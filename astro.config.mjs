@@ -1,15 +1,16 @@
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 import sitemap from '@astrojs/sitemap';
-import node from '@astrojs/node';
+import vercel from '@astrojs/vercel';
 
 // Pages are statically pre-rendered by default; the enquiry API route opts into
-// on-demand server rendering via `export const prerender = false`. The node
-// adapter is what lets that single endpoint run server-side validation + email.
+// on-demand rendering via `export const prerender = false`, which the Vercel
+// adapter deploys as a serverless function. Everything else ships as static CDN
+// assets. (Swap `vercel()` for another adapter if you self-host — see README §11.)
 export default defineConfig({
   site: 'https://gravityacademy.in',
   output: 'static',
-  adapter: node({ mode: 'standalone' }),
+  adapter: vercel(),
   integrations: [
     tailwind({ applyBaseStyles: false }),
     sitemap(),
