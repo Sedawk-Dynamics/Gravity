@@ -1,0 +1,24 @@
+---
+import Section from './Section.astro';
+import Button from './Button.astro';
+
+interface Props {
+  title?: string;
+  text?: string;
+}
+const {
+  title = 'See a class before you decide.',
+  text = 'Book a free demo and watch concept-first teaching in action — no commitment, no pressure.',
+} = Astro.props;
+---
+<Section tone="navy" class="relative overflow-hidden">
+  <div class="grid-motif pointer-events-none absolute inset-0 opacity-40"></div>
+  <div class="relative mx-auto flex max-w-3xl flex-col items-center text-center" data-reveal>
+    <h2 class="font-display text-display-lg text-white">{title}</h2>
+    <p class="mt-4 max-w-xl text-lg text-mist">{text}</p>
+    <div class="mt-8 flex flex-wrap justify-center gap-3">
+      <Button href="/admissions" variant="primary" size="lg" icon="arrow-right">Book a free demo</Button>
+      <Button href="/contact" variant="ghost" size="lg" class="!text-white !ring-white/40 hover:!bg-white/10">Talk to a mentor</Button>
+    </div>
+  </div>
+</Section>

@@ -1,0 +1,88 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Section from '../components/Section.astro';
+import TopperCard from '../components/TopperCard.astro';
+import CTABand from '../components/CTABand.astro';
+import { toppers, examFilters, topperYears } from '../data/toppers';
+import { educationalOrganizationLd } from '../data/jsonld';
+---
+<BaseLayout
+  title="Results & Toppers"
+  description="See Gravity Academy's results — JEE and NEET ranks, board toppers and Olympiad medallists from Bengaluru. Filter by exam and year."
+  path="/results"
+  jsonld={[educationalOrganizationLd]}
+>
+  <PageHeader
+    eyebrow="Results"
+    title="Where concept-first teaching leads"
+    intro="Ranks, board scores and Olympiad medals from students who put in the work — with mentors who knew exactly how to guide them."
+  />
+
+  <Section tone="paper">
+    <!-- Filters -->
+    <div class="flex flex-col gap-5 md:flex-row md:items-center md:justify-between" data-reveal>
+      <div role="group" aria-label="Filter by exam" class="flex flex-wrap gap-2">
+        {examFilters.map((f, i) => (
+          <button
+            type="button"
+            class="filter-exam rounded-full px-4 py-2 text-sm font-semibold ring-1 ring-mist transition-colors data-[active]:bg-navy data-[active]:text-white data-[active]:ring-navy"
+            data-value={f}
+            data-active={i === 0 ? '' : null}
+          >
+            {f}
+          </button>
+        ))}
+      </div>
+
+      <label class="flex items-center gap-2 text-sm text-slate">
+        Year
+        <select id="filter-year" class="rounded-btn border border-slate/35 bg-paper px-3 py-2 text-ink focus:border-navy focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange/30">
+          <option value="All">All years</option>
+          {topperYears.map((y) => <option value={y}>{y}</option>)}
+        </select>
+      </label>
+    </div>
+
+    <div id="toppers-grid" class="mt-10 grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-4">
+      {toppers.map((t) => <TopperCard topper={t} />)}
+    </div>
+
+    <p id="no-results" class="mt-10 hidden rounded-card bg-paper-2 p-8 text-center text-slate">
+      No results match these filters yet. Try a different exam or year.
+    </p>
+  </Section>
+
+  <CTABand title="Your child's name could be here next." text="It starts with one free demo class. See how we teach, then decide." />
+</BaseLayout>
+
+<script>
+  const examBtns = document.querySelectorAll<HTMLButtonElement>('.filter-exam');
+  const yearSel = document.getElementById('filter-year') as HTMLSelectElement;
+  const cards = Array.from(document.querySelectorAll<HTMLElement>('#toppers-grid .topper-card'));
+  const empty = document.getElementById('no-results')!;
+  let exam = 'All';
+
+  const apply = () => {
+    const year = yearSel.value;
+    let shown = 0;
+    cards.forEach((card) => {
+      const okExam = exam === 'All' || card.dataset.exam === exam;
+      const okYear = year === 'All' || card.dataset.year === year;
+      const show = okExam && okYear;
+      card.classList.toggle('hidden', !show);
+      if (show) shown++;
+    });
+    empty.classList.toggle('hidden', shown > 0);
+  };
+
+  examBtns.forEach((btn) =>
+    btn.addEventListener('click', () => {
+      exam = btn.dataset.value ?? 'All';
+      examBtns.forEach((b) => b.removeAttribute('data-active'));
+      btn.setAttribute('data-active', '');
+      apply();
+    })
+  );
+  yearSel.addEventListener('change', apply);
+</script>

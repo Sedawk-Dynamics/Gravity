@@ -1,0 +1,210 @@
+---
+import { programs } from '../data/programs';
+import { site } from '../data/site';
+import Button from './Button.astro';
+import Icon from './Icon.astro';
+
+/**
+ * Shared lead-capture form used by both the Enquiry and Book-a-Demo flows.
+ * `intent` keeps the label consistent through the flow (§8): the button that says
+ * "Book a free demo" leads to a state that confirms "Demo requested".
+ */
+interface Props {
+  intent?: 'enquiry' | 'demo';
+  id?: string;
+}
+const { intent = 'enquiry', id = 'lead-form' } = Astro.props;
+
+const isDemo = intent === 'demo';
+const submitLabel = isDemo ? 'Book a free demo' : 'Send enquiry';
+const successTitle = isDemo ? 'Demo requested' : 'Enquiry received';
+const successBody = isDemo
+  ? 'Thanks — your free demo request is in. A counsellor will call you to confirm a slot, usually within one working day.'
+  : 'Thanks — we have your enquiry. A counsellor will reach out shortly, usually within one working day.';
+
+const field =
+  'w-full rounded-btn border border-slate/35 bg-paper px-4 py-3 text-ink placeholder:text-slate/70 transition-colors focus:border-navy focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange/30';
+const labelCls = 'block text-sm font-semibold text-navy';
+---
+<form id={id} class="space-y-5" novalidate data-success-title={successTitle} data-success-body={successBody}>
+  <input type="hidden" name="intent" value={intent} />
+  <!-- Honeypot: bots fill it, humans never see it. -->
+  <div class="absolute left-[-9999px]" aria-hidden="true">
+    <label>Leave this empty <input type="text" name="company" tabindex="-1" autocomplete="off" /></label>
+  </div>
+
+  <div class="grid gap-5 sm:grid-cols-2">
+    <div>
+      <label class={labelCls} for={`${id}-student`}>Student name <span class="text-orange">*</span></label>
+      <input class:list={[field, 'mt-1.5']} id={`${id}-student`} name="studentName" type="text" required autocomplete="name" />
+      <p class="field-error mt-1 hidden text-sm text-orange-700"></p>
+    </div>
+    <div>
+      <label class={labelCls} for={`${id}-parent`}>Parent name <span class="text-orange">*</span></label>
+      <input class:list={[field, 'mt-1.5']} id={`${id}-parent`} name="parentName" type="text" required autocomplete="name" />
+      <p class="field-error mt-1 hidden text-sm text-orange-700"></p>
+    </div>
+    <div>
+      <label class={labelCls} for={`${id}-phone`}>Phone <span class="text-orange">*</span></label>
+      <input class:list={[field, 'mt-1.5']} id={`${id}-phone`} name="phone" type="tel" required inputmode="tel" autocomplete="tel" placeholder="10-digit mobile" />
+      <p class="field-error mt-1 hidden text-sm text-orange-700"></p>
+    </div>
+    <div>
+      <label class={labelCls} for={`${id}-email`}>Email <span class="font-normal text-slate">(optional)</span></label>
+      <input class:list={[field, 'mt-1.5']} id={`${id}-email`} name="email" type="email" autocomplete="email" />
+      <p class="field-error mt-1 hidden text-sm text-orange-700"></p>
+    </div>
+    <div>
+      <label class={labelCls} for={`${id}-grade`}>Class / Grade <span class="text-orange">*</span></label>
+      <select class:list={[field, 'mt-1.5']} id={`${id}-grade`} name="grade" required>
+        <option value="">Select class</option>
+        {[6, 7, 8, 9, 10, 11, 12].map((g) => <option value={`Class ${g}`}>Class {g}</option>)}
+      </select>
+      <p class="field-error mt-1 hidden text-sm text-orange-700"></p>
+    </div>
+    <div>
+      <label class={labelCls} for={`${id}-board`}>Board <span class="text-orange">*</span></label>
+      <select class:list={[field, 'mt-1.5']} id={`${id}-board`} name="board" required>
+        <option value="">Select board</option>
+        {site.boards.map((b) => <option value={b}>{b}</option>)}
+      </select>
+      <p class="field-error mt-1 hidden text-sm text-orange-700"></p>
+    </div>
+    <div>
+      <label class={labelCls} for={`${id}-program`}>Program interested <span class="text-orange">*</span></label>
+      <select class:list={[field, 'mt-1.5']} id={`${id}-program`} name="program" required>
+        <option value="">Select program</option>
+        {programs.map((p) => <option value={p.name}>{p.name}</option>)}
+        <option value="Not sure yet">Not sure yet — help me choose</option>
+      </select>
+      <p class="field-error mt-1 hidden text-sm text-orange-700"></p>
+    </div>
+    <div>
+      <label class={labelCls} for={`${id}-time`}>Preferred time <span class="font-normal text-slate">(optional)</span></label>
+      <select class:list={[field, 'mt-1.5']} id={`${id}-time`} name="preferredTime">
+        <option value="">No preference</option>
+        <option value="Morning">Morning (9 AM – 12 PM)</option>
+        <option value="Afternoon">Afternoon (12 – 4 PM)</option>
+        <option value="Evening">Evening (4 – 7:30 PM)</option>
+      </select>
+    </div>
+  </div>
+
+  <div>
+    <label class={labelCls} for={`${id}-message`}>Message <span class="font-normal text-slate">(optional)</span></label>
+    <textarea class:list={[field, 'mt-1.5']} id={`${id}-message`} name="message" rows="4" placeholder="Anything you'd like us to know?"></textarea>
+  </div>
+
+  <div class="flex flex-wrap items-center gap-4">
+    <Button type="submit" variant="primary" size="lg" class="submit-btn">{submitLabel}</Button>
+    <p class="form-status text-sm" role="status" aria-live="polite"></p>
+  </div>
+
+  <!-- Success state, revealed on a successful submit. -->
+  <div class="form-success hidden rounded-card border border-navy/15 bg-paper-2 p-6">
+    <div class="flex items-start gap-3">
+      <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-orange text-navy">
+        <Icon name="check" size={22} />
+      </span>
+      <div>
+        <h3 class="success-title font-display text-display-sm text-navy">{successTitle}</h3>
+        <p class="success-body mt-1 text-slate">{successBody}</p>
+      </div>
+    </div>
+  </div>
+</form>
+
+<script>
+  const forms = document.querySelectorAll<HTMLFormElement>('form#lead-form, form[id^="lead-form"]');
+
+  const showError = (input: HTMLElement, msg: string) => {
+    const wrap = input.parentElement;
+    const el = wrap?.querySelector<HTMLElement>('.field-error');
+    input.setAttribute('aria-invalid', 'true');
+    input.classList.add('border-orange-700');
+    if (el) { el.textContent = msg; el.classList.remove('hidden'); }
+  };
+  const clearError = (input: HTMLElement) => {
+    const el = input.parentElement?.querySelector<HTMLElement>('.field-error');
+    input.removeAttribute('aria-invalid');
+    input.classList.remove('border-orange-700');
+    if (el) { el.textContent = ''; el.classList.add('hidden'); }
+  };
+
+  const validate = (form: HTMLFormElement): boolean => {
+    let ok = true;
+    let firstBad: HTMLElement | null = null;
+    const fields = form.querySelectorAll<HTMLInputElement | HTMLSelectElement>('[required]');
+    fields.forEach((f) => {
+      clearError(f);
+      if (!f.value.trim()) {
+        showError(f, 'This field is required.');
+        ok = false;
+        firstBad ??= f;
+      }
+    });
+    const phone = form.querySelector<HTMLInputElement>('[name="phone"]');
+    if (phone && phone.value.trim()) {
+      const digits = phone.value.replace(/\D/g, '');
+      if (digits.length < 10 || digits.length > 13) {
+        showError(phone, 'Enter a valid phone number (at least 10 digits).');
+        ok = false;
+        firstBad ??= phone;
+      }
+    }
+    const email = form.querySelector<HTMLInputElement>('[name="email"]');
+    if (email && email.value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+      showError(email, 'Enter a valid email, or leave it blank.');
+      ok = false;
+      firstBad ??= email;
+    }
+    firstBad?.focus();
+    return ok;
+  };
+
+  forms.forEach((form) => {
+    const status = form.querySelector<HTMLElement>('.form-status')!;
+    const submitBtn = form.querySelector<HTMLButtonElement>('.submit-btn')!;
+    const successBox = form.querySelector<HTMLElement>('.form-success')!;
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      status.textContent = '';
+      status.className = 'form-status text-sm';
+      if (!validate(form)) {
+        status.textContent = 'Please fix the highlighted fields.';
+        status.classList.add('text-orange-700');
+        return;
+      }
+
+      submitBtn.disabled = true;
+      status.textContent = 'Sending…';
+      status.classList.add('text-slate');
+
+      try {
+        const data = Object.fromEntries(new FormData(form).entries());
+        const res = await fetch('/api/enquiry', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+        const json = await res.json().catch(() => ({}));
+        if (!res.ok) throw new Error(json?.error || 'Something went wrong.');
+
+        form.querySelectorAll('input, select, textarea, button').forEach((el) => ((el as HTMLElement).style.display = 'none'));
+        status.style.display = 'none';
+        successBox.classList.remove('hidden');
+        successBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } catch (err) {
+        submitBtn.disabled = false;
+        status.textContent = err instanceof Error ? err.message : 'Could not send. Please call us instead.';
+        status.className = 'form-status text-sm text-orange-700';
+      }
+    });
+
+    // Clear an error as soon as the user starts fixing it.
+    form.querySelectorAll<HTMLElement>('input, select, textarea').forEach((f) =>
+      f.addEventListener('input', () => clearError(f))
+    );
+  });
+</script>

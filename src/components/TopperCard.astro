@@ -1,0 +1,33 @@
+---
+import type { Topper } from '../data/toppers';
+
+interface Props {
+  topper: Topper;
+}
+const { topper } = Astro.props;
+---
+<article
+  class="topper-card flex flex-col overflow-hidden rounded-card border border-mist bg-paper shadow-soft transition-all duration-300 ease-fall hover:-translate-y-1 hover:shadow-lift"
+  data-exam={topper.exam}
+  data-year={topper.year}
+>
+  <div class="relative aspect-[4/5] overflow-hidden bg-mist">
+    <img
+      src={topper.photo}
+      alt={`${topper.name}, ${topper.detail} ${topper.year}`}
+      width="320"
+      height="400"
+      loading="lazy"
+      decoding="async"
+      class="h-full w-full object-cover"
+    />
+    <span class="absolute left-3 top-3 rounded-full bg-navy/90 px-3 py-1 font-mono text-xs font-medium uppercase tracking-wide text-white backdrop-blur">
+      {topper.exam}
+    </span>
+  </div>
+  <div class="flex flex-1 flex-col p-5">
+    <p class="font-display text-display-sm font-bold text-orange">{topper.score}</p>
+    <p class="mt-1 font-display font-semibold text-navy">{topper.name}</p>
+    <p class="mt-auto pt-2 text-sm text-slate">{topper.detail} · {topper.year}</p>
+  </div>
+</article>

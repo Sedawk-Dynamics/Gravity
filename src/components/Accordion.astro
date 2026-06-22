@@ -1,0 +1,50 @@
+---
+import { faqs } from '../data/faqs';
+import Icon from './Icon.astro';
+
+/** Accessible FAQ accordion: each item is a <button> controlling a region via
+ *  aria-expanded + aria-controls. Keyboard-operable; multiple can stay open. */
+---
+<div class="divide-y divide-mist rounded-card border border-mist bg-paper">
+  {
+    faqs.map((item, i) => (
+      <div class="accordion-item">
+        <h3 class="m-0">
+          <button
+            type="button"
+            class="accordion-trigger flex w-full items-center justify-between gap-4 px-5 py-5 text-left font-display text-[1.05rem] font-semibold text-navy transition-colors hover:text-orange md:px-6"
+            aria-expanded="false"
+            aria-controls={`faq-panel-${i}`}
+            id={`faq-trigger-${i}`}
+          >
+            <span>{item.q}</span>
+            <Icon name="chevron-down" size={20} class="accordion-icon shrink-0 text-slate transition-transform duration-300" />
+          </button>
+        </h3>
+        <div
+          id={`faq-panel-${i}`}
+          role="region"
+          aria-labelledby={`faq-trigger-${i}`}
+          class="accordion-panel grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-fall"
+        >
+          <div class="overflow-hidden">
+            <p class="px-5 pb-5 text-slate md:px-6">{item.a}</p>
+          </div>
+        </div>
+      </div>
+    ))
+  }
+</div>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('.accordion-trigger').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!expanded));
+      const panel = btn.closest('.accordion-item')?.querySelector<HTMLElement>('.accordion-panel');
+      const icon = btn.querySelector<HTMLElement>('.accordion-icon');
+      if (panel) panel.style.gridTemplateRows = expanded ? '0fr' : '1fr';
+      if (icon) icon.style.transform = expanded ? '' : 'rotate(180deg)';
+    });
+  });
+</script>

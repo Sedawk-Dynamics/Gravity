@@ -1,0 +1,30 @@
+---
+import type { Testimonial } from '../data/testimonials';
+import Icon from './Icon.astro';
+
+interface Props {
+  testimonial: Testimonial;
+}
+const { testimonial } = Astro.props;
+---
+<figure class="flex h-full flex-col rounded-card border border-mist bg-paper p-6 shadow-soft">
+  <Icon name="quote" size={28} class="text-orange/80" />
+  <blockquote class="mt-4 flex-1 text-[1.05rem] leading-relaxed text-ink">
+    {testimonial.quote}
+  </blockquote>
+  <figcaption class="mt-5 flex items-center gap-3 border-t border-mist pt-4">
+    <img
+      src={testimonial.avatar}
+      alt={testimonial.author}
+      width="44"
+      height="44"
+      loading="lazy"
+      decoding="async"
+      class="h-11 w-11 rounded-full object-cover ring-1 ring-mist"
+    />
+    <span>
+      <span class="block font-display font-semibold text-navy">{testimonial.author}</span>
+      <span class="block text-sm text-slate">{testimonial.role}</span>
+    </span>
+  </figcaption>
+</figure>

@@ -1,0 +1,91 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Section from '../components/Section.astro';
+import SectionHead from '../components/SectionHead.astro';
+import CTABand from '../components/CTABand.astro';
+import Icon from '../components/Icon.astro';
+import { educationalOrganizationLd } from '../data/jsonld';
+
+const values = [
+  { icon: 'award', title: 'Excellence', text: 'We hold a high bar — in teaching, in effort, in outcomes.' },
+  { icon: 'clock', title: 'Discipline', text: 'Consistent habits compound. Structure is how potential becomes performance.' },
+  { icon: 'lightbulb', title: 'Innovation', text: 'We keep improving how we teach, measure and mentor.' },
+  { icon: 'scale', title: 'Integrity', text: 'Honest guidance and transparent communication with every family.' },
+  { icon: 'graduation-cap', title: 'Mentorship', text: 'Teachers who know each student, not just each syllabus.' },
+  { icon: 'sprout', title: 'Growth mindset', text: 'Every student can improve with the right method and support.' },
+];
+---
+<BaseLayout
+  title="About"
+  description="Gravity Academy is a concept-first coaching ecosystem in Bengaluru built on discipline, mentorship and measurable academic growth for Classes 6–12."
+  path="/about"
+  jsonld={[educationalOrganizationLd]}
+>
+  <PageHeader
+    eyebrow="About"
+    title="A learning ecosystem with real gravity"
+    intro="Gravity Academy was built on a simple conviction: when students truly understand the fundamentals, everything else falls into place."
+  />
+
+  <!-- Campus image overlapping the hero for depth -->
+  <div class="container-x relative z-10 -mt-10 md:-mt-16">
+    <img
+      src="/campus/study-group.jpg"
+      alt="Students learning together at the Gravity Academy centre"
+      width="1200"
+      height="500"
+      loading="eager"
+      decoding="async"
+      class="h-[260px] w-full rounded-card object-cover shadow-lift ring-1 ring-white/10 md:h-[380px]"
+    />
+  </div>
+
+  <Section tone="paper">
+    <div class="grid gap-12 lg:grid-cols-[1.3fr_1fr]">
+      <div class="prose-measure space-y-5 text-lg leading-relaxed text-ink" data-reveal>
+        <p>
+          We started Gravity Academy because we kept seeing capable students taught to memorise instead of understand. So we built the opposite: a disciplined, mentorship-driven institute where concepts come first and exam technique follows naturally.
+        </p>
+        <p>
+          Today we coach students across Classes 6 to 12 — CBSE, ICSE and State Board — alongside dedicated JEE, NEET and Olympiad foundations. Batches are deliberately small, mentors know each student by name, and parents get a clear, honest view of progress throughout the year.
+        </p>
+        <p>
+          The name is the philosophy. Gravity is the force that holds systems together and keeps everything in orbit. Strong fundamentals do the same for a student's learning.
+        </p>
+      </div>
+
+      <div class="space-y-4">
+        <div class="rounded-card border border-mist bg-paper-2 p-6 shadow-soft" data-reveal>
+          <p class="eyebrow">Vision</p>
+          <p class="mt-3 text-ink">
+            To build a future-ready learning ecosystem where every student develops conceptual understanding, confidence, discipline and academic excellence.
+          </p>
+        </div>
+        <div class="rounded-card border border-mist bg-paper-2 p-6 shadow-soft" data-reveal>
+          <p class="eyebrow">Mission</p>
+          <p class="mt-3 text-ink">
+            To deliver high-quality, personalized, technology-enabled education that turns potential into measurable, lasting results.
+          </p>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <Section tone="paper-2">
+    <SectionHead eyebrow="What we stand for" title="Six values, applied daily" />
+    <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {values.map((v) => (
+        <div class="rounded-card border border-mist bg-paper p-6 shadow-soft" data-reveal>
+          <span class="grid h-11 w-11 place-items-center rounded-btn bg-navy text-white">
+            <Icon name={v.icon} size={22} />
+          </span>
+          <h3 class="mt-4 font-display text-display-sm text-navy">{v.title}</h3>
+          <p class="mt-1.5 text-slate">{v.text}</p>
+        </div>
+      ))}
+    </div>
+  </Section>
+
+  <CTABand />
+</BaseLayout>

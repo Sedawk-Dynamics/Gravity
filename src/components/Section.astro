@@ -1,0 +1,28 @@
+---
+/**
+ * Vertical-rhythm + max-width wrapper. `tone` sets the background; padding lives
+ * on the outer <section> and the inner container only handles horizontal gutters,
+ * so the two never cancel out (a real Tailwind specificity footgun — see §9).
+ */
+interface Props {
+  tone?: 'paper' | 'paper-2' | 'mist' | 'navy';
+  as?: string;
+  id?: string;
+  class?: string;
+  /** Drop the inner container for full-bleed children. */
+  bleed?: boolean;
+}
+
+const { tone = 'paper', as = 'section', id, class: className = '', bleed = false } = Astro.props;
+const Tag = as as any;
+
+const tones: Record<string, string> = {
+  paper: 'bg-paper text-ink',
+  'paper-2': 'bg-paper-2 text-ink',
+  mist: 'bg-mist text-ink',
+  navy: 'bg-navy text-white',
+};
+---
+<Tag id={id} class:list={['py-section', tones[tone], className]}>
+  {bleed ? <slot /> : <div class="container-x"><slot /></div>}
+</Tag>

@@ -1,0 +1,77 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Section from '../components/Section.astro';
+import Button from '../components/Button.astro';
+import CTABand from '../components/CTABand.astro';
+import Icon from '../components/Icon.astro';
+import { getPrograms, programUrl } from '../data/programs';
+import { educationalOrganizationLd } from '../data/jsonld';
+
+const programs = await getPrograms();
+---
+<BaseLayout
+  title="Programs"
+  description="Explore Gravity Academy's six coaching tracks — Foundation, Test Prep, JEE, NEET, Olympiads and Subject Coaching — for Classes 6–12 in Bengaluru."
+  path="/programs"
+  jsonld={[educationalOrganizationLd]}
+>
+  <PageHeader
+    eyebrow="Programs"
+    title="Find the right orbit"
+    intro="Six tracks built around concept mastery — from early foundations to competitive-exam intensity. Pick a track to view batches, schedules and fees in the catalog."
+  />
+
+  <Section tone="paper">
+    <div class="space-y-6">
+      {programs.map((p, i) => (
+        <article
+          id={p.slug}
+          class="grid scroll-mt-28 gap-6 rounded-card border border-mist bg-paper p-6 shadow-soft md:grid-cols-[auto_1fr_auto] md:items-center md:gap-8 md:p-8"
+          data-reveal
+        >
+          <span class="grid h-16 w-16 place-items-center rounded-card bg-mist text-navy">
+            <Icon name={p.icon} size={30} />
+          </span>
+
+          <div>
+            <h2 class="font-display text-display-md text-navy">{p.name}</h2>
+            <p class="mt-1.5 text-lg text-slate">{p.tagline}</p>
+            <dl class="mt-5 grid gap-4 sm:grid-cols-2">
+              <div>
+                <dt class="eyebrow !text-slate">Who it's for</dt>
+                <dd class="mt-1 text-ink">{p.audience}</dd>
+              </div>
+              <div>
+                <dt class="eyebrow !text-slate">Outcomes</dt>
+                <dd class="mt-1 text-ink">{p.outcomes}</dd>
+              </div>
+              <div class="sm:col-span-2">
+                <dt class="eyebrow !text-slate">What's covered</dt>
+                <dd class="mt-2 flex flex-wrap gap-2">
+                  {p.covers.map((c) => (
+                    <span class="inline-flex items-center gap-1.5 rounded-full bg-paper-2 px-3 py-1 text-sm text-navy ring-1 ring-mist">
+                      <Icon name="check" size={14} class="text-orange" /> {c}
+                    </span>
+                  ))}
+                </dd>
+              </div>
+            </dl>
+          </div>
+
+          <div class="flex flex-row gap-3 md:flex-col">
+            <Button href={programUrl(p.slug)} variant="primary" icon="arrow-up-right" external>View in catalog</Button>
+            <Button href="/admissions" variant="ghost">Book a demo</Button>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <p class="mt-8 flex items-center gap-2 rounded-card bg-paper-2 p-4 text-sm text-slate ring-1 ring-mist">
+      <Icon name="arrow-up-right" size={16} class="shrink-0 text-orange" />
+      Batches, schedules, fees and enrolment live in our catalog. The links above take you straight there.
+    </p>
+  </Section>
+
+  <CTABand title="Not sure which track fits?" text="Tell us your child's class and goals — a counsellor will recommend the right program in minutes." />
+</BaseLayout>

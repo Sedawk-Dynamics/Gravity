@@ -1,0 +1,62 @@
+---
+/**
+ * Counts up when scrolled into view; renders the final value statically and only
+ * animates if motion is allowed. The static value is in the DOM from the start,
+ * so it's correct for no-JS and reduced-motion users (no layout shift).
+ */
+interface Props {
+  value: number;
+  prefix?: string;
+  suffix?: string;
+  /** Thousands separator for big numbers. */
+  separator?: boolean;
+}
+const { value, prefix = '', suffix = '', separator = true } = Astro.props;
+const formatted = separator ? value.toLocaleString('en-IN') : String(value);
+---
+<span
+  class="counter tabular-nums"
+  data-target={value}
+  data-prefix={prefix}
+  data-suffix={suffix}
+  data-separator={separator ? '1' : '0'}
+>{prefix}{formatted}{suffix}</span>
+
+<script>
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const counters = document.querySelectorAll<HTMLElement>('.counter');
+
+  const run = (el: HTMLElement) => {
+    const target = Number(el.dataset.target ?? '0');
+    const prefix = el.dataset.prefix ?? '';
+    const suffix = el.dataset.suffix ?? '';
+    const sep = el.dataset.separator === '1';
+    const fmt = (n: number) => (sep ? Math.round(n).toLocaleString('en-IN') : String(Math.round(n)));
+    const duration = 1400;
+    let start: number | null = null;
+    const step = (t: number) => {
+      if (start === null) start = t;
+      const p = Math.min((t - start) / duration, 1);
+      // gravitational ease-out (settle)
+      const eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = `${prefix}${fmt(target * eased)}${suffix}`;
+      if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
+
+  if (!reduce && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver(
+      (entries, obs) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            run(e.target as HTMLElement);
+            obs.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.4 }
+    );
+    counters.forEach((c) => io.observe(c));
+  }
+</script>

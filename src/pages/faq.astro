@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Section from '../components/Section.astro';
+import Accordion from '../components/Accordion.astro';
+import Button from '../components/Button.astro';
+import Icon from '../components/Icon.astro';
+import { faqs } from '../data/faqs';
+import { site } from '../data/site';
+import { educationalOrganizationLd, faqLd } from '../data/jsonld';
+---
+<BaseLayout
+  title="FAQ"
+  description="Answers on batch sizes, fees and EMI, free demo classes, boards covered, online vs offline, results and our Bengaluru centre."
+  path="/faq"
+  jsonld={[educationalOrganizationLd, faqLd(faqs)]}
+>
+  <PageHeader
+    eyebrow="FAQ"
+    title="Questions, answered plainly"
+    intro="The things parents and students ask us most. Still unsure about something? Call us or book a demo — we're happy to talk it through."
+  />
+
+  <Section tone="paper">
+    <div class="grid gap-10 lg:grid-cols-[1.6fr_1fr] lg:items-start">
+      <div data-reveal>
+        <Accordion />
+      </div>
+
+      <aside class="rounded-card border border-mist bg-paper-2 p-6 shadow-soft lg:sticky lg:top-28" data-reveal>
+        <h2 class="font-display text-display-sm text-navy">Still have a question?</h2>
+        <p class="mt-2 text-slate">Talk to a counsellor — no scripts, no pressure.</p>
+        <div class="mt-5 space-y-3">
+          <Button href="/admissions" variant="primary" class="w-full">Book a free demo</Button>
+          <a href={site.phoneHref} class="flex items-center justify-center gap-2 rounded-btn px-4 py-3 font-semibold text-navy ring-1 ring-slate/35 transition-colors hover:bg-paper">
+            <Icon name="phone" size={18} /> {site.phone}
+          </a>
+        </div>
+      </aside>
+    </div>
+  </Section>
+</BaseLayout>

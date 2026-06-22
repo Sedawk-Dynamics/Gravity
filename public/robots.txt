@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# WordPress/WooCommerce surfaces are served from the same domain (see §11).
+Disallow: /wp-admin/
+Disallow: /cart
+Disallow: /checkout
+Disallow: /my-account
+
+Sitemap: https://gravityacademy.in/sitemap-index.xml
