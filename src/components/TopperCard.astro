@@ -1,5 +1,6 @@
 ---
 import type { Topper } from '../data/toppers';
+import Icon from './Icon.astro';
 
 interface Props {
   topper: Topper;
@@ -7,27 +8,22 @@ interface Props {
 const { topper } = Astro.props;
 ---
 <article
-  class="topper-card flex flex-col overflow-hidden rounded-card border border-mist bg-paper shadow-soft transition-all duration-300 ease-fall hover:-translate-y-1 hover:shadow-lift"
-  data-exam={topper.exam}
-  data-year={topper.year}
+  class="topper-card group relative flex flex-col overflow-hidden rounded-card border border-mist bg-paper p-6 text-center shadow-soft transition-all duration-300 ease-fall hover:-translate-y-1 hover:shadow-lift"
+  data-board={topper.board}
+  data-grade={`Class ${topper.grade}`}
 >
-  <div class="relative aspect-[4/5] overflow-hidden bg-mist">
-    <img
-      src={topper.photo}
-      alt={`${topper.name}, ${topper.detail} ${topper.year}`}
-      width="320"
-      height="400"
-      loading="lazy"
-      decoding="async"
-      class="h-full w-full object-cover"
-    />
-    <span class="absolute left-3 top-3 rounded-full bg-navy/90 px-3 py-1 font-mono text-xs font-medium uppercase tracking-wide text-white backdrop-blur">
-      {topper.exam}
-    </span>
-  </div>
-  <div class="flex flex-1 flex-col p-5">
-    <p class="font-display text-display-sm font-bold text-orange">{topper.score}</p>
-    <p class="mt-1 font-display font-semibold text-navy">{topper.name}</p>
-    <p class="mt-auto pt-2 text-sm text-slate">{topper.detail} · {topper.year}</p>
-  </div>
+  <span class="absolute right-4 top-4 rounded-full bg-mist px-2.5 py-1 font-mono text-[0.65rem] font-medium uppercase tracking-wide text-navy">
+    {topper.board}
+  </span>
+
+  <span class="mx-auto grid h-12 w-12 place-items-center rounded-full bg-orange/12 text-orange">
+    <Icon name="medal" size={26} />
+  </span>
+
+  <p class="mt-4 font-display text-[2.4rem] font-bold leading-none text-orange">{topper.score}</p>
+  <p class="mt-2 font-display text-sm font-semibold uppercase tracking-wide text-navy">{topper.subject}</p>
+  {topper.note && <p class="mt-0.5 text-xs text-slate">{topper.note}</p>}
+
+  <p class="mt-4 font-display text-lg font-semibold text-navy">{topper.name}</p>
+  <p class="text-sm text-slate">Class {topper.grade} · {topper.board}</p>
 </article>

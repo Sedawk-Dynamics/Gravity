@@ -11,7 +11,7 @@ import TestimonialCard from '../components/TestimonialCard.astro';
 import CTABand from '../components/CTABand.astro';
 import Icon from '../components/Icon.astro';
 import { site } from '../data/site';
-import { getPrograms, programUrl } from '../data/programs';
+import { getPrograms } from '../data/programs';
 import { toppers } from '../data/toppers';
 import { testimonials } from '../data/testimonials';
 import { educationalOrganizationLd, localBusinessLd } from '../data/jsonld';
@@ -20,20 +20,20 @@ const why = [
   { icon: 'users', title: 'Small batches', text: 'Capped enrolment so every mentor knows each student\'s strengths and gaps.' },
   { icon: 'lightbulb', title: 'Concept-first teaching', text: 'We build understanding from first principles — no rote, no shortcuts.' },
   { icon: 'graduation-cap', title: 'Personalized mentoring', text: 'One-to-one guidance that adapts to how each student learns.' },
-  { icon: 'monitor', title: 'Hybrid learning', text: 'Flexible online + offline options. (Coming soon.)' },
-  { icon: 'trending-up', title: 'Parent performance tracking', text: 'Periodic, transparent reports so families always know where things stand.' },
+  { icon: 'monitor', title: 'Hybrid learning', text: 'Learn your way — offline classroom, online-live, or a hybrid of both.' },
+  { icon: 'trending-up', title: 'Parent performance tracking', text: 'Regular tests, PTMs and progress updates so families always know where things stand.' },
 ];
 
 const programs = await getPrograms();
 const featured = programs.filter((p) => ['jee-foundation', 'neet-foundation', 'test-prep', 'olympiads'].includes(p.id));
 const homeToppers = toppers.slice(0, 4);
 
-// Sample headline numbers — verify against real institute data before launch.
+// Real first-year milestones (source: founder's "Milestones of Growth" address).
 const stats = [
-  { value: 4200, suffix: '+', label: 'Students mentored' },
-  { value: 12, suffix: '', label: 'Years of teaching' },
-  { value: 94, suffix: '%', label: 'Students scoring 90%+ in boards', separator: false },
-  { value: 180, suffix: '+', label: 'JEE & NEET selections' },
+  { value: 47, suffix: '+', label: 'Students mentored in year one' },
+  { value: 720, suffix: '+', label: 'Hours of classroom teaching' },
+  { value: 100, suffix: '+', label: 'Hours of doubt-solving sessions' },
+  { value: 14, suffix: '+', label: 'Years of founder teaching experience' },
 ];
 ---
 <BaseLayout
@@ -54,7 +54,7 @@ const stats = [
           Build the concepts that hold everything together.
         </h1>
         <p class="mt-5 max-w-md text-lg leading-relaxed text-mist">
-          Concept-first coaching for Classes 6–12 across CBSE, ICSE and State Board — plus JEE, NEET and Olympiad foundations. Small batches, real mentorship, measurable progress.
+          Concept-first coaching in Bengaluru for Grades 6–12 across CBSE, ICSE and State Board — plus JEE, NEET UG and KCET preparation. Small batches, real mentorship, measurable progress.
         </p>
         <div class="mt-8 flex flex-wrap gap-3">
           <Button href="/admissions" variant="primary" size="lg" icon="arrow-right">Book a free demo</Button>
@@ -75,7 +75,7 @@ const stats = [
       {site.boards.map((b) => (
         <span class="font-display text-sm font-semibold text-navy">{b}</span>
       ))}
-      <span class="font-display text-sm font-semibold text-navy">JEE · NEET · Olympiads</span>
+      <span class="font-display text-sm font-semibold text-navy">JEE · NEET UG · KCET</span>
     </div>
   </div>
 
@@ -134,12 +134,12 @@ const stats = [
 
   <!-- 5b. INSIDE GRAVITY — campus gallery -->
   <Section tone="paper">
-    <SectionHead eyebrow="Inside Gravity" title="Where the work happens" intro="Focused classrooms, small groups, and mentors within arm's reach — the everyday environment that makes concept-first learning stick." />
+    <SectionHead eyebrow="Inside Gravity" title="Where the work happens" intro="From our annual Aarambh event to parent orientations and packed classrooms — a look at the Gravity community in action." />
     <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {[
-        { src: '/campus/classroom.jpg', alt: 'A focused classroom session at Gravity Academy', span: 'lg:row-span-2 lg:h-full' },
-        { src: '/campus/lecture-hall.jpg', alt: 'A mentor teaching a concept at the whiteboard' },
-        { src: '/campus/studying.jpg', alt: 'A student working through problems' },
+        { src: '/gallery/students-founder.jpg', alt: 'Gravity Academy students with the founder at the annual event', span: 'lg:row-span-2 lg:h-full' },
+        { src: '/founder/aarambh.jpg', alt: 'Founder Ankush Koul addressing the Aarambh 2026 event' },
+        { src: '/gallery/parent-orientation.jpg', alt: 'Parents at a Gravity Academy orientation' },
       ].map((img, i) => (
         <div
           class:list={['overflow-hidden rounded-card ring-1 ring-mist', img.span]}
@@ -169,7 +169,7 @@ const stats = [
     <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
       {featured.map((p) => (
         <a
-          href={programUrl(p.slug)}
+          href={`/programs/${p.slug}`}
           class="group flex flex-col rounded-card border border-mist bg-paper-2 p-6 transition-all duration-300 ease-fall hover:-translate-y-1 hover:shadow-lift"
           data-reveal
         >
@@ -179,7 +179,7 @@ const stats = [
           <h3 class="mt-4 font-display text-display-sm text-navy">{p.name}</h3>
           <p class="mt-1.5 flex-1 text-sm text-slate">{p.tagline}</p>
           <span class="mt-4 inline-flex items-center gap-1.5 font-display text-sm font-semibold text-navy group-hover:text-orange">
-            Enrol <Icon name="arrow-up-right" size={16} />
+            View program <Icon name="arrow-right" size={16} />
           </span>
         </a>
       ))}

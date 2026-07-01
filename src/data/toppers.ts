@@ -1,28 +1,28 @@
-export type Exam = 'JEE' | 'NEET' | 'Boards' | 'Olympiad';
+export type Board = 'CBSE' | 'ICSE';
 
 export interface Topper {
   id: string;
   name: string;
-  /** Headline achievement, e.g. "AIR 412" or "98.6%". */
+  /** Headline score, e.g. "94.5%". */
   score: string;
-  exam: Exam;
-  /** Board or exam detail line. */
-  detail: string;
-  year: number;
-  /** Photo path. Swap sample portraits for real, consented student photos. */
-  photo: string;
+  /** Subject or scope the score is for. */
+  subject: string;
+  /** Optional second highlight, e.g. "Science 95%". */
+  note?: string;
+  board: Board;
+  grade: number;
 }
 
+// Real first-year results (Gravity Academy — 2025–26). Source: results poster.
 export const toppers: Topper[] = [
-  { id: 't1', name: 'Aditya Sharma', score: 'AIR 412', exam: 'JEE', detail: 'JEE Advanced', year: 2025, photo: '/toppers/t1.jpg' },
-  { id: 't2', name: 'Ananya Gupta', score: 'AIR 1,287', exam: 'NEET', detail: 'NEET UG', year: 2025, photo: '/toppers/t2.jpg' },
-  { id: 't3', name: 'Ishaan Mehta', score: '98.6%', exam: 'Boards', detail: 'CBSE Class XII', year: 2025, photo: '/toppers/t3.jpg' },
-  { id: 't4', name: 'Diya Patel', score: '97.2%', exam: 'Boards', detail: 'ICSE Class X', year: 2025, photo: '/toppers/t4.jpg' },
-  { id: 't5', name: 'Arjun Nair', score: 'Gold', exam: 'Olympiad', detail: 'IMO National', year: 2024, photo: '/toppers/t5.jpg' },
-  { id: 't6', name: 'Sara Khan', score: 'AIR 2,034', exam: 'JEE', detail: 'JEE Main', year: 2024, photo: '/toppers/t6.jpg' },
-  { id: 't7', name: 'Karthik Rao', score: '99.1%', exam: 'Boards', detail: 'State Board XII', year: 2024, photo: '/toppers/t7.jpg' },
-  { id: 't8', name: 'Riya Joshi', score: 'AIR 3,560', exam: 'NEET', detail: 'NEET UG', year: 2024, photo: '/toppers/t8.jpg' },
+  { id: 't1', name: 'Anshika S.', score: '94.5%', subject: 'Overall', board: 'CBSE', grade: 10 },
+  { id: 't2', name: 'Aaditya S.', score: '100%', subject: 'Mathematics', note: 'Science 95%', board: 'CBSE', grade: 8 },
+  { id: 't3', name: 'Tejasva', score: '99%', subject: 'Mathematics', note: 'Science 98%', board: 'CBSE', grade: 8 },
+  { id: 't4', name: 'Rajdeep', score: '99%', subject: 'Science', board: 'CBSE', grade: 7 },
+  { id: 't5', name: 'Siddharth B.', score: '96%', subject: 'Physics', board: 'ICSE', grade: 8 },
+  { id: 't6', name: 'Pragnya', score: '96%', subject: 'Mathematics', board: 'CBSE', grade: 6 },
+  { id: 't7', name: 'Hema', score: '94%', subject: 'Chemistry', board: 'ICSE', grade: 8 },
 ];
 
-export const examFilters: ('All' | Exam)[] = ['All', 'JEE', 'NEET', 'Boards', 'Olympiad'];
-export const topperYears: number[] = [...new Set(toppers.map((t) => t.year))].sort((a, b) => b - a);
+export const boardFilters: ('All' | Board)[] = ['All', 'CBSE', 'ICSE'];
+export const gradeFilters: ('All' | string)[] = ['All', ...[...new Set(toppers.map((t) => t.grade))].sort((a, b) => a - b).map((g) => `Class ${g}`)];

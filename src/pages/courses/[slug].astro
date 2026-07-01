@@ -1,0 +1,156 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import Section from '../../components/Section.astro';
+import SectionHead from '../../components/SectionHead.astro';
+import Button from '../../components/Button.astro';
+import Icon from '../../components/Icon.astro';
+import { site } from '../../data/site';
+import { programs } from '../../data/programs';
+import {
+  courses,
+  methodology,
+  studyMaterial,
+  performanceTracking,
+  learningOutcomes,
+  learningModes,
+  courseFaqs,
+  courseCatalogUrl,
+} from '../../data/courses';
+import { educationalOrganizationLd, faqLd } from '../../data/jsonld';
+
+export function getStaticPaths() {
+  return courses.map((course) => ({ params: { slug: course.slug }, props: { course } }));
+}
+
+const { course } = Astro.props;
+const parent = programs.find((p) => p.slug === course.category);
+
+const structure = [
+  { icon: 'clock', label: 'Duration', value: 'Full academic year, aligned to your board and target exam' },
+  { icon: 'monitor', label: 'Mode', value: learningModes.join(' · ') },
+  { icon: 'users', label: 'Batch', value: 'Small batches (typically 12–18) for individual attention' },
+  { icon: 'target', label: 'Assessments', value: 'Weekly & monthly tests with detailed analysis' },
+  { icon: 'lightbulb', label: 'Doubt sessions', value: 'Dedicated doubt-solving clinics every week' },
+];
+---
+<BaseLayout
+  title={course.name}
+  description={`${course.name} at Gravity Academy — ${course.tagline} ${course.subjects}`}
+  path={`/courses/${course.slug}`}
+  jsonld={[educationalOrganizationLd, faqLd(courseFaqs)]}
+>
+  <PageHeader eyebrow={`${course.series} · ${course.level}`} title={course.name} intro={course.tagline}>
+    <div class="mt-8 flex flex-wrap gap-3">
+      <Button href="/admissions" variant="primary" size="lg" icon="arrow-right">Book a free demo</Button>
+      <Button href={courseCatalogUrl(course.slug)} variant="ghost" size="lg" external class="!text-white !ring-white/40 hover:!bg-white/10">View in catalog</Button>
+    </div>
+    {parent && (
+      <p class="mt-5 text-sm text-mist">
+        Part of <a href={`/programs/${parent.slug}`} class="font-semibold text-white underline underline-offset-4 hover:text-orange">{parent.name}</a>
+      </p>
+    )}
+  </PageHeader>
+
+  <!-- Who / Why -->
+  <Section tone="paper">
+    <div class="grid gap-8 lg:grid-cols-2">
+      <div class="rounded-card border border-mist bg-paper-2 p-7 shadow-soft" data-reveal>
+        <p class="eyebrow">Who should join</p>
+        <p class="mt-3 text-lg text-ink">{course.audience}</p>
+      </div>
+      <div class="rounded-card border border-mist bg-paper-2 p-7 shadow-soft" data-reveal style="--reveal-delay:80ms">
+        <p class="eyebrow">Why this programme</p>
+        <p class="mt-3 text-lg text-ink">{course.why}</p>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Subjects & Curriculum -->
+  <Section tone="paper-2">
+    <div class="grid gap-8 lg:grid-cols-[1fr_1.2fr] lg:items-center">
+      <SectionHead eyebrow="Subjects & curriculum" title="What you'll study" />
+      <p class="text-lg leading-relaxed text-ink" data-reveal>{course.subjects}</p>
+    </div>
+  </Section>
+
+  <!-- Course structure -->
+  <Section tone="paper">
+    <SectionHead eyebrow="Course structure" title="How the programme runs" />
+    <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {structure.map((s, i) => (
+        <div class="flex gap-4 rounded-card border border-mist bg-paper p-6 shadow-soft" data-reveal style={`--reveal-delay:${(i % 3) * 70}ms`}>
+          <span class="grid h-11 w-11 shrink-0 place-items-center rounded-btn bg-mist text-navy"><Icon name={s.icon} size={20} /></span>
+          <div>
+            <h3 class="font-display font-semibold text-navy">{s.label}</h3>
+            <p class="mt-1 text-sm text-slate">{s.value}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </Section>
+
+  <!-- Learning methodology (ordered) -->
+  <Section tone="navy">
+    <SectionHead eyebrow="Learning methodology" title="A loop built for mastery" tone="dark" intro="Every topic moves through the same disciplined cycle — so understanding compounds instead of fading." />
+    <ol class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-6">
+      {methodology.map((step, i) => (
+        <li class="relative rounded-card bg-white/5 p-5 ring-1 ring-white/10" data-reveal style={`--reveal-delay:${i * 60}ms`}>
+          <span class="font-mono text-sm text-orange">{String(i + 1).padStart(2, '0')}</span>
+          <p class="mt-2 font-display font-semibold text-white">{step}</p>
+        </li>
+      ))}
+    </ol>
+  </Section>
+
+  <!-- Study material + Performance tracking + Outcomes -->
+  <Section tone="paper">
+    <div class="grid gap-8 lg:grid-cols-3">
+      {[
+        { icon: 'flask-conical', title: 'Study material', items: studyMaterial },
+        { icon: 'trending-up', title: 'Performance tracking', items: performanceTracking },
+        { icon: 'award', title: 'Learning outcomes', items: learningOutcomes },
+      ].map((col, i) => (
+        <div class="rounded-card border border-mist bg-paper-2 p-6 shadow-soft" data-reveal style={`--reveal-delay:${i * 80}ms`}>
+          <span class="grid h-11 w-11 place-items-center rounded-btn bg-navy text-white"><Icon name={col.icon} size={20} /></span>
+          <h3 class="mt-4 font-display text-display-sm text-navy">{col.title}</h3>
+          <ul class="mt-3 space-y-2">
+            {col.items.map((it) => (
+              <li class="flex items-start gap-2 text-slate"><Icon name="check" size={16} class="mt-1 shrink-0 text-orange" /> {it}</li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </Section>
+
+  <!-- FAQs (native, accessible) -->
+  <Section tone="paper-2">
+    <SectionHead eyebrow="FAQs" title="Good to know" />
+    <div class="mt-8 divide-y divide-mist rounded-card border border-mist bg-paper">
+      {courseFaqs.map((f) => (
+        <details class="group">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-5 font-display text-[1.02rem] font-semibold text-navy md:px-6">
+            {f.q}
+            <Icon name="chevron-down" size={20} class="shrink-0 text-slate transition-transform duration-300 group-open:rotate-180" />
+          </summary>
+          <p class="px-5 pb-5 text-slate md:px-6">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </Section>
+
+  <!-- CTA -->
+  <Section tone="navy" class="relative overflow-hidden">
+    <div class="grid-motif pointer-events-none absolute inset-0 opacity-40"></div>
+    <div class="relative mx-auto flex max-w-3xl flex-col items-center text-center" data-reveal>
+      <h2 class="font-display text-display-lg text-white">Ready to begin {course.short}?</h2>
+      <p class="mt-4 max-w-xl text-lg text-mist">Book a free demo, visit the campus, or talk to a counsellor — whatever helps you decide.</p>
+      <div class="mt-8 flex flex-wrap justify-center gap-3">
+        <Button href="/admissions" variant="primary" size="lg" icon="arrow-right">Book a free demo</Button>
+        <Button href="/contact" variant="ghost" size="lg" class="!text-white !ring-white/40 hover:!bg-white/10">Visit campus</Button>
+        <Button href={site.phoneHref} variant="ghost" size="lg" class="!text-white !ring-white/40 hover:!bg-white/10">Talk to a counsellor</Button>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>

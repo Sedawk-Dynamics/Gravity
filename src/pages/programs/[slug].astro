@@ -1,0 +1,81 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import Section from '../../components/Section.astro';
+import SectionHead from '../../components/SectionHead.astro';
+import Button from '../../components/Button.astro';
+import CTABand from '../../components/CTABand.astro';
+import Icon from '../../components/Icon.astro';
+import { programs, programUrl } from '../../data/programs';
+import { coursesByCategory, courseCatalogUrl } from '../../data/courses';
+import { educationalOrganizationLd } from '../../data/jsonld';
+
+export function getStaticPaths() {
+  return programs.map((program) => ({ params: { slug: program.slug }, props: { program } }));
+}
+
+const { program } = Astro.props;
+const related = coursesByCategory(program.slug);
+---
+<BaseLayout
+  title={program.name}
+  description={`${program.name} at Gravity Academy — ${program.tagline} ${program.outcomes}`}
+  path={`/programs/${program.slug}`}
+  jsonld={[educationalOrganizationLd]}
+>
+  <PageHeader eyebrow="Program" title={program.name} intro={program.tagline}>
+    <div class="mt-8 flex flex-wrap gap-3">
+      <Button href="/admissions" variant="primary" size="lg" icon="arrow-right">Book a free demo</Button>
+      <Button href={programUrl(program.slug)} variant="ghost" size="lg" external class="!text-white !ring-white/40 hover:!bg-white/10">View in catalog</Button>
+    </div>
+  </PageHeader>
+
+  <Section tone="paper">
+    <div class="grid gap-8 lg:grid-cols-3">
+      <div class="rounded-card border border-mist bg-paper-2 p-6 shadow-soft" data-reveal>
+        <span class="grid h-12 w-12 place-items-center rounded-btn bg-navy text-white"><Icon name="users" size={22} /></span>
+        <h2 class="mt-4 font-display text-display-sm text-navy">Who it's for</h2>
+        <p class="mt-2 text-slate">{program.audience}</p>
+      </div>
+      <div class="rounded-card border border-mist bg-paper-2 p-6 shadow-soft" data-reveal style="--reveal-delay:80ms">
+        <span class="grid h-12 w-12 place-items-center rounded-btn bg-navy text-white"><Icon name="trending-up" size={22} /></span>
+        <h2 class="mt-4 font-display text-display-sm text-navy">Outcomes</h2>
+        <p class="mt-2 text-slate">{program.outcomes}</p>
+      </div>
+      <div class="rounded-card border border-mist bg-paper-2 p-6 shadow-soft" data-reveal style="--reveal-delay:160ms">
+        <span class="grid h-12 w-12 place-items-center rounded-btn bg-navy text-white"><Icon name={program.icon} size={22} /></span>
+        <h2 class="mt-4 font-display text-display-sm text-navy">What's covered</h2>
+        <ul class="mt-3 space-y-2">
+          {program.covers.map((c) => (
+            <li class="flex items-start gap-2 text-ink">
+              <Icon name="check" size={16} class="mt-1 shrink-0 text-orange" /> {c}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </Section>
+
+  {related.length > 0 && (
+    <Section tone="paper-2">
+      <SectionHead eyebrow="Courses in this program" title="Choose your batch" intro="Each course runs offline, online-live or hybrid, with small batches and regular assessments." />
+      <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {related.map((c) => (
+          <a href={`/courses/${c.slug}`} class="group flex flex-col rounded-card border border-mist bg-paper p-6 shadow-soft transition-all duration-300 ease-fall hover:-translate-y-1 hover:shadow-lift" data-reveal>
+            <div class="flex items-center justify-between">
+              <span class="grid h-11 w-11 place-items-center rounded-btn bg-mist text-navy transition-colors group-hover:bg-orange group-hover:text-navy"><Icon name={c.icon} size={20} /></span>
+              <span class="font-mono text-xs uppercase tracking-wide text-slate">{c.level}</span>
+            </div>
+            <h3 class="mt-4 font-display text-display-sm text-navy">{c.short}</h3>
+            <p class="mt-1.5 flex-1 text-sm text-slate">{c.tagline}</p>
+            <span class="mt-4 inline-flex items-center gap-1.5 font-display text-sm font-semibold text-navy group-hover:text-orange">
+              View course <Icon name="arrow-right" size={16} class="transition-transform group-hover:translate-x-1" />
+            </span>
+          </a>
+        ))}
+      </div>
+    </Section>
+  )}
+
+  <CTABand title={`Ready to explore ${program.name}?`} text="Book a free demo class and see our concept-first teaching in action — no commitment." />
+</BaseLayout>

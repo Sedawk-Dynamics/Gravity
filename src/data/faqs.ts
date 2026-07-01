@@ -18,11 +18,11 @@ export const faqs: Faq[] = [
   },
   {
     q: 'Which boards do you cover?',
-    a: 'We coach students across CBSE, ICSE and State Board for Classes 6 to 12, and run dedicated JEE, NEET and Olympiad foundation tracks.',
+    a: 'We coach students across CBSE, ICSE and Karnataka State Board for Grades 6 to 12, plus Foundation programs and dedicated JEE, NEET UG and KCET preparation.',
   },
   {
     q: 'Are classes online or offline?',
-    a: 'Classes are conducted offline at our Bengaluru centre. A hybrid learning option is coming soon — ask a counsellor about the current schedule.',
+    a: 'Both. We offer offline classroom programs at our Maragondanahalli centre, online live interactive classes, and a hybrid model that mixes the two — pick whatever fits your schedule.',
   },
   {
     q: 'How do you track and report results?',
@@ -30,6 +30,6 @@ export const faqs: Faq[] = [
   },
   {
     q: 'Where is the centre, and what are the timings?',
-    a: 'We\'re located on 100 Feet Road, Indiranagar, Bengaluru. The centre is open Mon–Sat, 9:00 AM–7:30 PM, with Sunday counselling slots. See the Contact page for the map and directions.',
+    a: 'We\'re at Achyutha Arcade, near New Baldwin International School, Maragondanahalli, KR Puram, Bengaluru. The centre is open Mon–Sat, 9:00 AM–7:30 PM, with Sunday counselling slots. See the Contact page for the map and directions.',
   },
 ];

@@ -13,10 +13,10 @@ const { transparent = false } = Astro.props;
 
 const nav = [
   { label: 'Programs', href: '/programs', mega: true },
+  { label: 'Courses', href: '/courses' },
   { label: 'About', href: '/about' },
   { label: 'Results', href: '/results' },
   { label: 'Faculty', href: '/faculty' },
-  { label: 'FAQ', href: '/faq' },
   { label: 'Contact', href: '/contact' },
 ];
 
@@ -30,8 +30,8 @@ const isActive = (href: string) => current === href.replace(/\/$/, '');
 >
   <div class="container-x flex items-center justify-between gap-4 py-3.5">
     <a href="/" class="rounded-md" aria-label={`${site.name} — home`}>
-      <Logo variant="dark" class="logo-dark" />
-      <Logo variant="light" class="logo-light hidden" />
+      <Logo variant="dark" class="logo-dark h-10 sm:h-11" />
+      <Logo variant="light" class="logo-light hidden h-10 sm:h-11" />
     </a>
 
     <!-- Desktop nav -->
@@ -59,7 +59,7 @@ const isActive = (href: string) => current === href.replace(/\/$/, '');
                   <div class="grid gap-1 sm:grid-cols-2">
                     {programs.map((p) => (
                       <a
-                        href={`/programs#${p.slug}`}
+                        href={`/programs/${p.slug}`}
                         class="group flex items-start gap-3 rounded-btn p-3 transition-colors hover:bg-paper-2"
                       >
                         <span class="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-btn bg-mist text-navy transition-colors group-hover:bg-navy group-hover:text-white">
@@ -72,13 +72,22 @@ const isActive = (href: string) => current === href.replace(/\/$/, '');
                       </a>
                     ))}
                   </div>
-                  <a
-                    href="/programs"
-                    class="mt-1 flex items-center justify-between rounded-btn bg-navy px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-navy-800"
-                  >
-                    View all programs
-                    <Icon name="arrow-right" size={16} />
-                  </a>
+                  <div class="mt-1 grid grid-cols-2 gap-2">
+                    <a
+                      href="/programs"
+                      class="flex items-center justify-between rounded-btn bg-navy px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-navy-800"
+                    >
+                      All programs
+                      <Icon name="arrow-right" size={16} />
+                    </a>
+                    <a
+                      href="/courses"
+                      class="flex items-center justify-between rounded-btn bg-mist px-4 py-3 text-sm font-semibold text-navy transition-colors hover:bg-slate/30"
+                    >
+                      All courses
+                      <Icon name="arrow-right" size={16} />
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -130,7 +139,7 @@ const isActive = (href: string) => current === href.replace(/\/$/, '');
     class="drawer-panel absolute right-0 top-0 flex h-full w-[min(86vw,360px)] translate-x-full flex-col bg-paper shadow-lift transition-transform duration-300"
   >
     <div class="flex items-center justify-between border-b border-mist px-5 py-4">
-      <Logo variant="dark" />
+      <Logo variant="dark" class="h-10" />
       <button id="nav-close" type="button" class="grid h-11 w-11 place-items-center rounded-btn text-navy hover:bg-paper-2" aria-label="Close menu">
         <Icon name="x" size={24} />
       </button>
@@ -140,13 +149,13 @@ const isActive = (href: string) => current === href.replace(/\/$/, '');
       <a href="/programs" class="block rounded-btn px-4 py-3 text-base font-semibold text-navy hover:bg-paper-2">Programs</a>
       <div class="mb-2 grid grid-cols-1 gap-0.5 pl-2">
         {programs.map((p) => (
-          <a href={`/programs#${p.slug}`} class="flex items-center gap-3 rounded-btn px-4 py-2.5 text-sm text-slate hover:bg-paper-2 hover:text-navy">
+          <a href={`/programs/${p.slug}`} class="flex items-center gap-3 rounded-btn px-4 py-2.5 text-sm text-slate hover:bg-paper-2 hover:text-navy">
             <Icon name={p.icon} size={16} />
             {p.name}
           </a>
         ))}
       </div>
-      {['About', 'Results', 'Faculty', 'FAQ', 'Contact'].map((label) => (
+      {['Courses', 'About', 'Results', 'Faculty', 'FAQ', 'Contact'].map((label) => (
         <a href={`/${label.toLowerCase()}`} class="block rounded-btn px-4 py-3 text-base font-semibold text-navy hover:bg-paper-2">
           {label}
         </a>
@@ -185,8 +194,9 @@ const isActive = (href: string) => current === href.replace(/\/$/, '');
   /* Transparent-over-hero state: white text + light logo. */
   #site-header[data-transparent]:not(.is-solid) .nav-link { color: #fff; }
   #site-header[data-transparent]:not(.is-solid) .nav-link:hover { color: var(--mist); }
-  #site-header[data-transparent]:not(.is-solid) .logo-dark { display: none; }
-  #site-header[data-transparent]:not(.is-solid) .logo-light { display: inline-flex; }
+  /* :global() so these reach the <img> rendered by the child Logo component. */
+  #site-header[data-transparent]:not(.is-solid) :global(.logo-dark) { display: none; }
+  #site-header[data-transparent]:not(.is-solid) :global(.logo-light) { display: inline-block; }
 
   /* Mega-menu open state (hover, focus-within, or JS class). */
   .mega:hover .mega-panel,

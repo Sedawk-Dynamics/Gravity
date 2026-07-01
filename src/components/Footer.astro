@@ -1,13 +1,14 @@
 ---
 import { site } from '../data/site';
-import { programs, programUrl } from '../data/programs';
+import { programs } from '../data/programs';
 import Logo from './Logo.astro';
 import Icon from './Icon.astro';
 
-const year = 2026; // {{ REPLACE: keep current — Date intentionally avoided in build }}
+const year = 2026;
 
 const quickLinks = [
   { label: 'About', href: '/about' },
+  { label: 'Courses', href: '/courses' },
   { label: 'Results', href: '/results' },
   { label: 'Admissions', href: '/admissions' },
   { label: 'FAQ', href: '/faq' },
@@ -23,7 +24,7 @@ const socials = [
 <footer class="bg-navy text-white">
   <div class="container-x grid gap-10 py-16 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.3fr]">
     <div>
-      <Logo variant="light" />
+      <Logo variant="light" class="h-12" />
       <p class="mt-4 max-w-xs text-sm leading-relaxed text-mist">
         Concept-first coaching for Classes 6–12 in Bengaluru. Disciplined, mentorship-driven, built to last.
       </p>
@@ -51,7 +52,7 @@ const socials = [
         {
           programs.map((p) => (
             <li>
-              <a href={programUrl(p.slug)} class="text-mist transition-colors hover:text-orange">
+              <a href={`/programs/${p.slug}`} class="text-mist transition-colors hover:text-orange">
                 {p.name}
               </a>
             </li>
@@ -85,6 +86,11 @@ const socials = [
         <p>
           <a href={site.phoneHref} class="flex items-center gap-2.5 transition-colors hover:text-orange">
             <Icon name="phone" size={18} class="text-orange" /> {site.phone}
+          </a>
+        </p>
+        <p>
+          <a href={site.phone2Href} class="flex items-center gap-2.5 transition-colors hover:text-orange">
+            <Icon name="phone" size={18} class="text-orange" /> {site.phone2}
           </a>
         </p>
         <p>

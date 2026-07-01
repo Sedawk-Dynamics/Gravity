@@ -78,7 +78,7 @@ const nodes = programs.map((p, i) => ({ ...p, ...positions[i % positions.length]
   {
     nodes.map((p, i) => (
       <a
-        href={`/programs#${p.slug}`}
+        href={`/programs/${p.slug}`}
         class="orbit-node group absolute flex -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-1.5"
         style={`left:${p.left};top:${p.top};--i:${i}`}
         aria-label={`${p.name} — ${p.tagline}`}

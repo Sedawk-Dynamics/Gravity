@@ -2,29 +2,25 @@
 import { site } from '../data/site';
 
 /**
- * Typographic wordmark. "Orbit" is a small kicker that sits above the wordmark
- * (a descriptor, not a co-brand — §1). The orange triangular mark stands in for
- * the "A" / gravitational core. {{ REPLACE: swap for a supplied PNG/SVG logo,
- * keeping a light and dark variant. }}
+ * Official Gravity Academy logo (client-supplied lockup: "Orbit Gravity Academy"
+ * with the Foundation/Test-Prep tagline). Two variants:
+ *  - dark  → navy logo, for LIGHT backgrounds (/logo/gravity.svg)
+ *  - light → white logo, for DARK/navy backgrounds (/logo/gravity-white.svg,
+ *            generated from the source SVG: navy→white, pill→transparent, orange kept)
  */
 interface Props {
-  variant?: 'dark' | 'light'; // dark text (on light bg) vs light text (on dark bg)
+  variant?: 'dark' | 'light';
   class?: string;
 }
 const { variant = 'dark', class: className = '' } = Astro.props;
-const wordColor = variant === 'light' ? 'text-white' : 'text-navy';
-const kickerColor = variant === 'light' ? 'text-mist' : 'text-slate';
+const src = variant === 'light' ? '/logo/gravity-white.svg' : '/logo/gravity.svg';
 ---
-<span class:list={['inline-flex items-center gap-2.5 leading-none', className]}>
-  <!-- Orange triangle = the "A" / gravitational core -->
-  <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true" class="shrink-0">
-    <circle cx="13" cy="13" r="12" stroke="currentColor" stroke-width="1.25" class={kickerColor} opacity="0.5" />
-    <path d="M13 5.5 19.5 19h-13L13 5.5Z" fill="var(--orange)" />
-  </svg>
-  <span class="flex flex-col">
-    <span class:list={['font-mono text-[0.62rem] uppercase tracking-[0.34em]', kickerColor]}>{site.kicker}</span>
-    <span class:list={['font-display font-bold text-[1.15rem] tracking-tight', wordColor]}>
-      Gravity <span class="text-orange">Academy</span>
-    </span>
-  </span>
-</span>
+<img
+  src={src}
+  alt={`${site.name} logo`}
+  width="483"
+  height="171"
+  class:list={['w-auto', className]}
+  loading="eager"
+  decoding="async"
+/>

@@ -1,6 +1,5 @@
 /**
- * Site-wide constants. Everything factual that needs replacing with real values
- * is marked {{ REPLACE: ... }} in the string so it's greppable before launch.
+ * Site-wide constants — real Gravity Academy details supplied by the client.
  */
 
 /** Base URL of the separate WordPress/WooCommerce catalog (see §2 & §11).
@@ -13,31 +12,33 @@ export const USE_WP_API = (import.meta.env.PUBLIC_USE_WP_API ?? 'false') === 'tr
 
 export const site = {
   name: 'Gravity Academy',
-  kicker: 'Orbit', // small descriptor that sits above the wordmark — not a co-brand
-  tagline: 'Build the concepts that hold everything together.',
+  kicker: 'Orbit',
+  tagline: 'Building strong foundations. Creating bright futures.',
   description:
-    'Concept-first coaching for Classes 6–12 across CBSE, ICSE and State Board in Bengaluru — plus JEE, NEET and Olympiad foundations. Small batches, mentorship-driven, personalized.',
+    'Gravity Academy is an outcome-focused coaching institute in Maragondanahalli, KR Puram, Bengaluru for Grades 6–12 — CBSE, ICSE, Karnataka State Board, Foundation, JEE, NEET UG and KCET. Concept-first teaching, small batches, personal mentoring.',
   url: 'https://gravityacademy.in',
 
-  // Contact details (sample values — verify before launch).
-  phone: '+91 98860 12345',
-  phoneHref: 'tel:+919886012345',
-  whatsapp: '919886012345', // digits only, with country code
-  email: 'admissions@gravityacademy.in',
+  // Contact details.
+  phone: '+91 79960 49555',
+  phoneHref: 'tel:+917996049555',
+  phone2: '+91 78893 62386',
+  phone2Href: 'tel:+917889362386',
+  whatsapp: '917996049555', // digits only, with country code
+  email: 'info@gravityacademy.in',
 
   address: {
-    line1: '3rd Floor, Pinnacle Tower',
-    line2: '100 Feet Road, Indiranagar',
+    line1: 'Achyutha Arcade, Near New Baldwin International School',
+    line2: 'Maragondanahalli, KR Puram',
     city: 'Bengaluru',
     state: 'Karnataka',
-    pin: '560038',
+    pin: '560036',
     country: 'India',
   },
 
-  // Indiranagar, Bengaluru.
-  geo: { lat: 12.9719, lng: 77.6412 },
+  // Maragondanahalli, KR Puram, Bengaluru.
+  geo: { lat: 13.0281, lng: 77.7080 },
   mapEmbed:
-    'https://www.google.com/maps?q=12.9719,77.6412&hl=en&z=15&output=embed',
+    'https://www.google.com/maps?q=Maragondanahalli+KR+Puram+Bengaluru&hl=en&z=15&output=embed',
 
   hours: [
     { days: 'Mon – Sat', time: '9:00 AM – 7:30 PM' },
@@ -46,12 +47,13 @@ export const site = {
 
   social: {
     instagram: 'https://instagram.com/gravityacademy',
-    youtube: 'https://youtube.com/@gravityacademyindia',
-    facebook: 'https://facebook.com/gravityacademyblr',
-    handles: ['@gravityacademy', '@gravityacademyindia', '@gravityacademyblr'],
+    youtube: 'https://youtube.com/@gravityacademy',
+    facebook: 'https://facebook.com/gravityacademy',
+    handles: ['@gravityacademy'],
   },
 
   boards: ['CBSE', 'ICSE', 'State Board'],
+  exams: ['JEE Main', 'NEET UG', 'KCET'],
 } as const;
 
 export type Site = typeof site;

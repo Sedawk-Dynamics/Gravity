@@ -5,7 +5,7 @@ import Section from '../components/Section.astro';
 import Button from '../components/Button.astro';
 import CTABand from '../components/CTABand.astro';
 import Icon from '../components/Icon.astro';
-import { getPrograms, programUrl } from '../data/programs';
+import { getPrograms } from '../data/programs';
 import { educationalOrganizationLd } from '../data/jsonld';
 
 const programs = await getPrograms();
@@ -60,7 +60,7 @@ const programs = await getPrograms();
           </div>
 
           <div class="flex flex-row gap-3 md:flex-col">
-            <Button href={programUrl(p.slug)} variant="primary" icon="arrow-up-right" external>View in catalog</Button>
+            <Button href={`/programs/${p.slug}`} variant="primary" icon="arrow-right">View program</Button>
             <Button href="/admissions" variant="ghost">Book a demo</Button>
           </div>
         </article>
@@ -68,8 +68,8 @@ const programs = await getPrograms();
     </div>
 
     <p class="mt-8 flex items-center gap-2 rounded-card bg-paper-2 p-4 text-sm text-slate ring-1 ring-mist">
-      <Icon name="arrow-up-right" size={16} class="shrink-0 text-orange" />
-      Batches, schedules, fees and enrolment live in our catalog. The links above take you straight there.
+      <Icon name="arrow-right" size={16} class="shrink-0 text-orange" />
+      Each program opens onto its courses, batches and schedules. Prefer to talk it through? <a href="/admissions" class="font-semibold text-navy underline underline-offset-4 hover:text-orange">Book a free demo.</a>
     </p>
   </Section>
 

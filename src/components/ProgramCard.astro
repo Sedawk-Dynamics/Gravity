@@ -1,6 +1,5 @@
 ---
 import type { Program } from '../data/programs';
-import { programUrl } from '../data/programs';
 import Icon from './Icon.astro';
 
 interface Props {
@@ -19,9 +18,9 @@ const { program } = Astro.props;
   <p class="mt-2 text-slate">{program.tagline}</p>
 
   <a
-    href={programUrl(program.slug)}
+    href={`/programs/${program.slug}`}
     class="mt-5 inline-flex items-center gap-1.5 self-start font-display text-sm font-semibold text-navy transition-colors hover:text-orange focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange/40 rounded-md"
-    aria-label={`View ${program.name} in the catalog`}
+    aria-label={`View ${program.name}`}
   >
     View program
     <Icon name="arrow-right" size={16} class="transition-transform duration-200 group-hover:translate-x-1" />
