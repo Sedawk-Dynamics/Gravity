@@ -1,8 +1,10 @@
 ---
 import '../styles/global.css';
-// Variable fonts, self-hosted via @fontsource (no extra network round-trip,
-// font-display: swap). Only the weights/axes we use.
-import '@fontsource-variable/sora';
+// Self-hosted via @fontsource (no extra network round-trip, font-display: swap).
+// Display: Poppins (rounded, friendly). Body: Inter. Data/eyebrows: JetBrains Mono.
+import '@fontsource/poppins/500.css';
+import '@fontsource/poppins/600.css';
+import '@fontsource/poppins/700.css';
 import '@fontsource-variable/inter';
 import '@fontsource/jetbrains-mono/400.css';
 import '@fontsource/jetbrains-mono/500.css';
@@ -11,6 +13,7 @@ import SEO from '../components/SEO.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import WhatsAppFloat from '../components/WhatsAppFloat.astro';
+import BookDemoModal from '../components/BookDemoModal.astro';
 
 interface Props {
   title: string;
@@ -50,6 +53,7 @@ const { title, description, path, image, jsonld, transparentHeader = false } = A
 
     <Footer />
     <WhatsAppFloat />
+    <BookDemoModal />
 
     <!-- Scroll-reveal: short, low-distance, staggered. Skipped under reduced motion. -->
     <script>

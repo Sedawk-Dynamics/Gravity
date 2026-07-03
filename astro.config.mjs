@@ -8,7 +8,7 @@ import vercel from '@astrojs/vercel';
 // adapter deploys as a serverless function. Everything else ships as static CDN
 // assets. (Swap `vercel()` for another adapter if you self-host — see README §11.)
 export default defineConfig({
-  site: 'https://gravityacademy.in',
+  site: 'https://www.gogravity.in',
   output: 'static',
   adapter: vercel(),
   integrations: [

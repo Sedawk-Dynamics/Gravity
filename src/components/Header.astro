@@ -12,11 +12,9 @@ interface Props {
 const { transparent = false } = Astro.props;
 
 const nav = [
-  { label: 'Programs', href: '/programs', mega: true },
-  { label: 'Courses', href: '/courses' },
+  { label: 'Courses', href: '/courses', mega: true },
   { label: 'About', href: '/about' },
-  { label: 'Results', href: '/results' },
-  { label: 'Faculty', href: '/faculty' },
+  { label: 'Gallery', href: '/gallery' },
   { label: 'Contact', href: '/contact' },
 ];
 
@@ -74,19 +72,20 @@ const isActive = (href: string) => current === href.replace(/\/$/, '');
                   </div>
                   <div class="mt-1 grid grid-cols-2 gap-2">
                     <a
-                      href="/programs"
+                      href="/courses"
                       class="flex items-center justify-between rounded-btn bg-navy px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-navy-800"
                     >
-                      All programs
+                      Browse all courses
                       <Icon name="arrow-right" size={16} />
                     </a>
-                    <a
-                      href="/courses"
-                      class="flex items-center justify-between rounded-btn bg-mist px-4 py-3 text-sm font-semibold text-navy transition-colors hover:bg-slate/30"
+                    <button
+                      type="button"
+                      data-open-demo
+                      class="flex items-center justify-between rounded-btn bg-orange px-4 py-3 text-sm font-semibold text-navy transition-colors hover:bg-navy hover:text-white"
                     >
-                      All courses
+                      Book a free demo
                       <Icon name="arrow-right" size={16} />
-                    </a>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -146,7 +145,7 @@ const isActive = (href: string) => current === href.replace(/\/$/, '');
     </div>
 
     <nav class="flex-1 overflow-y-auto px-3 py-4" aria-label="Mobile">
-      <a href="/programs" class="block rounded-btn px-4 py-3 text-base font-semibold text-navy hover:bg-paper-2">Programs</a>
+      <a href="/courses" class="block rounded-btn px-4 py-3 text-base font-semibold text-navy hover:bg-paper-2">Courses</a>
       <div class="mb-2 grid grid-cols-1 gap-0.5 pl-2">
         {programs.map((p) => (
           <a href={`/programs/${p.slug}`} class="flex items-center gap-3 rounded-btn px-4 py-2.5 text-sm text-slate hover:bg-paper-2 hover:text-navy">
@@ -155,7 +154,7 @@ const isActive = (href: string) => current === href.replace(/\/$/, '');
           </a>
         ))}
       </div>
-      {['Courses', 'About', 'Results', 'Faculty', 'FAQ', 'Contact'].map((label) => (
+      {['About', 'Gallery', 'FAQ', 'Contact'].map((label) => (
         <a href={`/${label.toLowerCase()}`} class="block rounded-btn px-4 py-3 text-base font-semibold text-navy hover:bg-paper-2">
           {label}
         </a>

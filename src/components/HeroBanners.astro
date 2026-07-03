@@ -1,0 +1,140 @@
+---
+import Icon from './Icon.astro';
+
+/**
+ * Homepage hero as three auto-rotating banners (client request):
+ * Foundation (VI–X) · JEE Foundation · NEET Foundation.
+ * Crossfade auto-advance (pauses on hover/focus), clickable dots + arrows,
+ * and prefers-reduced-motion just shows the first slide with manual controls.
+ */
+const banners = [
+  {
+    eyebrow: 'Foundation (VI–X)',
+    title: 'Build the concepts that hold everything together.',
+    text: 'Concept-first coaching for Grades 6–10 across CBSE, ICSE and State Board. Strong fundamentals, study discipline and real confidence.',
+    href: '/programs/foundation',
+    cta: 'Explore Foundation',
+    image: '/gallery/students-founder.jpg',
+    icon: 'atom',
+  },
+  {
+    eyebrow: 'JEE Foundation',
+    title: 'Engineering dreams, built from the ground up.',
+    text: 'Physics, Chemistry and Maths taught with depth and real problem solving — a long-runway, no-shortcuts path toward JEE Main & Advanced.',
+    href: '/programs/jee-foundation',
+    cta: 'Explore JEE',
+    image: '/founder/aarambh.jpg',
+    icon: 'rocket',
+  },
+  {
+    eyebrow: 'NEET Foundation',
+    title: 'Medical aspirants, grounded in concepts.',
+    text: 'NCERT-deep Biology with strong Physics and Chemistry — steady, measured NEET UG preparation for Grades 11–12 and repeaters.',
+    href: '/programs/neet-foundation',
+    cta: 'Explore NEET',
+    image: '/gallery/parent-orientation.jpg',
+    icon: 'stethoscope',
+  },
+];
+---
+<section id="hero-banners" class="relative overflow-hidden bg-navy text-white" aria-roledescription="carousel" aria-label="Programs">
+  <div class="grid-motif pointer-events-none absolute inset-0 opacity-25"></div>
+  <div class="pointer-events-none absolute -right-32 -top-24 h-96 w-96 rounded-full bg-orange/15 blur-3xl"></div>
+
+  <div class="relative min-h-[86vh] md:min-h-[80vh]">
+    {banners.map((b, i) => (
+      <article
+        class="hero-slide absolute inset-0 transition-opacity duration-700 ease-fall data-[active]:opacity-100 data-[active]:z-10 opacity-0"
+        data-active={i === 0 ? '' : null}
+        aria-hidden={i === 0 ? 'false' : 'true'}
+        aria-roledescription="slide"
+        aria-label={`${i + 1} of ${banners.length}: ${b.eyebrow}`}
+      >
+        <!-- faded background image -->
+        <div class="absolute inset-0 opacity-[0.16]">
+          <img src={b.image} alt="" width="1200" height="800" loading={i === 0 ? 'eager' : 'lazy'} decoding="async" class="h-full w-full object-cover" />
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-r from-navy via-navy/85 to-navy/40"></div>
+
+        <div class="container-x relative flex h-full min-h-[86vh] items-center py-28 md:min-h-[80vh]">
+          <div class="max-w-2xl">
+            <p class="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 font-mono text-xs uppercase tracking-[0.14em] text-orange ring-1 ring-white/15">
+              <Icon name={b.icon} size={15} /> {b.eyebrow}
+            </p>
+            <h1 class="mt-5 font-display text-display-xl text-white">{b.title}</h1>
+            <p class="mt-5 max-w-lg text-lg leading-relaxed text-mist">{b.text}</p>
+            <div class="mt-8 flex flex-wrap gap-3">
+              <button type="button" data-open-demo class="group inline-flex items-center justify-center gap-2 rounded-btn bg-orange px-7 py-3.5 font-display font-semibold text-navy shadow-soft transition-all duration-200 ease-fall hover:bg-white hover:text-navy focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange/45">
+                Book a free demo
+                <Icon name="arrow-right" size={18} class="transition-transform group-hover:translate-x-0.5" />
+              </button>
+              <a href={b.href} class="inline-flex items-center justify-center gap-2 rounded-btn px-7 py-3.5 font-display font-semibold text-white ring-1 ring-inset ring-white/40 transition-colors hover:bg-white/10">
+                {b.cta}
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+    ))}
+
+    <!-- Controls -->
+    <div class="absolute inset-x-0 bottom-6 z-20">
+      <div class="container-x flex items-center justify-between">
+        <div class="flex gap-2" role="tablist" aria-label="Choose slide">
+          {banners.map((b, i) => (
+            <button
+              type="button"
+              class="hero-dot h-2.5 rounded-full bg-white/40 transition-all duration-300 data-[active]:w-8 data-[active]:bg-orange w-2.5"
+              data-index={i}
+              data-active={i === 0 ? '' : null}
+              role="tab"
+              aria-label={b.eyebrow}
+              aria-selected={i === 0 ? 'true' : 'false'}
+            ></button>
+          ))}
+        </div>
+        <div class="flex gap-2">
+          <button type="button" id="hero-prev" class="grid h-10 w-10 place-items-center rounded-full text-white ring-1 ring-white/30 transition-colors hover:bg-white/10" aria-label="Previous slide"><Icon name="chevron-right" size={20} class="rotate-180" /></button>
+          <button type="button" id="hero-next" class="grid h-10 w-10 place-items-center rounded-full text-white ring-1 ring-white/30 transition-colors hover:bg-white/10" aria-label="Next slide"><Icon name="chevron-right" size={20} /></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const root = document.getElementById('hero-banners');
+  if (root) {
+    const slides = Array.from(root.querySelectorAll<HTMLElement>('.hero-slide'));
+    const dots = Array.from(root.querySelectorAll<HTMLElement>('.hero-dot'));
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let i = 0;
+    let timer: number | undefined;
+
+    const show = (n: number) => {
+      i = (n + slides.length) % slides.length;
+      slides.forEach((s, k) => {
+        s.toggleAttribute('data-active', k === i);
+        s.setAttribute('aria-hidden', k === i ? 'false' : 'true');
+      });
+      dots.forEach((d, k) => {
+        d.toggleAttribute('data-active', k === i);
+        d.setAttribute('aria-selected', k === i ? 'true' : 'false');
+      });
+    };
+    const next = () => show(i + 1);
+    const prev = () => show(i - 1);
+    const start = () => { if (!reduce) timer = window.setInterval(next, 5500); };
+    const stop = () => { if (timer) window.clearInterval(timer); };
+    const restart = () => { stop(); start(); };
+
+    dots.forEach((d) => d.addEventListener('click', () => { show(Number(d.dataset.index)); restart(); }));
+    document.getElementById('hero-next')?.addEventListener('click', () => { next(); restart(); });
+    document.getElementById('hero-prev')?.addEventListener('click', () => { prev(); restart(); });
+    root.addEventListener('mouseenter', stop);
+    root.addEventListener('mouseleave', start);
+    root.addEventListener('focusin', stop);
+    root.addEventListener('focusout', start);
+    start();
+  }
+</script>

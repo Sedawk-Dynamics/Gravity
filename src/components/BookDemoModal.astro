@@ -1,0 +1,182 @@
+---
+import { site } from '../data/site';
+import Icon from './Icon.astro';
+
+/**
+ * Global "Book a free demo" popup (client-requested flow). Opens from ANY element
+ * with [data-open-demo] or any link to /admissions, so every existing
+ * "Book a free demo" CTA triggers it. Asks the four fields the client specified:
+ * student name · grade · phone + email · board. Posts to /api/enquiry.
+ * Accessible: role=dialog, focus trap, Escape + backdrop close, scroll lock.
+ */
+const field =
+  'w-full rounded-btn border border-slate/35 bg-paper px-4 py-2.5 text-ink placeholder:text-slate/70 transition-colors focus:border-navy focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange/30';
+const labelCls = 'block text-sm font-semibold text-navy';
+---
+<div id="demo-modal" class="fixed inset-0 z-[80] hidden" role="dialog" aria-modal="true" aria-labelledby="demo-modal-title">
+  <div class="demo-backdrop absolute inset-0 bg-ink/60 opacity-0 backdrop-blur-sm transition-opacity duration-300"></div>
+
+  <div class="absolute inset-0 grid place-items-center overflow-y-auto p-4">
+    <div class="demo-panel relative w-full max-w-md translate-y-4 scale-95 rounded-card bg-paper p-6 opacity-0 shadow-lift transition-all duration-300 ease-fall sm:p-8">
+      <button id="demo-close" type="button" class="absolute right-4 top-4 grid h-9 w-9 place-items-center rounded-btn text-slate hover:bg-paper-2 hover:text-navy" aria-label="Close">
+        <Icon name="x" size={20} />
+      </button>
+
+      <div class="demo-form-wrap">
+        <p class="eyebrow">Free demo</p>
+        <h2 id="demo-modal-title" class="mt-2 font-display text-display-sm text-navy">Book a free demo</h2>
+        <p class="mt-1 text-sm text-slate">Tell us a little about the student and we’ll call you to fix a slot.</p>
+
+        <form id="demo-form" class="mt-5 space-y-4" novalidate>
+          <input type="hidden" name="intent" value="demo" />
+          <input type="hidden" name="program" value="Free demo (popup)" />
+          <div class="absolute left-[-9999px]" aria-hidden="true"><label>Leave empty<input type="text" name="company" tabindex="-1" autocomplete="off" /></label></div>
+
+          <div>
+            <label class={labelCls} for="demo-student">Name of student <span class="text-orange">*</span></label>
+            <input class:list={[field, 'mt-1.5']} id="demo-student" name="studentName" type="text" required autocomplete="name" />
+            <p class="field-error mt-1 hidden text-sm text-orange-700"></p>
+          </div>
+
+          <div>
+            <label class={labelCls} for="demo-grade">Grade <span class="text-orange">*</span></label>
+            <select class:list={[field, 'mt-1.5']} id="demo-grade" name="grade" required>
+              <option value="">Select grade</option>
+              {[6, 7, 8, 9, 10, 11, 12].map((g) => <option value={`Grade ${g}`}>Grade {g}</option>)}
+            </select>
+            <p class="field-error mt-1 hidden text-sm text-orange-700"></p>
+          </div>
+
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div>
+              <label class={labelCls} for="demo-phone">Phone no. <span class="text-orange">*</span></label>
+              <input class:list={[field, 'mt-1.5']} id="demo-phone" name="phone" type="tel" inputmode="tel" required placeholder="10-digit mobile" />
+              <p class="field-error mt-1 hidden text-sm text-orange-700"></p>
+            </div>
+            <div>
+              <label class={labelCls} for="demo-email">Email ID</label>
+              <input class:list={[field, 'mt-1.5']} id="demo-email" name="email" type="email" autocomplete="email" placeholder="Optional" />
+              <p class="field-error mt-1 hidden text-sm text-orange-700"></p>
+            </div>
+          </div>
+
+          <div>
+            <label class={labelCls} for="demo-board">Board <span class="text-orange">*</span></label>
+            <select class:list={[field, 'mt-1.5']} id="demo-board" name="board" required>
+              <option value="">Select board</option>
+              {site.boards.map((b) => <option value={b}>{b}</option>)}
+            </select>
+            <p class="field-error mt-1 hidden text-sm text-orange-700"></p>
+          </div>
+
+          <button type="submit" class="demo-submit w-full rounded-btn bg-orange px-5 py-3 font-display font-semibold text-navy shadow-soft transition-all duration-200 ease-fall hover:bg-navy hover:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange/45 disabled:opacity-60">
+            Book a free demo
+          </button>
+          <p class="demo-status text-center text-sm" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+
+      <!-- Success -->
+      <div class="demo-success hidden py-4 text-center">
+        <span class="mx-auto grid h-14 w-14 place-items-center rounded-full bg-orange text-navy"><Icon name="check" size={30} /></span>
+        <h2 class="mt-4 font-display text-display-sm text-navy">Demo requested</h2>
+        <p class="mt-2 text-slate">Thanks! A counsellor will call you shortly to confirm a slot — usually within one working day.</p>
+        <button id="demo-done" type="button" class="mt-6 rounded-btn bg-navy px-6 py-3 font-display font-semibold text-white hover:bg-navy-800">Done</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const modal = document.getElementById('demo-modal');
+  if (modal) {
+    const backdrop = modal.querySelector<HTMLElement>('.demo-backdrop')!;
+    const panel = modal.querySelector<HTMLElement>('.demo-panel')!;
+    const form = document.getElementById('demo-form') as HTMLFormElement;
+    const status = modal.querySelector<HTMLElement>('.demo-status')!;
+    const submitBtn = modal.querySelector<HTMLButtonElement>('.demo-submit')!;
+    const formWrap = modal.querySelector<HTMLElement>('.demo-form-wrap')!;
+    const success = modal.querySelector<HTMLElement>('.demo-success')!;
+    let lastFocused: HTMLElement | null = null;
+
+    const open = () => {
+      lastFocused = document.activeElement as HTMLElement;
+      modal.classList.remove('hidden');
+      requestAnimationFrame(() => {
+        backdrop.classList.remove('opacity-0');
+        panel.classList.remove('opacity-0', 'translate-y-4', 'scale-95');
+      });
+      document.body.style.overflow = 'hidden';
+      (document.getElementById('demo-student') as HTMLInputElement)?.focus();
+    };
+    const close = () => {
+      backdrop.classList.add('opacity-0');
+      panel.classList.add('opacity-0', 'translate-y-4', 'scale-95');
+      document.body.style.overflow = '';
+      window.setTimeout(() => {
+        modal.classList.add('hidden');
+        // reset back to the form for next open
+        formWrap.classList.remove('hidden');
+        success.classList.add('hidden');
+        form.reset();
+        status.textContent = '';
+      }, 250);
+      lastFocused?.focus();
+    };
+
+    // Any "Book a free demo" CTA (marked, or any /admissions link) opens the popup.
+    document.addEventListener('click', (e) => {
+      const t = (e.target as HTMLElement)?.closest<HTMLElement>('[data-open-demo], a[href="/admissions"], a[href="/admissions/"]');
+      if (t) { e.preventDefault(); open(); }
+    });
+    document.getElementById('demo-close')?.addEventListener('click', close);
+    document.getElementById('demo-done')?.addEventListener('click', close);
+    backdrop.addEventListener('click', close);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !modal.classList.contains('hidden')) close(); });
+
+    // Validation + submit
+    const showError = (input: HTMLElement, msg: string) => {
+      const el = input.parentElement?.querySelector<HTMLElement>('.field-error');
+      input.setAttribute('aria-invalid', 'true'); input.classList.add('border-orange-700');
+      if (el) { el.textContent = msg; el.classList.remove('hidden'); }
+    };
+    const clearError = (input: HTMLElement) => {
+      const el = input.parentElement?.querySelector<HTMLElement>('.field-error');
+      input.removeAttribute('aria-invalid'); input.classList.remove('border-orange-700');
+      if (el) { el.textContent = ''; el.classList.add('hidden'); }
+    };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      let ok = true; let firstBad: HTMLElement | null = null;
+      form.querySelectorAll<HTMLInputElement | HTMLSelectElement>('[required]').forEach((f) => {
+        clearError(f);
+        if (!f.value.trim()) { showError(f, 'Required.'); ok = false; firstBad ??= f; }
+      });
+      const phone = form.querySelector<HTMLInputElement>('[name="phone"]')!;
+      if (phone.value.trim()) {
+        const d = phone.value.replace(/\D/g, '');
+        if (d.length < 10 || d.length > 13) { showError(phone, 'Enter a valid phone number.'); ok = false; firstBad ??= phone; }
+      }
+      const email = form.querySelector<HTMLInputElement>('[name="email"]')!;
+      if (email.value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) { showError(email, 'Enter a valid email or leave blank.'); ok = false; firstBad ??= email; }
+      if (!ok) { firstBad?.focus(); return; }
+
+      submitBtn.disabled = true; status.textContent = 'Sending…'; status.className = 'demo-status text-center text-sm text-slate';
+      try {
+        const data = Object.fromEntries(new FormData(form).entries());
+        const res = await fetch('/api/enquiry', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+        const json = await res.json().catch(() => ({}));
+        if (!res.ok) throw new Error(json?.error || 'Something went wrong.');
+        formWrap.classList.add('hidden');
+        success.classList.remove('hidden');
+        (document.getElementById('demo-done') as HTMLElement)?.focus();
+      } catch (err) {
+        submitBtn.disabled = false;
+        status.textContent = err instanceof Error ? err.message : 'Could not send. Please call us instead.';
+        status.className = 'demo-status text-center text-sm text-orange-700';
+      }
+    });
+    form.querySelectorAll<HTMLElement>('input, select').forEach((f) => f.addEventListener('input', () => clearError(f)));
+  }
+</script>

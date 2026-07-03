@@ -3,7 +3,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Section from '../components/Section.astro';
 import SectionHead from '../components/SectionHead.astro';
 import Button from '../components/Button.astro';
-import OrbitHero from '../components/OrbitHero.astro';
+import HeroBanners from '../components/HeroBanners.astro';
+import ImageMarquee from '../components/ImageMarquee.astro';
 import ProgramCard from '../components/ProgramCard.astro';
 import StatCard from '../components/StatCard.astro';
 import TopperCard from '../components/TopperCard.astro';
@@ -25,16 +26,31 @@ const why = [
 ];
 
 const programs = await getPrograms();
-const featured = programs.filter((p) => ['jee-foundation', 'neet-foundation', 'test-prep', 'olympiads'].includes(p.id));
-const homeToppers = toppers.slice(0, 4);
 
-// Real first-year milestones (source: founder's "Milestones of Growth" address).
+// Client-supplied headline numbers.
 const stats = [
-  { value: 47, suffix: '+', label: 'Students mentored in year one' },
-  { value: 720, suffix: '+', label: 'Hours of classroom teaching' },
-  { value: 100, suffix: '+', label: 'Hours of doubt-solving sessions' },
+  { value: 1000, suffix: '+', label: 'Students mentored' },
+  { value: 50, suffix: '+', label: 'Years of collective teaching experience' },
   { value: 14, suffix: '+', label: 'Years of founder teaching experience' },
+  { value: 18, suffix: '', label: 'Courses across Grades 6–12' },
 ];
+
+const galleryStrip = [
+  { src: '/gallery/students-founder.jpg', alt: 'Gravity Academy students with the founder' },
+  { src: '/founder/aarambh.jpg', alt: 'Founder Ankush Koul addressing the Aarambh 2026 event' },
+  { src: '/gallery/parent-orientation.jpg', alt: 'Parents at a Gravity Academy orientation' },
+  { src: '/gallery/event-audience.jpg', alt: 'Guests and families at a Gravity Academy event' },
+  { src: '/founder/milestones.jpg', alt: 'Founder presenting the academy\'s milestones of growth' },
+];
+
+const founderTrack = [
+  { stat: 'AIR 1', label: 'Mentored — NEET' },
+  { stat: 'AIR 5', label: 'Mentored — AIIMS' },
+  { stat: '14+', label: 'Years experience' },
+];
+
+// Toppers duplicated for the seamless auto-scroll.
+const topperLoop = [...toppers, ...toppers];
 ---
 <BaseLayout
   title="Home"
@@ -43,30 +59,8 @@ const stats = [
   transparentHeader
   jsonld={[educationalOrganizationLd, localBusinessLd]}
 >
-  <!-- 1. HERO — the signature -->
-  <section class="relative overflow-hidden bg-navy text-white">
-    <div class="grid-motif pointer-events-none absolute inset-0 opacity-30"></div>
-    <div class="pointer-events-none absolute -right-32 -top-32 h-96 w-96 rounded-full bg-orange/10 blur-3xl"></div>
-    <div class="container-x relative grid items-center gap-12 pb-16 pt-32 md:pt-36 lg:grid-cols-[1.05fr_1fr] lg:gap-8 lg:pb-24 lg:pt-40">
-      <div class="max-w-xl">
-        <p class="eyebrow">Gravity Academy · Bengaluru</p>
-        <h1 class="mt-4 font-display text-display-xl text-white">
-          Build the concepts that hold everything together.
-        </h1>
-        <p class="mt-5 max-w-md text-lg leading-relaxed text-mist">
-          Concept-first coaching in Bengaluru for Grades 6–12 across CBSE, ICSE and State Board — plus JEE, NEET UG and KCET preparation. Small batches, real mentorship, measurable progress.
-        </p>
-        <div class="mt-8 flex flex-wrap gap-3">
-          <Button href="/admissions" variant="primary" size="lg" icon="arrow-right">Book a free demo</Button>
-          <Button href="/programs" variant="ghost" size="lg" class="!text-white !ring-white/40 hover:!bg-white/10">Explore programs</Button>
-        </div>
-      </div>
-
-      <div class="orbit-parallax">
-        <OrbitHero />
-      </div>
-    </div>
-  </section>
+  <!-- 1. HERO — three auto-rotating banners -->
+  <HeroBanners />
 
   <!-- 2. TRUST STRIP -->
   <div class="border-y border-mist bg-paper-2">
@@ -79,13 +73,17 @@ const stats = [
     </div>
   </div>
 
-  <!-- 3. PROGRAMS GRID -->
+  <!-- 3. COURSE TRACKS -->
   <Section tone="paper">
-    <SectionHead
-      eyebrow="Programs"
-      title="Six tracks, one disciplined ecosystem"
-      intro="Each program is built around concept mastery first, then exam technique — so progress compounds instead of cramming."
-    />
+    <div class="flex flex-wrap items-end justify-between gap-4">
+      <SectionHead
+        eyebrow="Courses"
+        title="Six tracks, one disciplined ecosystem"
+        intro="Every course is built around concept mastery first, then exam technique — so progress compounds instead of cramming."
+        class="!max-w-2xl"
+      />
+      <Button href="/courses" variant="ghost" icon="arrow-right" class="hidden sm:inline-flex">All courses</Button>
+    </div>
     <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {programs.map((p, i) => (
         <div data-reveal style={`--reveal-delay:${(i % 3) * 80}ms`}>
@@ -101,13 +99,13 @@ const stats = [
       <SectionHead
         eyebrow="By the numbers"
         title="Outcomes that earn parent trust"
-        intro="Real results from a disciplined, mentorship-driven system."
+        intro="A disciplined, mentorship-driven system led by a mentor with a national track record."
         tone="dark"
       />
       <div class="grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
         {stats.map((s) => (
           <div data-reveal>
-            <StatCard value={s.value} suffix={s.suffix} label={s.label} separator={s.separator ?? true} />
+            <StatCard value={s.value} suffix={s.suffix} label={s.label} />
           </div>
         ))}
       </div>
@@ -132,70 +130,48 @@ const stats = [
     </div>
   </Section>
 
-  <!-- 5b. INSIDE GRAVITY — campus gallery -->
-  <Section tone="paper">
-    <SectionHead eyebrow="Inside Gravity" title="Where the work happens" intro="From our annual Aarambh event to parent orientations and packed classrooms — a look at the Gravity community in action." />
-    <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {[
-        { src: '/gallery/students-founder.jpg', alt: 'Gravity Academy students with the founder at the annual event', span: 'lg:row-span-2 lg:h-full' },
-        { src: '/founder/aarambh.jpg', alt: 'Founder Ankush Koul addressing the Aarambh 2026 event' },
-        { src: '/gallery/parent-orientation.jpg', alt: 'Parents at a Gravity Academy orientation' },
-      ].map((img, i) => (
-        <div
-          class:list={['overflow-hidden rounded-card ring-1 ring-mist', img.span]}
-          data-reveal
-          style={`--reveal-delay:${i * 80}ms`}
-        >
-          <img
-            src={img.src}
-            alt={img.alt}
-            width="640"
-            height="480"
-            loading="lazy"
-            decoding="async"
-            class="h-full min-h-[220px] w-full object-cover transition-transform duration-500 hover:scale-[1.04]"
-          />
+  <!-- 6. RESULTS (moved onto homepage, with poster + auto-scroll) -->
+  <Section id="results" tone="paper">
+    <div class="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+      <div class="mx-auto w-full max-w-sm overflow-hidden rounded-card shadow-lift ring-1 ring-mist" data-reveal>
+        <img src="/results/results-poster.jpg" alt="Gravity Academy first-year results poster with student scores" width="600" height="850" loading="lazy" decoding="async" class="h-full w-full object-cover" />
+      </div>
+      <div data-reveal>
+        <SectionHead eyebrow="Results" title="Our first year. Their proud victory." intro="Concept-first teaching, small batches and relentless practice — here's what our very first cohort achieved." />
+        <div class="mt-6 grid grid-cols-3 gap-3">
+          {founderTrack.map((f) => (
+            <div class="rounded-card border border-mist bg-paper-2 p-4 text-center">
+              <p class="font-display text-display-sm font-bold text-navy">{f.stat}</p>
+              <p class="mt-0.5 text-xs text-slate">{f.label}</p>
+            </div>
+          ))}
         </div>
-      ))}
+        <p class="mt-4 text-sm text-slate">Our founder <strong class="text-navy">Ankush Koul</strong> has mentored national rank holders, including AIR 1 in NEET and AIR 5 in AIIMS.</p>
+      </div>
+    </div>
+
+    <!-- Auto-scrolling topper cards -->
+    <div class="gv-marquee group relative mt-12" style="--gv-speed:46s" data-reveal>
+      <div class="gv-marquee-track gap-5">
+        {topperLoop.map((t, i) => (
+          <div class="w-56 shrink-0" aria-hidden={i >= toppers.length ? 'true' : undefined}>
+            <TopperCard topper={t} />
+          </div>
+        ))}
+      </div>
+      <div class="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-paper to-transparent"></div>
+      <div class="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-paper to-transparent"></div>
     </div>
   </Section>
 
-  <!-- 6. FEATURED BATCHES -->
-  <Section tone="paper-2">
-    <div class="flex flex-wrap items-end justify-between gap-4">
-      <SectionHead eyebrow="Featured batches" title="Popular tracks enrolling now" class="!max-w-xl" />
-      <Button href="/programs" variant="ghost" icon="arrow-right" class="hidden sm:inline-flex">All programs</Button>
-    </div>
-    <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-      {featured.map((p) => (
-        <a
-          href={`/programs/${p.slug}`}
-          class="group flex flex-col rounded-card border border-mist bg-paper-2 p-6 transition-all duration-300 ease-fall hover:-translate-y-1 hover:shadow-lift"
-          data-reveal
-        >
-          <span class="grid h-11 w-11 place-items-center rounded-btn bg-navy text-white transition-colors group-hover:bg-orange group-hover:text-navy">
-            <Icon name={p.icon} size={22} />
-          </span>
-          <h3 class="mt-4 font-display text-display-sm text-navy">{p.name}</h3>
-          <p class="mt-1.5 flex-1 text-sm text-slate">{p.tagline}</p>
-          <span class="mt-4 inline-flex items-center gap-1.5 font-display text-sm font-semibold text-navy group-hover:text-orange">
-            View program <Icon name="arrow-right" size={16} />
-          </span>
-        </a>
-      ))}
-    </div>
-  </Section>
-
-  <!-- 7. RESULTS HIGHLIGHT -->
+  <!-- 7. INSIDE GRAVITY — auto-scrolling image strip -->
   <Section tone="paper">
     <div class="flex flex-wrap items-end justify-between gap-4">
-      <SectionHead eyebrow="Results" title="Students who went further" class="!max-w-xl" />
-      <Button href="/results" variant="ghost" icon="arrow-right" class="hidden sm:inline-flex">All results</Button>
+      <SectionHead eyebrow="Inside Gravity" title="Life at the academy" class="!max-w-xl" />
+      <Button href="/gallery" variant="ghost" icon="arrow-right" class="hidden sm:inline-flex">View gallery</Button>
     </div>
-    <div class="mt-10 grid grid-cols-2 gap-5 lg:grid-cols-4">
-      {homeToppers.map((t) => (
-        <div data-reveal><TopperCard topper={t} /></div>
-      ))}
+    <div class="mt-10" data-reveal>
+      <ImageMarquee images={galleryStrip} speed={45} />
     </div>
   </Section>
 
@@ -212,27 +188,3 @@ const stats = [
   <!-- 9. CTA BAND -->
   <CTABand />
 </BaseLayout>
-
-<script>
-  // Gentle scroll parallax for the hero orbit. Respects reduced motion.
-  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const el = document.querySelector<HTMLElement>('.orbit-parallax');
-  if (el && !reduce) {
-    let ticking = false;
-    const update = () => {
-      const y = window.scrollY;
-      if (y < 900) el.style.transform = `translateY(${y * 0.06}px)`;
-      ticking = false;
-    };
-    window.addEventListener(
-      'scroll',
-      () => {
-        if (!ticking) {
-          requestAnimationFrame(update);
-          ticking = true;
-        }
-      },
-      { passive: true }
-    );
-  }
-</script>

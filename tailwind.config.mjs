@@ -32,7 +32,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ['"Sora Variable"', 'Sora', 'system-ui', 'sans-serif'],
+        display: ['Poppins', 'system-ui', 'sans-serif'],
         body: ['"Inter Variable"', 'Inter', 'system-ui', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
       },

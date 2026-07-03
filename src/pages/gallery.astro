@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Section from '../components/Section.astro';
+import CTABand from '../components/CTABand.astro';
+import { educationalOrganizationLd } from '../data/jsonld';
+
+// Real Gravity Academy photos + campus imagery.
+const photos = [
+  { src: '/gallery/students-founder.jpg', alt: 'Students with the founder at the annual event', tall: true },
+  { src: '/founder/aarambh.jpg', alt: 'Founder Ankush Koul addressing the Aarambh 2026 event' },
+  { src: '/gallery/parent-orientation.jpg', alt: 'Parent orientation session' },
+  { src: '/founder/milestones.jpg', alt: 'Milestones of growth address' },
+  { src: '/gallery/event-audience.jpg', alt: 'Guests and families at a Gravity Academy event' },
+  { src: '/campus/classroom.jpg', alt: 'A focused classroom session', tall: true },
+  { src: '/campus/lecture-hall.jpg', alt: 'A teaching session in progress' },
+  { src: '/campus/studying.jpg', alt: 'A student working through problems' },
+  { src: '/campus/study-group.jpg', alt: 'Students studying together' },
+];
+---
+<BaseLayout
+  title="Gallery"
+  description="Photos from Gravity Academy — classrooms, faculty teaching, student activities, the annual Aarambh event, and parent orientations in Maragondanahalli, Bengaluru."
+  path="/gallery"
+  jsonld={[educationalOrganizationLd]}
+>
+  <PageHeader
+    eyebrow="Gallery"
+    title="The Gravity Academy gallery"
+    intro="A look inside our campus and community — classrooms, faculty teaching, student milestones, and our events."
+  />
+
+  <Section tone="paper">
+    <div class="columns-1 gap-4 sm:columns-2 lg:columns-3 [&>*]:mb-4">
+      {photos.map((p, i) => (
+        <figure class="break-inside-avoid overflow-hidden rounded-card ring-1 ring-mist" data-reveal style={`--reveal-delay:${(i % 3) * 70}ms`}>
+          <img
+            src={p.src}
+            alt={p.alt}
+            width="640"
+            height={p.tall ? 800 : 480}
+            loading={i < 3 ? 'eager' : 'lazy'}
+            decoding="async"
+            class="w-full object-cover transition-transform duration-500 hover:scale-[1.03]"
+          />
+        </figure>
+      ))}
+    </div>
+  </Section>
+
+  <CTABand title="Come see it for yourself." text="Book a free demo class and visit our Maragondanahalli campus." />
+</BaseLayout>

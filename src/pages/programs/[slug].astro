@@ -23,7 +23,7 @@ const related = coursesByCategory(program.slug);
   path={`/programs/${program.slug}`}
   jsonld={[educationalOrganizationLd]}
 >
-  <PageHeader eyebrow="Program" title={program.name} intro={program.tagline}>
+  <PageHeader eyebrow="Course track" title={program.name} intro={program.tagline}>
     <div class="mt-8 flex flex-wrap gap-3">
       <Button href="/admissions" variant="primary" size="lg" icon="arrow-right">Book a free demo</Button>
       <Button href={programUrl(program.slug)} variant="ghost" size="lg" external class="!text-white !ring-white/40 hover:!bg-white/10">View in catalog</Button>

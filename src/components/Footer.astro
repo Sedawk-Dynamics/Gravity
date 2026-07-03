@@ -9,8 +9,8 @@ const year = 2026;
 const quickLinks = [
   { label: 'About', href: '/about' },
   { label: 'Courses', href: '/courses' },
-  { label: 'Results', href: '/results' },
-  { label: 'Admissions', href: '/admissions' },
+  { label: 'Gallery', href: '/gallery' },
+  { label: 'Results', href: '/#results' },
   { label: 'FAQ', href: '/faq' },
   { label: 'Contact', href: '/contact' },
 ];
@@ -46,8 +46,8 @@ const socials = [
       <p class="mt-4 text-xs text-slate">{site.social.handles.join(' · ')}</p>
     </div>
 
-    <nav aria-label="Programs">
-      <h2 class="font-display text-sm font-semibold uppercase tracking-wider text-white">Programs</h2>
+    <nav aria-label="Courses">
+      <h2 class="font-display text-sm font-semibold uppercase tracking-wider text-white">Courses</h2>
       <ul class="mt-4 space-y-2.5 text-sm">
         {
           programs.map((p) => (

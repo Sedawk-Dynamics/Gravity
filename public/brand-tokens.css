@@ -26,7 +26,7 @@
   --ease-fall: cubic-bezier(0.5, 0, 0.2, 1);         /* accelerate-in */
 
   /* Type families (load matching Google Fonts on the WP side) */
-  --font-display: 'Sora', system-ui, sans-serif;
+  --font-display: 'Poppins', system-ui, sans-serif;
   --font-body: 'Inter', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 

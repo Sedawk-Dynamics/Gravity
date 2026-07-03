@@ -17,7 +17,8 @@ interface Lead {
   company?: string; // honeypot
 }
 
-const REQUIRED: (keyof Lead)[] = ['studentName', 'parentName', 'phone', 'grade', 'board', 'program'];
+// The popup demo form asks only these four; the fuller page forms send more.
+const REQUIRED: (keyof Lead)[] = ['studentName', 'phone', 'grade', 'board'];
 
 const json = (data: unknown, status = 200) =>
   new Response(JSON.stringify(data), {

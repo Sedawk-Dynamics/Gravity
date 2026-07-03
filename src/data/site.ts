@@ -4,7 +4,7 @@
 
 /** Base URL of the separate WordPress/WooCommerce catalog (see §2 & §11).
  *  Either a path on the same domain (reverse-proxy setup) or a subdomain. */
-export const WP_SHOP_BASE = import.meta.env.PUBLIC_WP_SHOP_BASE ?? 'https://gravityacademy.in/shop';
+export const WP_SHOP_BASE = import.meta.env.PUBLIC_WP_SHOP_BASE ?? 'https://www.gogravity.in/shop';
 
 /** Feature flag: fetch live program data from the Woo Store API (§2.3).
  *  When false (default) or on failure, we render the local `programs.ts` list. */
@@ -16,7 +16,7 @@ export const site = {
   tagline: 'Building strong foundations. Creating bright futures.',
   description:
     'Gravity Academy is an outcome-focused coaching institute in Maragondanahalli, KR Puram, Bengaluru for Grades 6–12 — CBSE, ICSE, Karnataka State Board, Foundation, JEE, NEET UG and KCET. Concept-first teaching, small batches, personal mentoring.',
-  url: 'https://gravityacademy.in',
+  url: 'https://www.gogravity.in',
 
   // Contact details.
   phone: '+91 79960 49555',
@@ -24,7 +24,7 @@ export const site = {
   phone2: '+91 78893 62386',
   phone2Href: 'tel:+917889362386',
   whatsapp: '917996049555', // digits only, with country code
-  email: 'info@gravityacademy.in',
+  email: 'info@gogravity.in',
 
   address: {
     line1: 'Achyutha Arcade, Near New Baldwin International School',

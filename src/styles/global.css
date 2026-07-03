@@ -75,6 +75,27 @@
   }
 }
 
+/* Auto-scrolling marquee (results / image strips). Track content is duplicated
+   in markup so translateX(-50%) loops seamlessly. */
+@layer utilities {
+  .gv-marquee { overflow: hidden; }
+  .gv-marquee-track {
+    display: flex;
+    width: max-content;
+    animation: gv-scroll var(--gv-speed, 45s) linear infinite;
+  }
+  .gv-marquee:hover .gv-marquee-track,
+  .gv-marquee:focus-within .gv-marquee-track { animation-play-state: paused; }
+}
+@keyframes gv-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gv-marquee { overflow-x: auto; }
+  .gv-marquee-track { animation: none; }
+}
+
 /* Scroll-reveal: short, low-distance. JS toggles [data-reveal] -> .is-in. */
 @layer utilities {
   [data-reveal] {

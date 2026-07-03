@@ -1,0 +1,43 @@
+---
+/**
+ * Auto-scrolling horizontal image strip (client request). The list is duplicated
+ * so the CSS translateX(-50%) loops seamlessly. Pauses on hover; under
+ * prefers-reduced-motion it becomes a normal horizontally-scrollable strip.
+ */
+interface Props {
+  images: { src: string; alt: string }[];
+  /** Seconds for one full loop. Lower = faster. */
+  speed?: number;
+  reverse?: boolean;
+}
+const { images, speed = 40, reverse = false } = Astro.props;
+const doubled = [...images, ...images];
+---
+<div class="marquee group relative" style={`--marquee-speed:${speed}s`}>
+  <div class:list={['marquee-track flex w-max gap-4', reverse && 'marquee-reverse']}>
+    {doubled.map((img, i) => (
+      <div class="relative h-52 w-72 shrink-0 overflow-hidden rounded-card ring-1 ring-mist sm:h-64 sm:w-96">
+        <img src={img.src} alt={i < images.length ? img.alt : ''} aria-hidden={i >= images.length ? 'true' : undefined} width="384" height="256" loading="lazy" decoding="async" class="h-full w-full object-cover" />
+      </div>
+    ))}
+  </div>
+  <!-- edge fades -->
+  <div class="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-paper to-transparent"></div>
+  <div class="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-paper to-transparent"></div>
+</div>
+
+<style>
+  .marquee { overflow: hidden; }
+  .marquee-track { animation: marquee-scroll var(--marquee-speed, 40s) linear infinite; }
+  .marquee-track.marquee-reverse { animation-direction: reverse; }
+  .marquee:hover .marquee-track,
+  .marquee:focus-within .marquee-track { animation-play-state: paused; }
+  @keyframes marquee-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee { overflow-x: auto; }
+    .marquee-track { animation: none; }
+  }
+</style>
