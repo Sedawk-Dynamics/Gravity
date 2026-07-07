@@ -56,7 +56,6 @@ const topperLoop = [...toppers, ...toppers];
   title="Home"
   description={site.description}
   path="/"
-  transparentHeader
   jsonld={[educationalOrganizationLd, localBusinessLd]}
 >
   <!-- 1. HERO — three auto-rotating banners -->
@@ -64,7 +63,7 @@ const topperLoop = [...toppers, ...toppers];
 
   <!-- 2. TRUST STRIP -->
   <div class="border-y border-mist bg-paper-2">
-    <div class="container-x flex flex-wrap items-center justify-center gap-x-8 gap-y-2 py-5 text-center">
+    <div class="container-x flex flex-wrap items-center justify-center gap-x-4 gap-y-2 py-5 text-center sm:gap-x-8">
       <span class="font-mono text-xs uppercase tracking-[0.18em] text-slate">Aligned with</span>
       {site.boards.map((b) => (
         <span class="font-display text-sm font-semibold text-navy">{b}</span>

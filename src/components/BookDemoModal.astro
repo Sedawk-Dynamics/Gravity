@@ -30,7 +30,7 @@ const labelCls = 'block text-sm font-semibold text-navy';
         <form id="demo-form" class="mt-5 space-y-4" novalidate>
           <input type="hidden" name="intent" value="demo" />
           <input type="hidden" name="program" value="Free demo (popup)" />
-          <div class="absolute left-[-9999px]" aria-hidden="true"><label>Leave empty<input type="text" name="company" tabindex="-1" autocomplete="off" /></label></div>
+          <div class="sr-only" aria-hidden="true"><label>Leave empty<input type="text" name="company" tabindex="-1" autocomplete="off" /></label></div>
 
           <div>
             <label class={labelCls} for="demo-student">Name of student <span class="text-orange">*</span></label>

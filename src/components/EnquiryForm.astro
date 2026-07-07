@@ -28,8 +28,8 @@ const labelCls = 'block text-sm font-semibold text-navy';
 ---
 <form id={id} class="space-y-5" novalidate data-success-title={successTitle} data-success-body={successBody}>
   <input type="hidden" name="intent" value={intent} />
-  <!-- Honeypot: bots fill it, humans never see it. -->
-  <div class="absolute left-[-9999px]" aria-hidden="true">
+  <!-- Honeypot: bots fill it, humans never see it. (sr-only avoids page overflow) -->
+  <div class="sr-only" aria-hidden="true">
     <label>Leave this empty <input type="text" name="company" tabindex="-1" autocomplete="off" /></label>
   </div>
 
