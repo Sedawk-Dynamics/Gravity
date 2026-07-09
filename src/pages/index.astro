@@ -103,7 +103,7 @@ const topperLoop = [...toppers, ...toppers];
       />
       <div class="grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
         {stats.map((s) => (
-          <div data-reveal>
+          <div data-reveal class="h-full">
             <StatCard value={s.value} suffix={s.suffix} label={s.label} />
           </div>
         ))}
