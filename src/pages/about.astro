@@ -101,33 +101,31 @@ const gallery = [
     </div>
   </Section>
 
-  <!-- Founder -->
+  <!-- Founder (text-only) -->
   <Section tone="paper">
-    <div class="grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:items-center">
-      <div class="overflow-hidden rounded-card shadow-lift ring-1 ring-mist" data-reveal>
-        <img
-          src="/founder/aarambh.jpg"
-          alt="Ankush Koul, Founder & Academic Director, addressing students and parents"
-          width="900"
-          height="600"
-          loading="lazy"
-          decoding="async"
-          class="h-full w-full object-cover"
-        />
+    <div class="mx-auto max-w-4xl text-center" data-reveal>
+      <p class="eyebrow">About the founder</p>
+      <h2 class="mt-3 font-display text-display-lg text-navy">Ankush Koul</h2>
+      <p class="mt-1 font-display text-lg font-semibold text-orange">Founder &amp; Academic Director</p>
+
+      <div class="mt-6 flex flex-wrap justify-center gap-2">
+        {['BE', 'M.Tech (Microelectronics)', 'Physics Educator', 'Academic Mentor', 'EdTech Professional'].map((c) => (
+          <span class="rounded-full bg-paper-2 px-4 py-1.5 text-sm font-medium text-navy ring-1 ring-mist">{c}</span>
+        ))}
       </div>
-      <div data-reveal>
-        <p class="eyebrow">About the founder</p>
-        <h2 class="mt-3 font-display text-display-lg text-navy">Ankush Koul</h2>
-        <p class="mt-1 font-display text-lg font-semibold text-orange">Founder &amp; Academic Director</p>
-        <p class="mt-1 text-sm text-slate">BE, M.Tech (Microelectronics) · Physics Educator · Academic Mentor · EdTech Professional</p>
-        <p class="mt-5 text-lg leading-relaxed text-ink">
-          With over 14 years of teaching experience, Ankush Koul has mentored thousands of students and guided national-level rank holders — including <strong class="text-navy">AIR 1 in NEET</strong> and <strong class="text-navy">AIR 5 in AIIMS</strong>. His vision is to blend exceptional teaching with modern technology to create an outstanding learning experience.
-        </p>
-        <blockquote class="mt-6 border-l-4 border-orange pl-5 font-display text-xl italic text-navy">
-          “Every student deserves the right guidance, strong concepts, and the confidence to achieve their dreams.”
-        </blockquote>
-      </div>
+
+      <p class="prose-measure mx-auto mt-8 text-lg leading-relaxed text-ink">
+        With over 14 years of teaching experience, Ankush Koul has mentored thousands of students and guided national-level rank holders — including <strong class="text-navy">AIR 1 in NEET</strong> and <strong class="text-navy">AIR 5 in AIIMS</strong>. His vision is to blend exceptional teaching with modern technology to create an outstanding learning experience.
+      </p>
     </div>
+
+    <figure class="relative mx-auto mt-10 max-w-3xl rounded-card bg-navy p-8 text-center shadow-lift md:p-12" data-reveal>
+      <Icon name="quote" size={40} class="mx-auto text-orange/70" />
+      <blockquote class="mt-4 font-display text-2xl font-medium leading-snug text-white md:text-[1.75rem]">
+        Every student deserves the right guidance, strong concepts, and the confidence to achieve their dreams.
+      </blockquote>
+      <figcaption class="mt-5 font-mono text-sm uppercase tracking-widest text-mist">— Ankush Koul</figcaption>
+    </figure>
   </Section>
 
   <!-- Why choose -->

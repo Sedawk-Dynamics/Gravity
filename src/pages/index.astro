@@ -22,7 +22,7 @@ const why = [
   { icon: 'lightbulb', title: 'Concept-first teaching', text: 'We build understanding from first principles — no rote, no shortcuts.' },
   { icon: 'graduation-cap', title: 'Personalized mentoring', text: 'One-to-one guidance that adapts to how each student learns.' },
   { icon: 'monitor', title: 'Hybrid learning', text: 'Learn your way — offline classroom, online-live, or a hybrid of both.' },
-  { icon: 'trending-up', title: 'Parent performance tracking', text: 'Regular tests, PTMs and progress updates so families always know where things stand.' },
+  { icon: 'trending-up', title: 'Student performance tracking', text: 'Regular tests, PTMs and progress updates so every student — and their family — always knows exactly where they stand.' },
 ];
 
 const programs = await getPrograms();
@@ -41,12 +41,6 @@ const galleryStrip = [
   { src: '/gallery/parent-orientation.jpg', alt: 'Parents at a Gravity Academy orientation' },
   { src: '/gallery/event-audience.jpg', alt: 'Guests and families at a Gravity Academy event' },
   { src: '/founder/milestones.jpg', alt: 'Founder presenting the academy\'s milestones of growth' },
-];
-
-const founderTrack = [
-  { stat: 'AIR 1', label: 'Mentored — NEET' },
-  { stat: 'AIR 5', label: 'Mentored — AIIMS' },
-  { stat: '14+', label: 'Years experience' },
 ];
 
 // Toppers duplicated for the seamless auto-scroll.
@@ -72,8 +66,29 @@ const topperLoop = [...toppers, ...toppers];
     </div>
   </div>
 
-  <!-- 3. COURSE TRACKS -->
-  <Section tone="paper">
+  <!-- 3. RESULTS SLIDER -->
+  <Section id="results" tone="paper">
+    <SectionHead
+      eyebrow="Results"
+      title="Scores our students are proud of"
+      intro="A snapshot of what our students achieved across CBSE and ICSE — concept mastery, turned into marks."
+      align="center"
+    />
+    <div class="gv-marquee group relative mt-10" style="--gv-speed:46s" data-reveal>
+      <div class="gv-marquee-track gap-5">
+        {topperLoop.map((t, i) => (
+          <div class="w-56 shrink-0" aria-hidden={i >= toppers.length ? 'true' : undefined}>
+            <TopperCard topper={t} />
+          </div>
+        ))}
+      </div>
+      <div class="pointer-events-none absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-paper to-transparent sm:w-16"></div>
+      <div class="pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-paper to-transparent sm:w-16"></div>
+    </div>
+  </Section>
+
+  <!-- 4. COURSE TRACKS -->
+  <Section tone="paper-2">
     <div class="flex flex-wrap items-end justify-between gap-4">
       <SectionHead
         eyebrow="Courses"
@@ -114,9 +129,16 @@ const topperLoop = [...toppers, ...toppers];
   <!-- 5. WHY GRAVITY -->
   <Section tone="paper-2">
     <SectionHead eyebrow="Why Gravity" title="What makes the difference" />
-    <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-      {why.map((w) => (
-        <div class="flex gap-4 rounded-card border border-mist bg-paper p-6 shadow-soft" data-reveal>
+    <!-- 6-col grid: first 3 cards span 2 (≈33%), last 2 span 3 (50%) on desktop. -->
+    <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-6">
+      {why.map((w, i) => (
+        <div
+          class:list={[
+            'flex gap-4 rounded-card border border-mist bg-paper p-6 shadow-soft',
+            i < 3 ? 'lg:col-span-2' : 'lg:col-span-3',
+          ]}
+          data-reveal
+        >
           <span class="grid h-11 w-11 shrink-0 place-items-center rounded-btn bg-mist text-navy">
             <Icon name={w.icon} size={22} />
           </span>
@@ -126,40 +148,6 @@ const topperLoop = [...toppers, ...toppers];
           </div>
         </div>
       ))}
-    </div>
-  </Section>
-
-  <!-- 6. RESULTS (moved onto homepage, with poster + auto-scroll) -->
-  <Section id="results" tone="paper">
-    <div class="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-      <div class="mx-auto w-full max-w-sm overflow-hidden rounded-card shadow-lift ring-1 ring-mist" data-reveal>
-        <img src="/results/results-poster.jpg" alt="Gravity Academy first-year results poster with student scores" width="600" height="850" loading="lazy" decoding="async" class="h-full w-full object-cover" />
-      </div>
-      <div data-reveal>
-        <SectionHead eyebrow="Results" title="Our first year. Their proud victory." intro="Concept-first teaching, small batches and relentless practice — here's what our very first cohort achieved." />
-        <div class="mt-6 grid grid-cols-3 gap-3">
-          {founderTrack.map((f) => (
-            <div class="rounded-card border border-mist bg-paper-2 p-4 text-center">
-              <p class="font-display text-display-sm font-bold text-navy">{f.stat}</p>
-              <p class="mt-0.5 text-xs text-slate">{f.label}</p>
-            </div>
-          ))}
-        </div>
-        <p class="mt-4 text-sm text-slate">Our founder <strong class="text-navy">Ankush Koul</strong> has mentored national rank holders, including AIR 1 in NEET and AIR 5 in AIIMS.</p>
-      </div>
-    </div>
-
-    <!-- Auto-scrolling topper cards -->
-    <div class="gv-marquee group relative mt-12" style="--gv-speed:46s" data-reveal>
-      <div class="gv-marquee-track gap-5">
-        {topperLoop.map((t, i) => (
-          <div class="w-56 shrink-0" aria-hidden={i >= toppers.length ? 'true' : undefined}>
-            <TopperCard topper={t} />
-          </div>
-        ))}
-      </div>
-      <div class="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-paper to-transparent"></div>
-      <div class="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-paper to-transparent"></div>
     </div>
   </Section>
 

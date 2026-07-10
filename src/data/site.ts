@@ -19,11 +19,9 @@ export const site = {
   url: 'https://www.gogravity.in',
 
   // Contact details.
-  phone: '+91 79960 49555',
-  phoneHref: 'tel:+917996049555',
-  phone2: '+91 78893 62386',
-  phone2Href: 'tel:+917889362386',
-  whatsapp: '917996049555', // digits only, with country code
+  phone: '+91 78893 62386',
+  phoneHref: 'tel:+917889362386',
+  whatsapp: '917889362386', // digits only, with country code
   email: 'info@gogravity.in',
 
   address: {
