@@ -6,7 +6,7 @@ import Icon from './Icon.astro';
  * Global "Book a free demo" popup (client-requested flow). Opens from ANY element
  * with [data-open-demo] or any link to /admissions, so every existing
  * "Book a free demo" CTA triggers it. Asks the four fields the client specified:
- * student name · grade · phone + email · board. Posts to /api/enquiry.
+ * student name · grade · phone + email · board. Submits to Web3Forms (emailed).
  * Accessible: role=dialog, focus trap, Escape + backdrop close, scroll lock.
  */
 const field =
@@ -30,7 +30,11 @@ const labelCls = 'block text-sm font-semibold text-navy';
         <form id="demo-form" class="mt-5 space-y-4" novalidate>
           <input type="hidden" name="intent" value="demo" />
           <input type="hidden" name="program" value="Free demo (popup)" />
-          <div class="sr-only" aria-hidden="true"><label>Leave empty<input type="text" name="company" tabindex="-1" autocomplete="off" /></label></div>
+          <!-- Web3Forms: submissions are emailed to the account tied to this access key. -->
+          <input type="hidden" name="access_key" value="bed10236-9927-48d1-b361-3222c637d7f5" />
+          <input type="hidden" name="subject" value="New free-demo request — Gravity Academy website" />
+          <input type="hidden" name="from_name" value="Gravity Academy Website" />
+          <input type="checkbox" name="botcheck" class="hidden" style="display:none;" tabindex="-1" autocomplete="off" aria-hidden="true" />
 
           <div>
             <label class={labelCls} for="demo-student">Name of student <span class="text-orange">*</span></label>
@@ -164,10 +168,9 @@ const labelCls = 'block text-sm font-semibold text-navy';
 
       submitBtn.disabled = true; status.textContent = 'Sending…'; status.className = 'demo-status text-center text-sm text-slate';
       try {
-        const data = Object.fromEntries(new FormData(form).entries());
-        const res = await fetch('/api/enquiry', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+        const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: new FormData(form) });
         const json = await res.json().catch(() => ({}));
-        if (!res.ok) throw new Error(json?.error || 'Something went wrong.');
+        if (!res.ok || !json.success) throw new Error(json?.message || 'Something went wrong.');
         formWrap.classList.add('hidden');
         success.classList.remove('hidden');
         (document.getElementById('demo-done') as HTMLElement)?.focus();

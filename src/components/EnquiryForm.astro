@@ -28,10 +28,12 @@ const labelCls = 'block text-sm font-semibold text-navy';
 ---
 <form id={id} class="space-y-5" novalidate data-success-title={successTitle} data-success-body={successBody}>
   <input type="hidden" name="intent" value={intent} />
-  <!-- Honeypot: bots fill it, humans never see it. (sr-only avoids page overflow) -->
-  <div class="sr-only" aria-hidden="true">
-    <label>Leave this empty <input type="text" name="company" tabindex="-1" autocomplete="off" /></label>
-  </div>
+  <!-- Web3Forms: submissions are emailed to the account tied to this access key. -->
+  <input type="hidden" name="access_key" value="bed10236-9927-48d1-b361-3222c637d7f5" />
+  <input type="hidden" name="subject" value={isDemo ? 'New free-demo request — Gravity Academy website' : 'New enquiry — Gravity Academy website'} />
+  <input type="hidden" name="from_name" value="Gravity Academy Website" />
+  <!-- Web3Forms honeypot: bots tick it, humans never see it. -->
+  <input type="checkbox" name="botcheck" class="hidden" style="display:none;" tabindex="-1" autocomplete="off" aria-hidden="true" />
 
   <div class="grid gap-5 sm:grid-cols-2">
     <div>
@@ -182,14 +184,12 @@ const labelCls = 'block text-sm font-semibold text-navy';
       status.classList.add('text-slate');
 
       try {
-        const data = Object.fromEntries(new FormData(form).entries());
-        const res = await fetch('/api/enquiry', {
+        const res = await fetch('https://api.web3forms.com/submit', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data),
+          body: new FormData(form),
         });
         const json = await res.json().catch(() => ({}));
-        if (!res.ok) throw new Error(json?.error || 'Something went wrong.');
+        if (!res.ok || !json.success) throw new Error(json?.message || 'Something went wrong.');
 
         form.querySelectorAll('input, select, textarea, button').forEach((el) => ((el as HTMLElement).style.display = 'none'));
         status.style.display = 'none';
