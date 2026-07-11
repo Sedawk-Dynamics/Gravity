@@ -12,7 +12,7 @@ import CTABand from '@/components/CTABand';
 import Icon from '@/components/Icon';
 import { programs, programUrl } from '@/data/programs';
 import { coursesByCategory } from '@/data/courses';
-import { educationalOrganizationLd } from '@/data/jsonld';
+import { educationalOrganizationLd, breadcrumbLd } from '@/data/jsonld';
 
 export const dynamicParams = false;
 
@@ -39,9 +39,15 @@ export default async function ProgramDetailPage({ params }: { params: Promise<{ 
 
   const related = coursesByCategory(program.slug);
 
+  const breadcrumb = breadcrumbLd([
+    { name: 'Home', path: '/' },
+    { name: 'Programs', path: '/programs' },
+    { name: program.name, path: `/programs/${program.slug}` },
+  ]);
+
   return (
     <>
-      <JsonLd data={[educationalOrganizationLd]} />
+      <JsonLd data={[educationalOrganizationLd, breadcrumb]} />
 
       <PageHeader eyebrow="Course track" title={program.name} intro={program.tagline}>
         <div className="mt-8 flex flex-wrap gap-3">

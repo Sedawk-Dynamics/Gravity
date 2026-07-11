@@ -21,7 +21,7 @@ import {
   courseFaqs,
   courseCatalogUrl,
 } from '@/data/courses';
-import { educationalOrganizationLd, faqLd } from '@/data/jsonld';
+import { educationalOrganizationLd, faqLd, breadcrumbLd, courseLd } from '@/data/jsonld';
 
 export const dynamicParams = false;
 
@@ -56,9 +56,15 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ s
 
   const parent = programs.find((p) => p.slug === course.category);
 
+  const breadcrumb = breadcrumbLd([
+    { name: 'Home', path: '/' },
+    { name: 'Courses', path: '/courses' },
+    { name: course.name, path: `/courses/${course.slug}` },
+  ]);
+
   return (
     <>
-      <JsonLd data={[educationalOrganizationLd, faqLd(courseFaqs)]} />
+      <JsonLd data={[educationalOrganizationLd, faqLd(courseFaqs), breadcrumb, courseLd(course)]} />
 
       <PageHeader eyebrow={`${course.series} · ${course.level}`} title={course.name} intro={course.tagline}>
         <div className="mt-8 flex flex-wrap gap-3">

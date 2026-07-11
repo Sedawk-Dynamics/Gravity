@@ -16,7 +16,7 @@ import { site } from '@/data/site';
 import { getPrograms } from '@/data/programs';
 import { toppers } from '@/data/toppers';
 import { testimonials } from '@/data/testimonials';
-import { educationalOrganizationLd, localBusinessLd } from '@/data/jsonld';
+import { educationalOrganizationLd, localBusinessLd, webSiteLd } from '@/data/jsonld';
 
 export const metadata = buildMetadata({ title: 'Home', description: site.description, path: '/' });
 
@@ -51,7 +51,13 @@ export default async function HomePage() {
 
   return (
     <>
-      <JsonLd data={[educationalOrganizationLd, localBusinessLd]} />
+      <JsonLd data={[educationalOrganizationLd, localBusinessLd, webSiteLd]} />
+
+      {/* SEO/a11y H1 — the hero is client-supplied banner imagery, so the page's
+          primary heading lives here (visually hidden, keyword-rich). */}
+      <h1 className="sr-only">
+        Gravity Academy — concept-first coaching for Classes 6–12 in Bengaluru: CBSE, ICSE, State Board, JEE, NEET UG and KCET
+      </h1>
 
       {/* 1. HERO — three auto-rotating banners */}
       <HeroBanners />

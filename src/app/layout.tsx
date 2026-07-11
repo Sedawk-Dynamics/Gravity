@@ -19,10 +19,39 @@ import DemoModalProvider from '@/components/providers/DemoModalProvider';
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
-  icons: { icon: [{ url: '/favicon.svg', type: 'image/svg+xml' }] },
+  title: { default: `${site.name} — ${site.tagline}`, template: `%s · ${site.name}` },
+  description: site.description,
+  applicationName: site.name,
+  authors: [{ name: site.name, url: site.url }],
+  creator: site.name,
+  publisher: site.name,
+  category: 'education',
+  keywords: [
+    'Gravity Academy',
+    'coaching classes Bengaluru',
+    'CBSE coaching',
+    'ICSE coaching',
+    'State Board tuition',
+    'JEE Foundation',
+    'NEET UG coaching',
+    'KCET coaching',
+    'Classes 6 to 12 tuition',
+    'concept-first learning',
+    'Maragondanahalli KR Puram coaching',
+  ],
+  formatDetection: { telephone: false, email: false, address: false },
+  robots: { index: true, follow: true },
+  manifest: '/site.webmanifest',
+  icons: {
+    icon: [{ url: '/favicon.svg', type: 'image/svg+xml' }],
+    apple: [{ url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
+  },
+  appleWebApp: { capable: true, title: site.name, statusBarStyle: 'default' },
 };
 
 export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
   themeColor: '#012877',
 };
 

@@ -56,3 +56,41 @@ export const faqLd = (faqs: { q: string; a: string }[]): Record<string, unknown>
     acceptedAnswer: { '@type': 'Answer', text: f.a },
   })),
 });
+
+/** Site-level WebSite entity (home page). */
+export const webSiteLd: Record<string, unknown> = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: site.name,
+  url: site.url,
+  inLanguage: 'en-IN',
+  publisher: { '@type': 'EducationalOrganization', name: site.name, url: site.url },
+};
+
+/** Breadcrumb trail for a nested page. */
+export const breadcrumbLd = (items: { name: string; path: string }[]): Record<string, unknown> => ({
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: items.map((it, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: it.name,
+    item: new URL(it.path, site.url).href,
+  })),
+});
+
+/** schema.org/Course for a course detail page. */
+export const courseLd = (c: { name: string; slug: string; tagline: string; subjects: string }): Record<string, unknown> => ({
+  '@context': 'https://schema.org',
+  '@type': 'Course',
+  name: c.name,
+  description: `${c.tagline} ${c.subjects}`,
+  url: `${site.url}/courses/${c.slug}`,
+  inLanguage: 'en-IN',
+  provider: { '@type': 'EducationalOrganization', name: site.name, url: site.url, sameAs },
+  hasCourseInstance: {
+    '@type': 'CourseInstance',
+    courseMode: ['Onsite', 'Online', 'Blended'],
+    location: { '@type': 'Place', name: site.name, address },
+  },
+});

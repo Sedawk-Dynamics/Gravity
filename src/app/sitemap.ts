@@ -7,13 +7,20 @@ import { courses } from '@/data/courses';
  *  course detail pages. Served at /sitemap.xml. */
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = site.url.replace(/\/$/, '');
-  const staticPaths = ['/', '/about', '/programs', '/courses', '/admissions', '/contact', '/gallery', '/faq'];
+  const lastModified = new Date();
+
+  const staticPaths = ['/about', '/programs', '/courses', '/admissions', '/contact', '/gallery', '/faq'];
   const programPaths = programs.map((p) => `/programs/${p.slug}`);
   const coursePaths = courses.map((c) => `/courses/${c.slug}`);
 
-  return [...staticPaths, ...programPaths, ...coursePaths].map((path) => ({
-    url: `${base}${path === '/' ? '' : path}`,
-    changeFrequency: 'monthly',
-    priority: path === '/' ? 1 : 0.7,
-  }));
+  return [
+    { url: base, lastModified, changeFrequency: 'weekly' as const, priority: 1 },
+    ...staticPaths.map((path) => ({ url: `${base}${path}`, lastModified, changeFrequency: 'monthly' as const, priority: 0.8 })),
+    ...[...programPaths, ...coursePaths].map((path) => ({
+      url: `${base}${path}`,
+      lastModified,
+      changeFrequency: 'monthly' as const,
+      priority: 0.64,
+    })),
+  ];
 }
