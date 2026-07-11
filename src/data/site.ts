@@ -4,11 +4,11 @@
 
 /** Base URL of the separate WordPress/WooCommerce catalog (see §2 & §11).
  *  Either a path on the same domain (reverse-proxy setup) or a subdomain. */
-export const WP_SHOP_BASE = import.meta.env.PUBLIC_WP_SHOP_BASE ?? 'https://www.gogravity.in/shop';
+export const WP_SHOP_BASE = process.env.NEXT_PUBLIC_WP_SHOP_BASE ?? 'https://www.gogravity.in/shop';
 
 /** Feature flag: fetch live program data from the Woo Store API (§2.3).
  *  When false (default) or on failure, we render the local `programs.ts` list. */
-export const USE_WP_API = (import.meta.env.PUBLIC_USE_WP_API ?? 'false') === 'true';
+export const USE_WP_API = (process.env.NEXT_PUBLIC_USE_WP_API ?? 'false') === 'true';
 
 export const site = {
   name: 'Gravity Academy',

@@ -7,4 +7,4 @@ Disallow: /cart
 Disallow: /checkout
 Disallow: /my-account
 
-Sitemap: https://www.gogravity.in/sitemap-index.xml
+Sitemap: https://www.gogravity.in/sitemap.xml

@@ -1,0 +1,81 @@
+/* eslint-disable @next/next/no-img-element */
+import type { CSSProperties } from 'react';
+import fs from 'node:fs';
+import { buildMetadata } from '@/lib/metadata';
+import JsonLd from '@/components/JsonLd';
+import PageHeader from '@/components/PageHeader';
+import Section from '@/components/Section';
+import CTABand from '@/components/CTABand';
+import { educationalOrganizationLd } from '@/data/jsonld';
+
+export const metadata = buildMetadata({
+  title: 'Gallery',
+  description:
+    'Photos from Gravity Academy — classrooms, faculty teaching, student activities, the annual Aarambh event and parent orientations in Maragondanahalli, Bengaluru.',
+  path: '/gallery',
+});
+
+// Friendly alt text for the known photos; a sensible default for the rest.
+const captions: Record<string, string> = {
+  'students-founder.jpg': 'Gravity Academy students with the founder at the annual event',
+  'parent-orientation.jpg': 'Parents at a Gravity Academy orientation',
+  'event-audience.jpg': 'Guests and families at a Gravity Academy event',
+  'gallery-01.jpg': 'Inside a Gravity Academy classroom',
+  'gallery-02.jpg': 'Concept notes on the classroom whiteboard',
+  'gallery-03.jpg': 'Concept notes on the classroom whiteboard',
+  'gallery-04.jpg': 'Students in a focused classroom session',
+  'gallery-05.jpg': 'A Gravity Academy classroom session in progress',
+  'gallery-06.jpg': 'Students working through problems in class',
+};
+
+// Gallery = every image in /public/gallery (nothing else — no stock imagery).
+// Read at build time so the page always matches exactly what's in the folder.
+function getPhotos() {
+  const dir = 'public/gallery';
+  const files = fs.existsSync(dir)
+    ? fs.readdirSync(dir).filter((f) => /\.(jpe?g|png|webp)$/i.test(f)).sort()
+    : [];
+  return files.map((f) => ({
+    src: `/gallery/${f}`,
+    alt: captions[f] ?? 'Gravity Academy — campus, classrooms and events',
+  }));
+}
+
+export default function GalleryPage() {
+  const photos = getPhotos();
+
+  return (
+    <>
+      <JsonLd data={[educationalOrganizationLd]} />
+
+      <PageHeader
+        eyebrow="Gallery"
+        title="The Gravity Academy gallery"
+        intro="A look inside our campus and community — classrooms, concept-first teaching, student milestones and our events."
+      />
+
+      <Section tone="paper">
+        <div className="columns-1 gap-4 [&>*]:mb-4 sm:columns-2 lg:columns-3">
+          {photos.map((p, i) => (
+            <figure
+              key={p.src}
+              className="break-inside-avoid overflow-hidden rounded-card ring-1 ring-mist"
+              data-reveal
+              style={{ '--reveal-delay': `${(i % 3) * 70}ms` } as CSSProperties}
+            >
+              <img
+                src={p.src}
+                alt={p.alt}
+                loading={i < 3 ? 'eager' : 'lazy'}
+                decoding="async"
+                className="w-full bg-mist transition-transform duration-500 hover:scale-[1.03]"
+              />
+            </figure>
+          ))}
+        </div>
+      </Section>
+
+      <CTABand title="Come see it for yourself." text="Book a free demo class and visit our Bangalore campus." />
+    </>
+  );
+}

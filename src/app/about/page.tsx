@@ -1,0 +1,218 @@
+/* eslint-disable @next/next/no-img-element */
+import type { CSSProperties } from 'react';
+import { buildMetadata } from '@/lib/metadata';
+import JsonLd from '@/components/JsonLd';
+import PageHeader from '@/components/PageHeader';
+import Section from '@/components/Section';
+import SectionHead from '@/components/SectionHead';
+import Button from '@/components/Button';
+import CTABand from '@/components/CTABand';
+import Icon from '@/components/Icon';
+import { site } from '@/data/site';
+import { educationalOrganizationLd } from '@/data/jsonld';
+
+export const metadata = buildMetadata({
+  title: 'About',
+  description:
+    'Gravity Academy is an outcome-focused, concept-first coaching institute in Maragondanahalli, KR Puram, Bengaluru for Grades 6–12 — CBSE, ICSE, State Board, Foundation, JEE, NEET UG and KCET.',
+  path: '/about',
+});
+
+const offerings = [
+  { icon: 'users', title: 'Offline classroom programs', text: 'Structured, in-centre teaching at our Maragondanahalli campus.' },
+  { icon: 'monitor', title: 'Online live interactive classes', text: 'Real-time classes you can join from anywhere.' },
+  { icon: 'atom', title: 'Hybrid learning model', text: 'Mix offline and online to fit your schedule.' },
+  { icon: 'trending-up', title: 'Regular tests & performance analysis', text: 'Frequent assessment with clear, actionable feedback.' },
+  { icon: 'graduation-cap', title: 'Parent progress updates', text: 'Transparent, periodic updates for every family.' },
+  { icon: 'award', title: 'Personal mentoring & career guidance', text: 'One-to-one mentoring and direction toward the right goals.' },
+];
+
+const whyChoose = [
+  'Expert faculty', 'Personalized attention', 'Concept-based learning', 'Structured academic planning',
+  'Regular tests & performance analysis', 'Parent involvement', 'Technology-enabled learning',
+  'Strong academic culture', 'Career guidance', 'Proven teaching methodology',
+];
+
+const gallery = [
+  { src: '/gallery/students-founder.jpg', alt: 'Gravity Academy students with the founder at the annual event' },
+  { src: '/gallery/parent-orientation.jpg', alt: 'Parents at a Gravity Academy orientation session' },
+  { src: '/gallery/event-audience.jpg', alt: 'Guests and families at a Gravity Academy event' },
+];
+
+export default function AboutPage() {
+  return (
+    <>
+      <JsonLd data={[educationalOrganizationLd]} />
+
+      <PageHeader
+        eyebrow="About"
+        title="Building strong foundations. Creating bright futures."
+        intro="Gravity Academy is a premium learning institute dedicated to building strong academic foundations and preparing students for success in school as well as competitive examinations."
+      />
+
+      {/* Campus image overlapping the hero */}
+      <div className="container-x relative z-10 -mt-10 md:-mt-16">
+        <img
+          src="/gallery/students-founder.jpg"
+          alt="Gravity Academy students with the founder"
+          width={1400}
+          height={600}
+          loading="eager"
+          decoding="async"
+          className="h-[280px] w-full rounded-card object-cover object-[center_35%] shadow-lift ring-1 ring-white/10 md:h-[440px]"
+        />
+      </div>
+
+      {/* Story + Vision/Mission */}
+      <Section tone="paper">
+        <div className="grid gap-12 lg:grid-cols-[1.3fr_1fr]">
+          <div className="prose-measure space-y-5 text-lg leading-relaxed text-ink" data-reveal>
+            <p>
+              Founded with the vision of making quality education accessible, we combine expert faculty, structured learning, technology-enabled classrooms and personalized mentoring to help every student reach their highest potential.
+            </p>
+            <p>
+              Gravity Academy is an outcome-focused coaching institute for students from Grades 6 to 12, specializing in CBSE, ICSE and Karnataka State Board, along with Foundation programs and JEE, NEET UG and KCET preparation.
+            </p>
+            <p>
+              Our teaching philosophy revolves around <strong className="text-navy">concept clarity rather than rote learning</strong>. Small batch sizes ensure every student receives individual attention and continuous academic support.
+            </p>
+          </div>
+
+          <div className="space-y-4">
+            <div className="rounded-card border border-mist bg-paper-2 p-6 shadow-soft" data-reveal>
+              <p className="eyebrow">Vision</p>
+              <p className="mt-3 text-ink">
+                To build a future-ready learning ecosystem where every student develops conceptual understanding, confidence, discipline and academic excellence.
+              </p>
+            </div>
+            <div className="rounded-card border border-mist bg-paper-2 p-6 shadow-soft" data-reveal>
+              <p className="eyebrow">Mission</p>
+              <p className="mt-3 text-ink">
+                To deliver high-quality, personalized, technology-enabled education that turns potential into measurable, lasting results.
+              </p>
+            </div>
+          </div>
+        </div>
+      </Section>
+
+      {/* What we offer */}
+      <Section tone="paper-2">
+        <SectionHead eyebrow="What we offer" title="A complete academic ecosystem" />
+        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {offerings.map((o) => (
+            <div key={o.title} className="rounded-card border border-mist bg-paper p-6 shadow-soft" data-reveal>
+              <span className="grid h-11 w-11 place-items-center rounded-btn bg-navy text-white">
+                <Icon name={o.icon} size={22} />
+              </span>
+              <h3 className="mt-4 font-display text-display-sm text-navy">{o.title}</h3>
+              <p className="mt-1.5 text-slate">{o.text}</p>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      {/* Founder (text-only) */}
+      <Section tone="paper">
+        <div className="mx-auto max-w-4xl text-center" data-reveal>
+          <p className="eyebrow">About the founder</p>
+          <h2 className="mt-3 font-display text-display-lg text-navy">Ankush Koul</h2>
+          <p className="mt-1 font-display text-lg font-semibold text-orange">Founder &amp; Academic Director</p>
+
+          <div className="mt-6 flex flex-wrap justify-center gap-2">
+            {['BE', 'M.Tech (Microelectronics)', 'Physics Educator', 'Academic Mentor', 'EdTech Professional'].map((c) => (
+              <span key={c} className="rounded-full bg-paper-2 px-4 py-1.5 text-sm font-medium text-navy ring-1 ring-mist">
+                {c}
+              </span>
+            ))}
+          </div>
+
+          <p className="prose-measure mx-auto mt-8 text-lg leading-relaxed text-ink">
+            With over 14 years of teaching experience, Ankush Koul has mentored thousands of students and guided national-level rank holders — including <strong className="text-navy">AIR 1 in NEET</strong> and <strong className="text-navy">AIR 5 in AIIMS</strong>. His vision is to blend exceptional teaching with modern technology to create an outstanding learning experience.
+          </p>
+        </div>
+
+        <figure className="relative mx-auto mt-10 max-w-3xl rounded-card bg-navy p-8 text-center shadow-lift md:p-12" data-reveal>
+          <Icon name="quote" size={40} className="mx-auto text-orange/70" />
+          <blockquote className="mt-4 font-display text-2xl font-medium leading-snug text-white md:text-[1.75rem]">
+            Every student deserves the right guidance, strong concepts, and the confidence to achieve their dreams.
+          </blockquote>
+          <figcaption className="mt-5 font-mono text-sm uppercase tracking-widest text-mist">— Ankush Koul</figcaption>
+        </figure>
+      </Section>
+
+      {/* Why choose */}
+      <Section tone="navy">
+        <SectionHead eyebrow="Why choose Gravity" title="Ten reasons families trust us" tone="dark" />
+        <div className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {whyChoose.map((w, i) => (
+            <div
+              key={w}
+              className="flex items-center gap-3 rounded-card bg-white/5 px-5 py-4 ring-1 ring-white/10"
+              data-reveal
+              style={{ '--reveal-delay': `${(i % 3) * 60}ms` } as CSSProperties}
+            >
+              <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-orange text-navy">
+                <Icon name="check" size={16} />
+              </span>
+              <span className="font-display font-semibold text-white">{w}</span>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      {/* Gallery */}
+      <Section tone="paper-2">
+        <SectionHead
+          eyebrow="Life at Gravity"
+          title="Inside our campus & events"
+          intro="From focused classrooms to our annual Aarambh event and parent orientations — a look at the Gravity community."
+        />
+        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {gallery.map((g, i) => (
+            <div
+              key={g.src}
+              className="overflow-hidden rounded-card ring-1 ring-mist"
+              data-reveal
+              style={{ '--reveal-delay': `${i * 80}ms` } as CSSProperties}
+            >
+              <img
+                src={g.src}
+                alt={g.alt}
+                width={640}
+                height={480}
+                loading="lazy"
+                decoding="async"
+                className="h-56 w-full object-cover transition-transform duration-500 hover:scale-[1.04]"
+              />
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      {/* Location */}
+      <Section tone="paper">
+        <div
+          className="flex flex-col items-start gap-4 rounded-card border border-mist bg-paper-2 p-8 shadow-soft md:flex-row md:items-center md:justify-between"
+          data-reveal
+        >
+          <div className="flex items-start gap-4">
+            <span className="grid h-12 w-12 shrink-0 place-items-center rounded-btn bg-navy text-white">
+              <Icon name="map-pin" size={24} />
+            </span>
+            <div>
+              <h2 className="font-display text-display-sm text-navy">Visit our centre</h2>
+              <p className="mt-1 text-slate">
+                {site.address.line1}, {site.address.line2}, {site.address.city}, {site.address.state} {site.address.pin}
+              </p>
+            </div>
+          </div>
+          <Button href="/contact" variant="primary" icon="arrow-right">
+            Get directions
+          </Button>
+        </div>
+      </Section>
+
+      <CTABand />
+    </>
+  );
+}

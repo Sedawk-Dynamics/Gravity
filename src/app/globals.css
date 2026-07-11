@@ -1,0 +1,196 @@
+/* ─────────────────────────────────────────────────────────────────────────
+ * Brand tokens — single source of truth. Inlined here (was `@import
+ * '/brand-tokens.css'` under Astro). The identical file is ALSO kept at
+ * public/brand-tokens.css for the separate WordPress/WooCommerce surface.
+ * ───────────────────────────────────────────────────────────────────────── */
+:root {
+  --navy: #012877;
+  --orange: #fd5e03;
+  --slate: #7086b2;
+  --mist: #d4dae8;
+  --ink: #0a0f1f;
+  --paper: #ffffff;
+  --paper-2: #f6f8fc;
+
+  --navy-600: #022a85;
+  --navy-800: #01205f;
+  --navy-900: #011843;
+  --orange-600: #e85503;
+  --orange-700: #c84802;
+
+  --ease-gravity: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-fall: cubic-bezier(0.5, 0, 0.2, 1);
+
+  --font-display: 'Poppins', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  --radius-card: 16px;
+  --radius-btn: 12px;
+  --shadow-soft: 0 1px 2px rgba(1, 40, 119, 0.06), 0 8px 24px rgba(1, 40, 119, 0.08);
+  --shadow-lift: 0 2px 6px rgba(1, 40, 119, 0.08), 0 18px 48px rgba(1, 40, 119, 0.14);
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    overflow-x: clip; /* safety net: never allow horizontal scroll/overflow */
+  }
+
+  body {
+    font-family: var(--font-body);
+    background-color: var(--paper);
+    color: var(--ink);
+    font-size: 1.0625rem; /* 17px base */
+    line-height: 1.6;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+    max-width: 100%;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    color: var(--navy);
+    font-weight: 700;
+    text-wrap: balance;
+  }
+
+  p { text-wrap: pretty; }
+
+  :focus-visible {
+    outline: 3px solid var(--orange);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background: var(--orange);
+    color: #fff;
+  }
+}
+
+@layer components {
+  .container-x {
+    width: 100%;
+    max-width: var(--container, 1200px);
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 5vw, 2.5rem);
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--orange);
+    font-weight: 500;
+  }
+
+  .prose-measure { max-width: 70ch; }
+
+  .grid-motif {
+    background-image:
+      linear-gradient(to right, rgba(112, 134, 178, 0.08) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(112, 134, 178, 0.08) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+}
+
+/* Auto-scrolling marquee (results / image strips). Track content is duplicated
+   in markup so translateX(-50%) loops seamlessly. */
+@layer utilities {
+  .gv-marquee { overflow: hidden; }
+  .gv-marquee-track {
+    display: flex;
+    width: max-content;
+    animation: gv-scroll var(--gv-speed, 45s) linear infinite;
+  }
+  .gv-marquee:hover .gv-marquee-track,
+  .gv-marquee:focus-within .gv-marquee-track { animation-play-state: paused; }
+}
+@keyframes gv-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gv-marquee { overflow-x: auto; }
+  .gv-marquee-track { animation: none; }
+}
+
+/* Scroll-reveal: short, low-distance. JS toggles [data-reveal] -> .is-in. */
+@layer utilities {
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.6s var(--ease-fall), transform 0.6s var(--ease-fall);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+  [data-reveal].is-in {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ── Header (ported from Header.astro scoped <style>) ── */
+#site-header.is-solid {
+  background-color: color-mix(in srgb, var(--paper) 86%, transparent);
+  backdrop-filter: saturate(140%) blur(10px);
+  box-shadow: 0 1px 0 rgba(112, 134, 178, 0.18), var(--shadow-soft);
+}
+#site-header:not([data-transparent]) {
+  background-color: color-mix(in srgb, var(--paper) 86%, transparent);
+  backdrop-filter: saturate(140%) blur(10px);
+}
+.nav-link { color: var(--navy); transition: color 0.2s, background-color 0.2s; }
+.nav-link:hover { color: var(--orange); }
+.nav-link[aria-current='page'] { color: var(--orange); }
+#site-header[data-transparent]:not(.is-solid) .nav-link { color: #fff; }
+#site-header[data-transparent]:not(.is-solid) .nav-link:hover { color: var(--mist); }
+#site-header[data-transparent]:not(.is-solid) .logo-dark { display: none; }
+#site-header[data-transparent]:not(.is-solid) .logo-light { display: inline-block; }
+/* Visibility is driven entirely by the `.is-open` class (React state) so a
+   client-side navigation can force the panel shut — a CSS :hover/:focus-within
+   rule can't be overridden by JS and would keep it open after a link click. The
+   Header sets is-open from hover/focus/click and clears it on route change. */
+.mega.is-open .mega-panel {
+  visibility: visible;
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+.mega.is-open .mega-caret { transform: rotate(180deg); }
+
+/* ── ImageMarquee (ported from ImageMarquee.astro scoped <style>) ── */
+.marquee { overflow: hidden; }
+.marquee-track { animation: marquee-scroll var(--marquee-speed, 40s) linear infinite; }
+.marquee-track.marquee-reverse { animation-direction: reverse; }
+.marquee:hover .marquee-track,
+.marquee:focus-within .marquee-track { animation-play-state: paused; }
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee { overflow-x: auto; }
+  .marquee-track { animation: none; }
+}
+
+/* Honor reduced motion globally: ship the static composition. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  [data-reveal] { opacity: 1 !important; transform: none !important; }
+}

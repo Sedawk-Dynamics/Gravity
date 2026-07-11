@@ -1,18 +1,20 @@
 # build output
-dist/
+.next/
+out/
 .vercel/
 .output/
 # dependencies
 node_modules/
-# generated types
-.astro/
 # environment
 .env
+.env*.local
 .env.production
 # logs
 *.log
 npm-debug.log*
+# typescript
+*.tsbuildinfo
+next-env.d.ts
 # os / editor
 .DS_Store
 Thumbs.db
-.vercel

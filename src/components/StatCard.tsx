@@ -1,0 +1,20 @@
+import AnimatedCounter from './AnimatedCounter';
+
+interface Props {
+  value: number;
+  label: string;
+  prefix?: string;
+  suffix?: string;
+  separator?: boolean;
+}
+
+export default function StatCard({ value, label, prefix = '', suffix = '', separator = true }: Props) {
+  return (
+    <div className="flex h-full flex-col gap-1 rounded-card bg-white/5 px-6 py-7 ring-1 ring-white/10">
+      <span className="font-display text-display-md font-bold text-orange">
+        <AnimatedCounter value={value} prefix={prefix} suffix={suffix} separator={separator} />
+      </span>
+      <span className="mt-auto text-sm leading-snug text-mist">{label}</span>
+    </div>
+  );
+}
