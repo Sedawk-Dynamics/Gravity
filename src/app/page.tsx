@@ -44,6 +44,19 @@ const galleryStrip = [
   { src: '/founder/milestones.jpg', alt: "Founder presenting the academy's milestones of growth" },
 ];
 
+// Trust belt (below the hero). Two tiers: how we teach + what we prepare for.
+// Clean line icons (brand set) keep it crisp and consistent across devices.
+const trustModes = [
+  { icon: 'school', label: 'Offline' },
+  { icon: 'monitor', label: 'Online' },
+  { icon: 'repeat', label: 'Hybrid' },
+];
+const trustTracks = [
+  { icon: 'book-open', label: 'CBSE' },
+  { icon: 'book', label: 'ICSE' },
+  { icon: 'target', label: 'JEE · NEET · KCET' },
+];
+
 export default async function HomePage() {
   const programs = await getPrograms();
   // Toppers duplicated for the seamless auto-scroll.
@@ -62,21 +75,33 @@ export default async function HomePage() {
       {/* 1. HERO — three auto-rotating banners */}
       <HeroBanners />
 
-      {/* 2. TRUST STRIP */}
+      {/* 2. TRUST BELT — delivery modes + boards/exams (fills the belt on mobile) */}
       <div className="border-y border-mist bg-paper-2">
-        <div className="container-x flex flex-wrap items-center justify-center gap-x-4 gap-y-2 py-5 text-center sm:gap-x-8">
-          <span className="font-mono text-xs uppercase tracking-[0.18em] text-slate">Aligned with</span>
-          {site.boards.map((b) => (
-            <span key={b} className="font-display text-sm font-semibold text-navy">
-              {b}
-            </span>
-          ))}
-          <span className="font-display text-sm font-semibold text-navy">JEE · NEET UG · KCET</span>
+        <div className="container-x flex flex-col items-center gap-3 py-4 text-center sm:gap-4 sm:py-5">
+          {/* How we teach */}
+          <ul className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2.5 sm:gap-x-12">
+            {trustModes.map((m) => (
+              <li key={m.label} className="inline-flex items-center gap-2 font-display text-sm font-semibold text-navy sm:text-[0.95rem]">
+                <Icon name={m.icon} size={19} className="shrink-0 text-orange" />
+                {m.label}
+              </li>
+            ))}
+          </ul>
+          <span aria-hidden="true" className="h-px w-full max-w-xs bg-mist sm:max-w-xl" />
+          {/* What we prepare for */}
+          <ul className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2.5 sm:gap-x-12">
+            {trustTracks.map((t) => (
+              <li key={t.label} className="inline-flex items-center gap-2 font-display text-sm font-semibold text-navy sm:text-[0.95rem]">
+                <Icon name={t.icon} size={19} className="shrink-0 text-orange" />
+                {t.label}
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
 
-      {/* 3. RESULTS SLIDER */}
-      <Section id="results" tone="paper">
+      {/* 3. RESULTS SLIDER — tighter top gap under the trust belt on mobile */}
+      <Section id="results" tone="paper" className="pt-10 sm:pt-section">
         <SectionHead
           eyebrow="Results"
           title="Scores our students are proud of"
