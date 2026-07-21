@@ -1,6 +1,6 @@
 import { site } from './site';
 
-const sameAs = [site.social.instagram, site.social.youtube, site.social.facebook];
+const sameAs = [site.social.instagram, site.social.x, site.social.facebook, site.social.linkedin];
 
 const address = {
   '@type': 'PostalAddress',

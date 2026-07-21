@@ -17,8 +17,9 @@ const quickLinks = [
 
 const socials = [
   { name: 'instagram', href: site.social.instagram, label: 'Instagram' },
-  { name: 'youtube', href: site.social.youtube, label: 'YouTube' },
+  { name: 'x-twitter', href: site.social.x, label: 'X' },
   { name: 'facebook', href: site.social.facebook, label: 'Facebook' },
+  { name: 'linkedin', href: site.social.linkedin, label: 'LinkedIn' },
 ];
 
 export default function Footer() {

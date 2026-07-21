@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { site } from '@/data/site';
 
 /** Twitter/X handle (also used for og). Update if the brand handle changes. */
-const TWITTER_HANDLE = '@gravityacademy';
+const TWITTER_HANDLE = '@gogravity_';
 
 interface Args {
   title: string;

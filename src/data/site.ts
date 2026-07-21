@@ -43,11 +43,13 @@ export const site = {
     { days: 'Sunday', time: '10:00 AM – 2:00 PM (counselling only)' },
   ],
 
+  // Official accounts — these four only. No YouTube or other channels.
   social: {
-    instagram: 'https://instagram.com/gravityacademy',
-    youtube: 'https://youtube.com/@gravityacademy',
-    facebook: 'https://facebook.com/gravityacademy',
-    handles: ['@gravityacademy'],
+    instagram: 'https://www.instagram.com/gogravityacademy/?hl=en',
+    x: 'https://x.com/gogravity_',
+    facebook: 'https://www.facebook.com/gogravityacademy',
+    linkedin: 'https://www.linkedin.com/company/gogravityacademy/',
+    handles: ['@gogravityacademy'],
   },
 
   boards: ['CBSE', 'ICSE', 'State Board'],
