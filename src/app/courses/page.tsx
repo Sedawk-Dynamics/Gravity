@@ -6,7 +6,7 @@ import Section from '@/components/Section';
 import CTABand from '@/components/CTABand';
 import Icon from '@/components/Icon';
 import { courses, courseSeries, learningModes } from '@/data/courses';
-import { educationalOrganizationLd } from '@/data/jsonld';
+import { educationalOrganizationLd, breadcrumbLd } from '@/data/jsonld';
 
 export const metadata = buildMetadata({
   title: 'Courses',
@@ -28,7 +28,12 @@ const seriesBlurb: Record<string, string> = {
 export default function CoursesPage() {
   return (
     <>
-      <JsonLd data={[educationalOrganizationLd]} />
+      <JsonLd
+        data={[
+          educationalOrganizationLd,
+          breadcrumbLd([{ name: 'Home', path: '/' }, { name: 'Courses', path: '/courses' }]),
+        ]}
+      />
 
       <PageHeader
         eyebrow="Courses"

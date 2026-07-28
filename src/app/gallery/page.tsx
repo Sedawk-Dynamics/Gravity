@@ -6,7 +6,7 @@ import JsonLd from '@/components/JsonLd';
 import PageHeader from '@/components/PageHeader';
 import Section from '@/components/Section';
 import CTABand from '@/components/CTABand';
-import { educationalOrganizationLd } from '@/data/jsonld';
+import { educationalOrganizationLd, breadcrumbLd } from '@/data/jsonld';
 
 export const metadata = buildMetadata({
   title: 'Gallery',
@@ -46,7 +46,12 @@ export default function GalleryPage() {
 
   return (
     <>
-      <JsonLd data={[educationalOrganizationLd]} />
+      <JsonLd
+        data={[
+          educationalOrganizationLd,
+          breadcrumbLd([{ name: 'Home', path: '/' }, { name: 'Gallery', path: '/gallery' }]),
+        ]}
+      />
 
       <PageHeader
         eyebrow="Gallery"

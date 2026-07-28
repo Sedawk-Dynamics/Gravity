@@ -5,7 +5,7 @@ import Section from '@/components/Section';
 import EnquiryForm from '@/components/EnquiryForm';
 import Icon from '@/components/Icon';
 import { site } from '@/data/site';
-import { localBusinessLd } from '@/data/jsonld';
+import { localBusinessLd, breadcrumbLd } from '@/data/jsonld';
 
 export const metadata = buildMetadata({
   title: 'Contact',
@@ -19,7 +19,12 @@ const whatsappHref = `https://wa.me/${site.whatsapp}`;
 export default function ContactPage() {
   return (
     <>
-      <JsonLd data={[localBusinessLd]} />
+      <JsonLd
+        data={[
+          localBusinessLd,
+          breadcrumbLd([{ name: 'Home', path: '/' }, { name: 'Contact', path: '/contact' }]),
+        ]}
+      />
 
       <PageHeader
         eyebrow="Contact"

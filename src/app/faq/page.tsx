@@ -7,7 +7,7 @@ import DemoButton from '@/components/DemoButton';
 import Icon from '@/components/Icon';
 import { faqs } from '@/data/faqs';
 import { site } from '@/data/site';
-import { educationalOrganizationLd, faqLd } from '@/data/jsonld';
+import { educationalOrganizationLd, faqLd, breadcrumbLd } from '@/data/jsonld';
 
 export const metadata = buildMetadata({
   title: 'FAQ',
@@ -19,7 +19,13 @@ export const metadata = buildMetadata({
 export default function FaqPage() {
   return (
     <>
-      <JsonLd data={[educationalOrganizationLd, faqLd(faqs)]} />
+      <JsonLd
+        data={[
+          educationalOrganizationLd,
+          faqLd(faqs),
+          breadcrumbLd([{ name: 'Home', path: '/' }, { name: 'FAQ', path: '/faq' }]),
+        ]}
+      />
 
       <PageHeader
         eyebrow="FAQ"

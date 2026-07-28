@@ -6,7 +6,7 @@ import Section from '@/components/Section';
 import SectionHead from '@/components/SectionHead';
 import EnquiryForm from '@/components/EnquiryForm';
 import Icon from '@/components/Icon';
-import { educationalOrganizationLd } from '@/data/jsonld';
+import { educationalOrganizationLd, breadcrumbLd } from '@/data/jsonld';
 
 export const metadata = buildMetadata({
   title: 'Admissions & Book a Demo',
@@ -26,7 +26,12 @@ const steps = [
 export default function AdmissionsPage() {
   return (
     <>
-      <JsonLd data={[educationalOrganizationLd]} />
+      <JsonLd
+        data={[
+          educationalOrganizationLd,
+          breadcrumbLd([{ name: 'Home', path: '/' }, { name: 'Admissions', path: '/admissions' }]),
+        ]}
+      />
 
       <PageHeader
         eyebrow="Admissions"

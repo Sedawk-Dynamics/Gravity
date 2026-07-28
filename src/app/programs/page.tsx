@@ -8,7 +8,7 @@ import DemoLink from '@/components/DemoLink';
 import CTABand from '@/components/CTABand';
 import Icon from '@/components/Icon';
 import { getPrograms } from '@/data/programs';
-import { educationalOrganizationLd } from '@/data/jsonld';
+import { educationalOrganizationLd, breadcrumbLd } from '@/data/jsonld';
 
 export const metadata = buildMetadata({
   title: 'Programs',
@@ -22,7 +22,12 @@ export default async function ProgramsPage() {
 
   return (
     <>
-      <JsonLd data={[educationalOrganizationLd]} />
+      <JsonLd
+        data={[
+          educationalOrganizationLd,
+          breadcrumbLd([{ name: 'Home', path: '/' }, { name: 'Programs', path: '/programs' }]),
+        ]}
+      />
 
       <PageHeader
         eyebrow="Courses"

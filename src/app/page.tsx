@@ -18,7 +18,7 @@ import { toppers } from '@/data/toppers';
 import { testimonials } from '@/data/testimonials';
 import { educationalOrganizationLd, localBusinessLd, webSiteLd } from '@/data/jsonld';
 
-export const metadata = buildMetadata({ title: 'Home', description: site.description, path: '/' });
+export const metadata = buildMetadata({ title: 'Home', description: site.seo.homeDescription, path: '/' });
 
 const why = [
   { icon: 'users', title: 'Small batches', text: "Capped enrolment so every mentor knows each student's strengths and gaps." },

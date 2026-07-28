@@ -18,6 +18,15 @@ export const site = {
     'Gravity Academy is an outcome-focused coaching institute in Maragondanahalli, KR Puram, Bengaluru for Grades 6–12 — CBSE, ICSE, Karnataka State Board, Foundation, JEE, NEET UG and KCET. Concept-first teaching, small batches, personal mentoring.',
   url: 'https://www.gogravity.in',
 
+  // Search-facing copy (title ≤ ~70 chars keyword-first, description ≤ ~160 chars
+  // so Google doesn't truncate). `description` above stays the long-form copy for
+  // JSON-LD and social cards.
+  seo: {
+    homeTitle: 'Coaching Classes for Grades 6–12 in KR Puram, Bengaluru | Gravity Academy',
+    homeDescription:
+      'Concept-first coaching in KR Puram, Bengaluru for Grades 6–12 — CBSE, ICSE & State Board tuition plus JEE, NEET UG and KCET prep. Small batches, free demo class.',
+  },
+
   // Contact details.
   phone: '+91 78893 62386',
   phoneHref: 'tel:+917889362386',

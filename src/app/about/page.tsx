@@ -9,12 +9,12 @@ import Button from '@/components/Button';
 import CTABand from '@/components/CTABand';
 import Icon from '@/components/Icon';
 import { site } from '@/data/site';
-import { educationalOrganizationLd } from '@/data/jsonld';
+import { educationalOrganizationLd, founderPersonLd, breadcrumbLd } from '@/data/jsonld';
 
 export const metadata = buildMetadata({
   title: 'About',
   description:
-    'Gravity Academy is an outcome-focused, concept-first coaching institute in Maragondanahalli, KR Puram, Bengaluru for Grades 6–12 — CBSE, ICSE, State Board, Foundation, JEE, NEET UG and KCET.',
+    'The story, vision and people behind Gravity Academy — founded by Ankush Koul, physics educator and mentor to NEET AIR 1 and AIIMS AIR 5 rank holders, to bring concept-first coaching to KR Puram, Bengaluru.',
   path: '/about',
 });
 
@@ -42,7 +42,13 @@ const gallery = [
 export default function AboutPage() {
   return (
     <>
-      <JsonLd data={[educationalOrganizationLd]} />
+      <JsonLd
+        data={[
+          educationalOrganizationLd,
+          founderPersonLd,
+          breadcrumbLd([{ name: 'Home', path: '/' }, { name: 'About', path: '/about' }]),
+        ]}
+      />
 
       <PageHeader
         eyebrow="About"

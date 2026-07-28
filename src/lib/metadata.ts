@@ -13,10 +13,11 @@ interface Args {
 }
 
 /**
- * Per-page metadata. Title rule: home (`/`) → "Name — Tagline"; everything else →
- * "Title · Name". Emits canonical + rich OpenGraph/Twitter (1200×630 PNG so link
- * previews actually render on Facebook/LinkedIn/WhatsApp/X) and robots directives.
- * `metadataBase` (root layout) resolves the relative OG image to an absolute URL.
+ * Per-page metadata. Title rule: home (`/`) → keyword-first `site.seo.homeTitle`;
+ * everything else → "Title · Name". Emits canonical + rich OpenGraph/Twitter
+ * (1200×630 PNG so link previews actually render on Facebook/LinkedIn/WhatsApp/X)
+ * and robots directives. `metadataBase` (root layout) resolves the relative OG
+ * image to an absolute URL.
  */
 export function buildMetadata({
   title,
@@ -25,7 +26,7 @@ export function buildMetadata({
   image = '/og-default.png',
   noindex = false,
 }: Args): Metadata {
-  const fullTitle = path === '/' ? `${site.name} — ${site.tagline}` : `${title} · ${site.name}`;
+  const fullTitle = path === '/' ? site.seo.homeTitle : `${title} · ${site.name}`;
   const canonical = new URL(path, site.url).href;
 
   return {

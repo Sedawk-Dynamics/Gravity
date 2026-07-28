@@ -19,7 +19,7 @@ import DemoModalProvider from '@/components/providers/DemoModalProvider';
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
-  title: { default: `${site.name} — ${site.tagline}`, template: `%s · ${site.name}` },
+  title: { default: site.seo.homeTitle, template: `%s · ${site.name}` },
   description: site.description,
   applicationName: site.name,
   authors: [{ name: site.name, url: site.url }],
