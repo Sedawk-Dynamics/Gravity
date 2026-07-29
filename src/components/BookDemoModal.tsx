@@ -236,7 +236,7 @@ export default function BookDemoModal({ isOpen, onClose }: Props) {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="demo-submit w-full rounded-btn bg-orange px-5 py-3 font-display font-semibold text-navy shadow-soft transition-all duration-200 ease-fall hover:bg-navy hover:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange/45 disabled:opacity-60"
+                  className="demo-submit w-full rounded-btn bg-orange px-5 py-3 font-display font-semibold text-white shadow-soft transition-all duration-200 ease-fall hover:bg-navy hover:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange/45 disabled:opacity-60"
                 >
                   Book a free demo
                 </button>

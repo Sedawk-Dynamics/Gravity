@@ -19,6 +19,7 @@ interface Props {
 const nav = [
   { label: 'Courses', href: '/courses', mega: true },
   { label: 'About', href: '/about' },
+  { label: 'Blog', href: 'https://staging.gravity.sedawk.cloud/blog/', external: true },
   { label: 'Gallery', href: '/gallery' },
   { label: 'Contact', href: '/contact' },
 ];
@@ -165,7 +166,7 @@ export default function Header({ transparent = false }: Props) {
                             setMegaOpen(false);
                             open();
                           }}
-                          className="flex items-center justify-between rounded-btn bg-orange px-4 py-3 text-sm font-semibold text-navy transition-colors hover:bg-navy hover:text-white"
+                          className="flex items-center justify-between rounded-btn bg-orange px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-navy hover:text-white"
                         >
                           Book a free demo
                           <Icon name="arrow-right" size={16} />
@@ -174,6 +175,14 @@ export default function Header({ transparent = false }: Props) {
                     </div>
                   </div>
                 </div>
+              ) : item.external ? (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  className="nav-link rounded-md px-3 py-2 text-[0.95rem] font-medium"
+                >
+                  {item.label}
+                </a>
               ) : (
                 <Link
                   key={item.href}
@@ -263,16 +272,33 @@ export default function Header({ transparent = false }: Props) {
                 </Link>
               ))}
             </div>
-            {['About', 'Gallery', 'FAQ', 'Contact'].map((label) => (
-              <Link
-                key={label}
-                href={`/${label.toLowerCase()}`}
-                onClick={closeDrawer}
-                className="block rounded-btn px-4 py-3 text-base font-semibold text-navy hover:bg-paper-2"
-              >
-                {label}
-              </Link>
-            ))}
+            {[
+              { label: 'About', href: '/about' },
+              { label: 'Blog', href: 'https://staging.gravity.sedawk.cloud/blog/', external: true },
+              { label: 'Gallery', href: '/gallery' },
+              { label: 'FAQ', href: '/faq' },
+              { label: 'Contact', href: '/contact' },
+            ].map(({ label, href, external }) =>
+              external ? (
+                <a
+                  key={label}
+                  href={href}
+                  onClick={closeDrawer}
+                  className="block rounded-btn px-4 py-3 text-base font-semibold text-navy hover:bg-paper-2"
+                >
+                  {label}
+                </a>
+              ) : (
+                <Link
+                  key={label}
+                  href={href}
+                  onClick={closeDrawer}
+                  className="block rounded-btn px-4 py-3 text-base font-semibold text-navy hover:bg-paper-2"
+                >
+                  {label}
+                </Link>
+              )
+            )}
           </nav>
 
           <div className="space-y-3 border-t border-mist px-5 py-4">

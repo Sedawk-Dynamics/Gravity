@@ -7,8 +7,8 @@ import { cn } from '@/lib/cn';
 
 /**
  * Renders a next/link for internal hrefs, an external <a> when `external` (or an
- * absolute URL), otherwise a <button>. Contrast (§4): orange `primary` uses navy
- * text and swaps to navy-bg/white-text on hover.
+ * absolute URL), otherwise a <button>. Orange `primary` uses white text and
+ * swaps to navy-bg/white-text on hover.
  */
 export interface ButtonProps {
   href?: string;
@@ -32,7 +32,7 @@ const sizes: Record<string, string> = {
 };
 
 const variants: Record<string, string> = {
-  primary: 'bg-orange text-navy shadow-soft hover:bg-navy hover:text-white hover:shadow-lift',
+  primary: 'bg-orange text-white shadow-soft hover:bg-navy hover:text-white hover:shadow-lift',
   secondary: 'bg-navy text-white hover:bg-navy-800 shadow-soft',
   ghost: 'text-navy hover:bg-mist/60 ring-1 ring-inset ring-slate/35 hover:ring-navy/40',
 };

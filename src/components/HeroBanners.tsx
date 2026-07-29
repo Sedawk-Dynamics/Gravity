@@ -99,7 +99,7 @@ export default function HeroBanners() {
           <button
             type="button"
             onClick={open}
-            className="group inline-flex items-center justify-center gap-2 rounded-btn bg-orange px-6 py-3 font-display font-semibold text-navy shadow-soft transition-all duration-200 ease-fall hover:bg-navy hover:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange/45"
+            className="group inline-flex items-center justify-center gap-2 rounded-btn bg-orange px-6 py-3 font-display font-semibold text-white shadow-soft transition-all duration-200 ease-fall hover:bg-navy hover:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange/45"
           >
             Book a free demo
             <Icon name="arrow-right" size={18} className="transition-transform group-hover:translate-x-0.5" />

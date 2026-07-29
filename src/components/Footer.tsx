@@ -13,6 +13,7 @@ const quickLinks = [
   { label: 'Results', href: '/#results' },
   { label: 'FAQ', href: '/faq' },
   { label: 'Contact', href: '/contact' },
+  { label: 'Blog', href: 'https://staging.gravity.sedawk.cloud/blog/', external: true },
 ];
 
 const socials = [
@@ -66,9 +67,15 @@ export default function Footer() {
           <ul className="mt-4 space-y-2.5 text-sm">
             {quickLinks.map((l) => (
               <li key={l.href}>
-                <Link href={l.href} className="text-mist transition-colors hover:text-orange">
-                  {l.label}
-                </Link>
+                {l.external ? (
+                  <a href={l.href} className="text-mist transition-colors hover:text-orange">
+                    {l.label}
+                  </a>
+                ) : (
+                  <Link href={l.href} className="text-mist transition-colors hover:text-orange">
+                    {l.label}
+                  </Link>
+                )}
               </li>
             ))}
           </ul>

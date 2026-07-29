@@ -1,0 +1,193 @@
+<!-- ════════════════════════════════════════════════════════════════════════
+  Gravity Academy — WordPress footer (mirror of Next.js Footer.tsx).
+  SELF-CONTAINED: styles + fonts are embedded, so this block works even
+  without the Additional CSS bundle. Paste the whole thing into an HTML
+  Block (Dashboard → HTML Blocks → Add New → Custom HTML element) and
+  assign it in Theme Settings → Footer → Footer layout → HTML Block.
+  Responsive: 1 column on phones, 2 on tablets (≥768px), 4 on desktop (≥1024px).
+  Logo: transparent white SVG hotlinked from the live Next.js site (the
+  media-library gravity-white.jpg has a white background baked in — don't
+  use it on the navy footer). A transparent PNG alternative for the WP
+  media library is at ../gravity-white-transparent.png.
+═════════════════════════════════════════════════════════════════════════ -->
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap');
+
+  .gv-footer {
+    --gv-navy: #012877;
+    --gv-orange: #fd5e03;
+    --gv-slate: #7086b2;
+    --gv-mist: #d4dae8;
+    background-color: var(--gv-navy);
+    color: #fff;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+  .gv-footer *, .gv-footer *::before, .gv-footer *::after { box-sizing: border-box; }
+  .gv-footer a { text-decoration: none; }
+  .gv-footer p { margin: 0; }
+  .gv-footer nav { margin: 0; }
+
+  .gv-footer-inner {
+    width: 100%;
+    max-width: 1200px;
+    margin-inline: auto;
+    padding: 4rem clamp(1.25rem, 5vw, 2.5rem);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  @media (min-width: 768px)  { .gv-footer-inner { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 1024px) { .gv-footer-inner { grid-template-columns: 1.4fr 1fr 1fr 1.3fr; } }
+
+  .gv-f-logolink { display: inline-block; line-height: 0; }
+  .gv-f-logo { height: 48px; width: auto; max-width: 100%; display: block; }
+  .gv-f-blurb { margin-top: 1rem; max-width: 20rem; color: var(--gv-mist); }
+
+  .gv-f-socials { margin-top: 1.25rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .gv-f-socials a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 40px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.10);
+    color: #fff;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+  .gv-f-socials a:hover { background: var(--gv-orange); color: var(--gv-navy); }
+  .gv-f-socials svg { width: 18px; height: 18px; }
+  .gv-f-handles { margin-top: 1rem; font-size: 0.75rem; color: var(--gv-slate); }
+
+  .gv-f-head {
+    font-family: 'Poppins', system-ui, sans-serif;
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #fff;
+    margin: 0 0 1rem;
+  }
+  .gv-f-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.625rem; }
+  .gv-f-list li { margin: 0; }
+  .gv-f-list a { color: var(--gv-mist); transition: color 0.2s ease; }
+  .gv-f-list a:hover { color: var(--gv-orange); }
+
+  .gv-f-contact { font-style: normal; display: grid; gap: 0.75rem; color: var(--gv-mist); }
+  .gv-f-contact p { display: flex; gap: 0.625rem; align-items: flex-start; }
+  .gv-f-contact a { color: var(--gv-mist); display: flex; gap: 0.625rem; align-items: center; transition: color 0.2s ease; }
+  .gv-f-contact a:hover { color: var(--gv-orange); }
+  .gv-f-contact svg { width: 18px; height: 18px; flex-shrink: 0; color: var(--gv-orange); margin-top: 2px; }
+
+  .gv-f-bottom { border-top: 1px solid rgba(255, 255, 255, 0.10); }
+  .gv-f-bottom-inner {
+    width: 100%;
+    max-width: 1200px;
+    margin-inline: auto;
+    padding: 1.25rem clamp(1.25rem, 5vw, 2.5rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    font-size: 0.75rem;
+    color: var(--gv-slate);
+    text-align: center;
+  }
+  @media (min-width: 640px) { .gv-f-bottom-inner { flex-direction: row; text-align: left; } }
+</style>
+
+<div class="gv-footer">
+  <div class="gv-footer-inner">
+
+    <!-- Brand -->
+    <div>
+      <a href="https://www.gogravity.in/" class="gv-f-logolink" aria-label="Gravity Academy home">
+        <img class="gv-f-logo" src="https://www.gogravity.in/logo/gravity-white.svg" alt="Gravity Academy logo" width="483" height="171" loading="lazy" />
+      </a>
+      <p class="gv-f-blurb">Concept-first coaching for Classes 6–12 in Bengaluru. Disciplined, mentorship-driven, built to last.</p>
+      <div class="gv-f-socials">
+        <a href="https://www.instagram.com/gogravityacademy/?hl=en" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+        <a href="https://x.com/gogravity_" target="_blank" rel="noopener noreferrer" aria-label="X">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.47l8.6-9.83L0 1.15h7.59l5.24 6.93 6.07-6.93Zm-1.29 19.5h2.04L6.48 3.24H4.3l13.31 17.41Z"/></svg>
+        </a>
+        <a href="https://www.facebook.com/gogravityacademy" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/company/gogravityacademy/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+        </a>
+      </div>
+      <p class="gv-f-handles">@gogravityacademy</p>
+    </div>
+
+    <!-- Courses -->
+    <nav aria-label="Courses">
+      <h2 class="gv-f-head">Courses</h2>
+      <ul class="gv-f-list">
+        <li><a href="https://www.gogravity.in/programs/foundation">Foundation (VI–X)</a></li>
+        <li><a href="https://www.gogravity.in/programs/test-prep">Test Prep (XI–XII)</a></li>
+        <li><a href="https://www.gogravity.in/programs/jee-foundation">JEE Foundation</a></li>
+        <li><a href="https://www.gogravity.in/programs/neet-foundation">NEET Foundation</a></li>
+        <li><a href="https://www.gogravity.in/programs/olympiads">Olympiads</a></li>
+        <li><a href="https://www.gogravity.in/programs/subject-coaching">Subject Coaching (PCM / PCB)</a></li>
+      </ul>
+    </nav>
+
+    <!-- Quick links -->
+    <nav aria-label="Quick links">
+      <h2 class="gv-f-head">Quick links</h2>
+      <ul class="gv-f-list">
+        <li><a href="https://www.gogravity.in/about">About</a></li>
+        <li><a href="https://www.gogravity.in/courses">Courses</a></li>
+        <li><a href="https://www.gogravity.in/gallery">Gallery</a></li>
+        <li><a href="https://www.gogravity.in/#results">Results</a></li>
+        <li><a href="https://www.gogravity.in/faq">FAQ</a></li>
+        <li><a href="https://www.gogravity.in/contact">Contact</a></li>
+        <li><a href="/blog/">Blog</a></li>
+      </ul>
+    </nav>
+
+    <!-- Contact -->
+    <div>
+      <h2 class="gv-f-head">Contact</h2>
+      <address class="gv-f-contact">
+        <p>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span>Achyutha Arcade, Near New Baldwin International School, Maragondanahalli, KR Puram, Bengaluru, Karnataka 560036</span>
+        </p>
+        <p>
+          <a href="tel:+917889362386">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            +91 78893 62386
+          </a>
+        </p>
+        <p>
+          <a href="mailto:info@gogravity.in">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-10 5L2 7"/></svg>
+            info@gogravity.in
+          </a>
+        </p>
+        <p>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span>Mon – Sat: 9:00 AM – 7:30 PM</span>
+        </p>
+        <p>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span>Sunday: 10:00 AM – 2:00 PM (counselling only)</span>
+        </p>
+      </address>
+    </div>
+  </div>
+
+  <div class="gv-f-bottom">
+    <div class="gv-f-bottom-inner">
+      <p>© 2026 Gravity Academy. All rights reserved.</p>
+      <p>Aligned with CBSE · ICSE · State Board</p>
+    </div>
+  </div>
+</div>

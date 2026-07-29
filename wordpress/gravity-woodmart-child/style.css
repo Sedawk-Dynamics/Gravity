@@ -1,0 +1,13 @@
+/*
+Theme Name:   WoodMart Child — Gravity Academy
+Theme URI:    https://www.gogravity.in
+Description:  Child theme that skins WoodMart to match the Gravity Academy Next.js frontend (www.gogravity.in). Loads the shared brand tokens, Google Fonts (Poppins / Inter / JetBrains Mono) and a CSS skin for the header, footer, blog and WooCommerce surfaces.
+Author:       Webelio
+Author URI:   https://www.gogravity.in
+Template:     woodmart
+Version:      1.0.0
+Text Domain:  gravity-woodmart-child
+*/
+
+/* Intentionally empty — all styles are enqueued from assets/css/ via functions.php
+   so load order (tokens → skin) is guaranteed after the parent theme styles. */

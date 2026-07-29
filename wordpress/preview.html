@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gravity WP skin — preview harness</title>
+<!-- Local stand-in for the WordPress surface: loads the child theme's CSS
+     directly so skin edits can be previewed without a WP install.
+     Serve this folder statically, e.g.:  npx http-server . -p 3009 -c-1  -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="gravity-woodmart-child/assets/css/brand-tokens.css">
+<link rel="stylesheet" href="gravity-woodmart-child/assets/css/gravity-skin.css">
+<style>body{margin:0}</style>
+</head>
+<body>
+
+<!-- Mock WoodMart header markup (classes match what the Header Builder outputs) -->
+<div class="whb-header whb-sticked" style="position:sticky;top:0;z-index:50">
+  <div class="whb-general-header">
+    <div style="max-width:1200px;margin-inline:auto;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px clamp(1.25rem,5vw,2.5rem)">
+      <img src="gravity-woodmart-child/assets/img/gravity.svg" alt="Gravity Academy" style="height:42px;width:auto">
+      <ul class="wd-nav wd-nav-main" style="display:flex;gap:4px;list-style:none;margin:0;padding:0">
+        <li class="current-menu-item"><a href="#" style="padding:8px 12px;display:block;text-decoration:none"><span class="nav-link-text">Courses</span></a></li>
+        <li><a href="#" style="padding:8px 12px;display:block;text-decoration:none"><span class="nav-link-text">About</span></a></li>
+        <li><a href="#" style="padding:8px 12px;display:block;text-decoration:none"><span class="nav-link-text">Blog</span></a></li>
+        <li><a href="#" style="padding:8px 12px;display:block;text-decoration:none"><span class="nav-link-text">Shop</span></a></li>
+        <li><a href="#" style="padding:8px 12px;display:block;text-decoration:none"><span class="nav-link-text">Contact</span></a></li>
+      </ul>
+      <div style="display:flex;align-items:center;gap:12px">
+        <a href="tel:+917889362386" style="text-decoration:none;color:var(--navy);font-weight:600;font-size:.92rem">+91 78893 62386</a>
+        <a href="#" class="btn btn-color-primary" style="text-decoration:none;padding:10px 20px;display:inline-block">Book a free demo</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Mock WoodMart page title -->
+<div class="page-title">
+  <div style="max-width:1200px;margin-inline:auto;padding-inline:clamp(1.25rem,5vw,2.5rem)">
+    <div class="wd-breadcrumbs">Home / Blog</div>
+    <h1 class="entry-title" style="margin:.5rem 0 0">The Gravity Journal</h1>
+  </div>
+</div>
+
+<!-- Mock blog archive -->
+<div style="max-width:1200px;margin:3rem auto;padding-inline:clamp(1.25rem,5vw,2.5rem);display:grid;grid-template-columns:repeat(3,1fr);gap:30px">
+  <article class="blog-post-loop wd-post">
+    <div style="aspect-ratio:16/10;background:linear-gradient(135deg,var(--navy),var(--navy-900))"></div>
+    <div class="article-body-container">
+      <div class="wd-post-cat"><a href="#">JEE Prep</a></div>
+      <h3 class="entry-title" style="margin:.4rem 0"><a href="#" style="text-decoration:none">How to build a 2-year JEE runway from Class 11</a></h3>
+      <div class="entry-meta">July 21, 2026 · 6 min read</div>
+      <p style="color:var(--slate);font-size:.9rem;margin:.6rem 0 0">Concept-first pacing beats question-count grinding. Here is the study architecture we use.</p>
+    </div>
+  </article>
+  <article class="blog-post-loop wd-post">
+    <div style="aspect-ratio:16/10;background:linear-gradient(135deg,var(--orange),var(--orange-700))"></div>
+    <div class="article-body-container">
+      <div class="wd-post-cat"><a href="#">Foundation</a></div>
+      <h3 class="entry-title" style="margin:.4rem 0"><a href="#" style="text-decoration:none">Why Classes 6–8 are the real make-or-break years</a></h3>
+      <div class="entry-meta">July 14, 2026 · 4 min read</div>
+      <p style="color:var(--slate);font-size:.9rem;margin:.6rem 0 0">Strong fundamentals compound. What parents should watch for before Class 9.</p>
+    </div>
+  </article>
+  <article class="blog-post-loop wd-post">
+    <div style="aspect-ratio:16/10;background:var(--mist)"></div>
+    <div class="article-body-container">
+      <div class="wd-post-cat"><a href="#">NEET</a></div>
+      <h3 class="entry-title" style="margin:.4rem 0"><a href="#" style="text-decoration:none">NCERT-deep: the only NEET biology strategy you need</a></h3>
+      <div class="entry-meta">July 7, 2026 · 8 min read</div>
+      <p style="color:var(--slate);font-size:.9rem;margin:.6rem 0 0">High-yield revision loops and full-length mocks, scheduled the Gravity way.</p>
+    </div>
+  </article>
+</div>
+
+<!-- Footer block, injected verbatim from html-blocks/footer.html.
+     The WP theme path for the logo is rewritten to the local file so the
+     harness shows it; on WordPress the original path is correct. -->
+<div id="footer-slot"></div>
+<script>
+fetch('html-blocks/footer.html').then(r=>r.text()).then(t=>{
+  document.getElementById('footer-slot').innerHTML =
+    t.replaceAll('/wp-content/themes/gravity-woodmart-child/assets/img/', 'gravity-woodmart-child/assets/img/');
+});
+</script>
+</body>
+</html>
