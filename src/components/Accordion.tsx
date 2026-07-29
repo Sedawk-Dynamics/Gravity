@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { faqs } from '@/data/faqs';
+import { faqs, type Faq } from '@/data/faqs';
 import Icon from './Icon';
 
 /**
@@ -9,13 +9,13 @@ import Icon from './Icon';
  * aria-expanded + aria-controls. Keyboard-operable; multiple can stay open.
  * (Uses the grid-rows [0fr → 1fr] height-animation trick from the Astro build.)
  */
-export default function Accordion() {
+export default function Accordion({ items = faqs }: { items?: Faq[] }) {
   const [open, setOpen] = useState<Record<number, boolean>>({});
   const toggle = (i: number) => setOpen((s) => ({ ...s, [i]: !s[i] }));
 
   return (
     <div className="divide-y divide-mist rounded-card border border-mist bg-paper">
-      {faqs.map((item, i) => {
+      {items.map((item, i) => {
         const isOpen = !!open[i];
         return (
           <div key={i} className="accordion-item">

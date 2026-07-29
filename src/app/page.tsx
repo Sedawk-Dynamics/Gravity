@@ -10,9 +10,11 @@ import ProgramCard from '@/components/ProgramCard';
 import StatCard from '@/components/StatCard';
 import TopperCard from '@/components/TopperCard';
 import TestimonialCard from '@/components/TestimonialCard';
+import Accordion from '@/components/Accordion';
 import CTABand from '@/components/CTABand';
 import Icon from '@/components/Icon';
 import { site } from '@/data/site';
+import { faqs } from '@/data/faqs';
 import { getPrograms } from '@/data/programs';
 import { toppers } from '@/data/toppers';
 import { testimonials } from '@/data/testimonials';
@@ -210,7 +212,28 @@ export default async function HomePage() {
         </div>
       </Section>
 
-      {/* 9. CTA BAND */}
+      {/* 9. FAQ — top questions, with a link to the full list */}
+      <Section tone="paper">
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <SectionHead
+            eyebrow="FAQ"
+            title="Questions parents ask us"
+            intro="Quick answers on batches, fees, demo classes and more — the full list lives on the FAQ page."
+            className="!max-w-2xl"
+          />
+          <Button href="/faq" variant="ghost" icon="arrow-right" className="hidden sm:inline-flex">
+            All FAQs
+          </Button>
+        </div>
+        <div className="mt-10 mx-auto max-w-3xl" data-reveal>
+          <Accordion items={faqs.slice(0, 5)} />
+          <Button href="/faq" variant="ghost" icon="arrow-right" className="mt-6 sm:hidden">
+            All FAQs
+          </Button>
+        </div>
+      </Section>
+
+      {/* 10. CTA BAND */}
       <CTABand />
     </>
   );
