@@ -13,7 +13,7 @@ const quickLinks = [
   { label: 'Results', href: '/#results' },
   { label: 'FAQ', href: '/faq' },
   { label: 'Contact', href: '/contact' },
-  { label: 'Blog', href: 'https://staging.gravity.sedawk.cloud/blog/', external: true },
+  { label: 'Study Material', href: 'https://staging.gravity.sedawk.cloud/blog/', external: true },
 ];
 
 const socials = [

@@ -3,7 +3,6 @@
  * Paste the WHOLE file into: WP Admin → Appearance → Customize → Additional CSS.
  * The @import line MUST stay at the very top.
  * Contains: Google Fonts → brand tokens → WoodMart skin → header phone/CTA.
- * Source of truth: Gravity/public/brand-tokens.css + wordpress/…/gravity-skin.css
  * ═══════════════════════════════════════════════════════════════════════════ */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 
@@ -96,7 +95,7 @@
 	--btn-default-color-hover: #fff;
 	--btn-accented-bgcolor: var(--orange);
 	--btn-accented-bgcolor-hover: var(--navy);
-	--btn-accented-color: var(--navy);
+	--btn-accented-color: #fff;
 	--btn-accented-color-hover: #fff;
 
 	/* Roundness (WoodMart 7.1+ presets) */
@@ -178,7 +177,7 @@ button[type="submit"], input[type="submit"],
 button[type="submit"],
 input[type="submit"] {
 	background-color: var(--orange) !important;
-	color: var(--navy) !important;
+	color: #ffffff !important;
 	box-shadow: var(--shadow-soft);
 }
 .btn.btn-color-primary:hover,
@@ -256,7 +255,7 @@ input[type="submit"]:hover {
 .whb-header .wd-tools-element:hover > a { color: var(--orange); }
 .wd-cart-number, .wd-tools-count {
 	background-color: var(--orange) !important;
-	color: var(--navy) !important;
+	color: #ffffff !important;
 	font-weight: 700;
 }
 
@@ -500,7 +499,7 @@ nav.woocommerce-pagination .page-numbers li .page-numbers.current {
 .wd-product .price del, .single-product .price del { color: var(--slate) !important; }
 .wd-product img, .product-image-link img { border-radius: var(--radius-card); }
 /* Sale / hot badges */
-.product-label.onsale, .wd-product-label.onsale { background-color: var(--orange) !important; color: var(--navy) !important; }
+.product-label.onsale, .wd-product-label.onsale { background-color: var(--orange) !important; color: #ffffff !important; }
 .product-label.new, .wd-product-label.new { background-color: var(--navy) !important; }
 /* Star ratings */
 .star-rating, .wd-review-rating { color: var(--orange) !important; }
@@ -630,13 +629,13 @@ label { font-family: var(--font-body); font-weight: 500; color: var(--navy); }
 	color: #fff !important;
 	border-radius: var(--radius-btn) !important;
 }
-.scrollToTop:hover, .wd-scroll-top:hover { background-color: var(--orange) !important; color: var(--navy) !important; }
+.scrollToTop:hover, .wd-scroll-top:hover { background-color: var(--orange) !important; color: #ffffff !important; }
 /* Section alt backgrounds used by page builders */
 .gv-bg-paper-2 { background-color: var(--paper-2); }
 /* Hide WoodMart promo/demo leftovers just in case */
 .wd-promo-popup { border-radius: var(--radius-card); }
 
-/* ── 15. Header HTML blocks: phone link + CTA (mirror of Next.js Header.tsx) ── */
+/* ── 15. Header HTML blocks: phone link + CTA ─────────────────────────────── */
 .gv-phone {
 	display: inline-flex;
 	align-items: center;
@@ -661,7 +660,7 @@ label { font-family: var(--font-body); font-weight: 500; color: var(--navy); }
 	padding: 0.625rem 1.25rem;
 	border-radius: var(--radius-btn);
 	background-color: var(--orange);
-	color: var(--navy) !important;
+	color: #ffffff !important;
 	font-family: var(--font-display);
 	font-size: 0.95rem;
 	font-weight: 600;
@@ -672,7 +671,7 @@ label { font-family: var(--font-body); font-weight: 500; color: var(--navy); }
 }
 .gv-cta:hover {
 	background-color: var(--navy);
-	color: #fff !important;
+	color: #ffffff !important;
 	box-shadow: var(--shadow-lift);
 }
 .gv-cta:active { transform: translateY(1px); }

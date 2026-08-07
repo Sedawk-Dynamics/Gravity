@@ -19,7 +19,7 @@ interface Props {
 const nav = [
   { label: 'Courses', href: '/courses', mega: true },
   { label: 'About', href: '/about' },
-  { label: 'Blog', href: 'https://staging.gravity.sedawk.cloud/blog/', external: true },
+  { label: 'Study Material', href: 'https://staging.gravity.sedawk.cloud/blog/', external: true },
   { label: 'Gallery', href: '/gallery' },
   { label: 'Contact', href: '/contact' },
 ];
